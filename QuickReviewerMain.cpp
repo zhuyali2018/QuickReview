@@ -22,27 +22,41 @@ int main(int argc, const char ** argv)
 		exit(0);
 	}
 	printf("XML file '%s' loaded and parsed successfully\n", mydoc);
-	
-	char * str = nullptr;
-	char * cat = nullptr;
 	int qn = 1;   //question number;
-	char name[10];
-	sprintf_s(name, "Q%d", qn++);
-	{
+	do {
+		char * str = nullptr;
+		char * cat = nullptr;
+		
+		char name[10];
+		sprintf_s(name, "Q%d", qn++);
+		
 		XMLElement* attributeQLib = doc->FirstChildElement(name);
+		if (!attributeQLib) {
+			break;
+		}
 		attributeQLib->QueryStringAttribute("type", (const char **)&str);
 		attributeQLib->QueryStringAttribute("category", (const char **)&cat);
+		
 		XMLElement *Que = attributeQLib->FirstChildElement("Question");
-		const char * question = Que->GetText();
+		const char * question = nullptr;
+		if (Que) {
+			question = Que->GetText();
+		}
+		const char * answer = nullptr;
 		Que = attributeQLib->FirstChildElement("Answer");
-		const char * answer = Que->GetText();
-		cout << "Question No " << qn-1 << " :" << endl;
+		if (Que) {
+			answer = Que->GetText();
+		}
+		
+		cout << "Question No " << qn - 1 << " :" << endl;
 		printf("Question type: %s\n", str);
 		printf("Question Category: %s\n", cat);
 		printf("Question: %s\n", question);
 		printf("Answer: %s\n", answer);
-	}
+
+	} while (true);
 	//==================================================================
+	/*
 	sprintf_s(name, "Q%d", qn++);
 	{
 		XMLElement* attributeQLib = doc->FirstChildElement(name);
@@ -80,7 +94,7 @@ int main(int argc, const char ** argv)
 		const char * explain = Que->GetText();
 		printf("Explain: %s\n", explain);
 
-	}
+	}*/
 	cin.get();
 	return 0;
 }
