@@ -65,14 +65,13 @@ int main(int argc, const char ** argv)
 	const char * name = "QuestionsAndAnswers";
 	XMLElement* root = doc->FirstChildElement(name);
 	vector<Question> questions = GetAllQuestions(root);
+	int questionNo = 1;
 	for (Question q : questions) {
-		printf("Question ID:%d\n", q.id);
-		printf("Question type:%s\n", q.qtype.c_str());
-		printf("Question cate:%s\n", q.qcategory.c_str());
-		printf("Question countdown:%d\n", q.countdown);
-		printf("Question resetto:%d\n\n", q.resetto);
-		printf("Question : %s\n", q.question.c_str());
+		system("CLS");   //clear the screen of command line window
+		printf("Question %d : %s\n", questionNo++, q.question.c_str());
+		cin.get();
 		printf("Answer : %s\n", q.answer.c_str());
+		cin.get();
 	}
 	cin.get();
 
