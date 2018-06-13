@@ -1,6 +1,8 @@
 <?xml version="1.0"?>
 <!DOCTYPE QR SYSTEM "QuickReview.dtd">
 
+<QuestionsAndAnswers>
+
 <QA ID="1" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
   <Question>
         How can I handle a constructor that fails ?
@@ -53,3 +55,4 @@
   </Answer>
 </QA>
 
+</QuestionsAndAnswers>
