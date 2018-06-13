@@ -4,6 +4,7 @@
 <QuestionsAndAnswers>
 
 <QA ID="1" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+
   <Question>
         How can I handle a constructor that fails ?
   </Question>
@@ -16,42 +17,224 @@
 
 <QA ID="2" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
   <Question>
-        Is this question No 2 ?
+      What is difference between process and thread ?
   </Question>
   <Answer>
-        Yes
+      A process provides the resources needed to execute a program. A process has:
+        - a virtual address space, 
+        - executable code, 
+        - open handles to system objects, 
+        - a security context,          - process identifier, 
+        - environment variables, 
+        - at least one thread of execution ( Each process is started with a single thread, often called the primary thread, but can create additional threads from any of its threads.)
+
+      A thread is the entity within a process that can be scheduled for execution. 
+        - All threads of a process share its:
+           - virtual address space and 
+           - system resources. 
+        - each thread maintains 
+           - exception handlers, 
+           - a scheduling priority, 
+           - thread local storage, 
+           - a unique thread identifier, 
+           - a set of structures the system use to save the thread context until it is scheduled. 
+           - each thread context includes :
+              - the thread's set of machine registers, 
+              - the kernel stack, 
+              - a thread environment block, 
+              - a user stack in the address space of the thread's process. 
+              - a security context, which can be used for impersonating clients.
   </Answer>
 </QA>
 <QA ID="3" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
   <Question>
-        Is this question No 3 ?
+      Difference between Lock and control variable ?
   </Question>
   <Answer>
-        Yes
+        ??
   </Answer>
 </QA>
 <QA ID="4" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
   <Question>
-        Is this question No 4 ?
+      Difference between mutex and semorephone ?
   </Question>
   <Answer>
-        Yes
+      A mutex can be owned by only one thread at a time, enabling threads to coordinate mutually exclusive access to a shared resource.
+      A semaphore maintains a count between zero and some maximum value, limiting the number of threads that are simultaneously accessing a shared resource.
   </Answer>
 </QA>
 <QA ID="5" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
   <Question>
-        Is this question No 5 ?
+      What is Unique pointer and what is the diffrence between unique pointer and shared pointer?
   </Question>
   <Answer>
-        Yes
+      Unique pointer and Shared pointer are all smart pointers. Unique pointer means an object can only be pointered by one pointer
+      shared poitners keeps a count on number of pointers to an object and when the count drops to 0, the object is destroied !
   </Answer>
 </QA>
 <QA ID="6" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
   <Question>
-        Is this question No 6 ?
+      What is weak poitner?
   </Question>
   <Answer>
-        Yes
+      Weak pointer is a kind of pointer that does not own the object, does not affect the pointer count!
+  </Answer>
+</QA>
+<QA ID="7" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+      What is vector?
+  </Question>
+  <Answer>
+    A vector is a dynamic array that can only grow in one direction, and is contiguously allocated in memory.
+
+   vector pros and cons:
+   - fast insert/remove at the end: O(1)
+   - slow insert/remove at the begining and middle: O(n)
+   - slow search (linear time): O(n)
+   - random access
+  </Answer>
+</QA>
+
+<QA ID="8" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+      What is deque ?
+  </Question>
+  <Answer>
+      A deque is a dynamic array that can grow in both directions, and is contiguously allocated in memory.
+  </Answer>
+</QA>
+
+<QA ID="9" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+      What is array and what is its pros and cons ?
+  </Question>
+  <Answer>
+      array is fixed in size! and different size makes them different types.
+  </Answer>
+</QA>
+<QA ID="10" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+      What is the difference between list and forward list ?
+  </Question>
+  <Answer>
+      list is a doubly-linked list. Forward list is a singly-linked list
+  </Answer>
+</QA>
+<QA ID="11" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+      What is weak poitner?
+  </Question>
+  <Answer>
+      Weak pointer is a kind of pointer that does not own the object, does not affect the pointer count!
+  </Answer>
+</QA>
+<QA ID="12" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+      What are STL Containers
+  </Question>
+  <Answer>
+   STL Containers can be divieded into 3 categories:
+   1) Sequence Containers (Array and linked list)
+       - vector
+       - deque
+       - list
+       - forward list
+       - array
+   2) Associative Containers (binary tree)
+       - set, multiset,
+       - map, multimap
+   3) Unordered Containers (hash table)
+       - Unordered set/multiset;
+       - Unordered map/multimap
+
+   its headers to include: 
+        - &lt;vector&gt;
+        - &lt;deque&gt;
+        - &lt;list&gt;
+        - &lt;set&gt;
+        - &lt;map&gt;
+        - &lt;unordered_set&gt;
+        - &lt;unordered_map&gt;
+
+   other STL includes:
+        - &lt;iterator&gt;
+        - &lt;algorithm&gt;
+        - &lt;numeric&gt;     
+        - &lt;functional&gt;  //for functors
+
+   methods shared across all containers:
+   - empty()   //check for empty
+   - size()
+   - clear()   //remove all elements
+   - swap(T)   //swap all elements
+  </Answer>
+</QA>
+<QA ID="13" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+      What is associate containers ?
+  </Question>
+  <Answer>
+      Associate containers refer to map/multimap and set/multiset.
+      Associate means keys are associated with values
+      For set/map, the keys can be considered the same as values
+      - They are always sorted, so no push_front(), push_back() methods
+      - They are implemented as binary tree.
+      - They are fast in search
+      - They are slow in traversing
+      - No Random acces, no [] operator
+      - Elements (keys) can't be modified
+  </Answer>
+</QA>
+<QA ID="14" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+      show some set snippets:
+  </Question>
+  <Answer>
+
+  snippet:
+
+    set&lt;int&gt; myset;
+    myset.insert(3);
+    myset.insert(1);
+    myset.insert(7);   //myset: {1,3,7}
+
+    set&lt;int&gt;::iterator it;
+    it=myset.find(7);       //fast, sequence containers do not have find() memeber function
+                            //fast O(log(n))   &lt;=====outstanding feature
+    pair&lt;set&lt;int&gt;::iterator, bool&gt; set;
+    ret=myset.insert(3);    //no new element inserted, because no duplicates allowed
+    if(ret.second==false)   //return a pair of values: ret.first, ret.second
+      it=ret.first;         //"it" now points to element 3
+     
+    myset.insert(it,9);     //hint where it is pointing to, {1,3,7,9}
+    myset.erase(it);        //myset: {1,7,9}
+    myset.erase(7);         //myset: {1,9}
+   
+  </Answer>
+</QA>
+<QA ID="15" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+      what is difference between set and muti set ?
+  </Question>
+  <Answer>
+      Difference is that muti set allows duplcates while set does not allow duplicates
+      Same difference between map and multimap!
+  </Answer>
+</QA>
+<QA ID="16" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+      What is the difference between set/multiset and map/multimap ?
+  </Question>
+  <Answer>
+      Map/multimap is just a key-value paired version of set/multiset.
+  </Answer>
+</QA>
+<QA ID="xxx" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+      What is weak poitner?
+  </Question>
+  <Answer>
+      Weak pointer is a kind of pointer that does not own the object, does not affect the pointer count!
   </Answer>
 </QA>
 

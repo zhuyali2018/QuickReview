@@ -36,7 +36,6 @@ vector<Question> GetAllQuestions(XMLElement * parent) {
 		else {
 			QA->SetAttribute("countdown", countdown);
 		}
-		
 		const string question = QA->FirstChildElement("Question")->GetText();
 		const string answer = QA->FirstChildElement("Answer")->GetText();
 		
@@ -52,13 +51,15 @@ int main(int argc, const char ** argv)
 {
 	cout << "Quick Reviewer version 1.0" << endl;
 	
+	XMLDocument* doc = new XMLDocument();          //in tinyxml2 namespace
 	if (argc != 2) {
 		cout << "Usage: " << argv[0] << " <questionDataFile>" << endl;
-		return -1;
+		//return -1;
+		doc->LoadFile("QASheet.txt");
 	}
-
-	XMLDocument* doc = new XMLDocument();          //in tinyxml2 namespace
-	doc->LoadFile(argv[1]);
+	else {
+		doc->LoadFile(argv[1]);
+	}
 
 	int errorID = doc->ErrorID();
 	if (errorID) {
