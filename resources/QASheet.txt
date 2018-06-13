@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<!DOCTYPE QR SYSTEM "QuickReview.dtd">
+
+<Q1 type="OneAnswer" category="CPP" >
+  <Question>
+        How can I handle a constructor that fails ?
+  </Question>
+
+  <Answer>
+     throw an exception. Constructors don't have a return type, so it's not possible to use return codes. The best way to signal constructor failure is therefore to throw an exception.
+  </Answer>
+</Q1>
+
+
+<Q2 type="MultiChoice"  category="CPP">
+    <Question>
+        Pick a valid declaration for overloading ++ in postfix form where T is the class name
+    </Question>
+   <ChoiceA>
+      T operator++(); </ChoiceA>
+   <ChoiceB>
+     T operator++(int);
+  </ChoiceB>
+  <ChoiceC>
+     T && operator ++();
+  </ChoiceC>
+  <ChoiceD>
+     T && operator ++(int);
+  </ChoiceD>
+  <Answer> B </Answer>
+  <Explain>
+     bla bla bla
+  </Explain>
+</Q2>

@@ -1,0 +1,30 @@
+#include <sstring>
+
+...
+
+
+//parsing line: first last 1234 89.1
+
+stringstream studentinfo(string sinfo);
+studentinfo >> firstname;
+studentinfo >> lastname;
+studentinfo >> id;
+studentinfo >> gpa;
+
+
+
+//open a file and process it line by line
+
+std::ifstream studentFile(FilePath);
+string lineContents;
+while(!StudentFile.eof()){
+  getline(studentFile, lineContents);
+  student s(lineContents);
+  students.push_back(s);
+}
+studentFile.close()
+
+
+char * cPath="asfasdf"
+
+string path(cPath)
