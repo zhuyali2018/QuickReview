@@ -21,7 +21,8 @@ int main(int argc, const char ** argv)
 		cin.get();
 		exit(0);
 	}
-	printf("XML file '%s' loaded and parsed successfully\n", mydoc);
+	printf("XML file '%s' loaded and parsed successfully\n\n", mydoc);
+
 	int qn = 1;   //question number;
 	do {
 		char * str = nullptr;
@@ -52,49 +53,36 @@ int main(int argc, const char ** argv)
 		printf("Question type: %s\n", str);
 		printf("Question Category: %s\n", cat);
 		printf("Question: %s\n", question);
-		printf("Answer: %s\n", answer);
-
-	} while (true);
-	//==================================================================
-	/*
-	sprintf_s(name, "Q%d", qn++);
-	{
-		XMLElement* attributeQLib = doc->FirstChildElement(name);
-		attributeQLib->QueryStringAttribute("type", (const char **)&str);
-		attributeQLib->QueryStringAttribute("category", (const char **)&cat);
-		XMLElement *Que = attributeQLib->FirstChildElement("Question");
-		const char * question = Que->GetText();
-		Que = attributeQLib->FirstChildElement("Answer");
-		const char * answer = Que->GetText();
-		cout << "Question No " << qn-1 << " :" << endl;
-		printf("Question type: %s\n", str);
-		printf("Question Category: %s\n", cat);
-		printf("Question: %s\n", question);
-		
 		
 		Que = attributeQLib->FirstChildElement("ChoiceA");
-		const char * choiceA = Que->GetText();
-		printf("Choice A: %s\n", choiceA);
-		
+		if (Que) {
+			const char * choiceA = Que->GetText();
+			printf("Choice A: %s\n", choiceA);
+		}
 		Que = attributeQLib->FirstChildElement("ChoiceB");
-		const char * choiceB = Que->GetText();
-		printf("Choice B: %s\n", choiceB);
-
+		if (Que) {
+			const char * choiceB = Que->GetText();
+			printf("Choice B: %s\n", choiceB);
+		}
 		Que = attributeQLib->FirstChildElement("ChoiceC");
-		const char * choiceC = Que->GetText();
-		printf("Choice C: %s\n", choiceC);
-
+		if (Que) {
+			const char * choiceC = Que->GetText();
+			printf("Choice C: %s\n", choiceC);
+		}
 		Que = attributeQLib->FirstChildElement("ChoiceD");
-		const char * choiceD = Que->GetText();
-		printf("Choice D: %s\n", choiceD);
-		
+		if (Que) {
+			const char * choiceD = Que->GetText();
+			printf("Choice D: %s\n", choiceD);
+		}
 		printf("\n\n\nAnswer: %s\n", answer);
 
 		Que = attributeQLib->FirstChildElement("Explain");
-		const char * explain = Que->GetText();
-		printf("Explain: %s\n", explain);
+		if (Que) {
+			const char * explain = Que->GetText();
+			printf("Explain: %s\n", explain);
+		}
+	} while (true);
 
-	}*/
 	cin.get();
 	return 0;
 }
