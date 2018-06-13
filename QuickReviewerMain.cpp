@@ -29,7 +29,14 @@ vector<Question> GetAllQuestions(XMLElement * parent) {
 		QA->QueryStringAttribute("category", &category);
 		QA->QueryIntAttribute("countdown", &countdown);
 		QA->QueryIntAttribute("resetto", &resetto);
-
+		countdown--;
+		if (countdown <= 0) {			
+			QA->SetAttribute("countdown", resetto);
+		}
+		else {
+			QA->SetAttribute("countdown", countdown);
+		}
+		
 		const string question = QA->FirstChildElement("Question")->GetText();
 		const string answer = QA->FirstChildElement("Answer")->GetText();
 		
@@ -68,12 +75,19 @@ int main(int argc, const char ** argv)
 	int questionNo = 1;
 	for (Question q : questions) {
 		system("CLS");   //clear the screen of command line window
-		printf("Question %d : %s\n", questionNo++, q.question.c_str());
+		printf("(%d) Question %d : %s\n", q.id,questionNo++, q.question.c_str());
 		cin.get();
 		printf("Answer : %s\n", q.answer.c_str());
 		cin.get();
 	}
 	cin.get();
-
+	string newPath = "C:\\cygwin64\\home\\yali.zhu\\YaliSources\\QuickReviewer\\Debug\\NewlySavedXMLFile.xml";
+	doc->SaveFile(newPath.c_str());
+	errorID = doc->ErrorID();
+	if (errorID) {
+		printf("XML file '%s' Save failed: ErrorID=%d\n", argv[1], errorID);		
+		exit(0);
+	}
+	printf("XML file '%s' Saved successfully: ErrorID=%d\n", newPath.c_str(), errorID);
 	return 0;
 }
