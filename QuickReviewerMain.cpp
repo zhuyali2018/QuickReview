@@ -57,26 +57,38 @@ void promptAtQuestion() {
 }
 int main(int argc, const char ** argv) 
 {
-	cout << "Quick Reviewer version 1.4" << endl;
+	string newPath = "NewSavedXMLFile.xml";
+	cout << "Quick Reviewer version 1.5" << endl;
 	
 	XMLDocument* doc = new XMLDocument();          //in tinyxml2 namespace
 	if (argc != 2) {
 		cout << "Usage: " << argv[0] << " <questionDataFile>" << endl;
 		//return -1;
-		doc->LoadFile("QASheet.txt");
+		doc->LoadFile(newPath.c_str());
+		if (doc->ErrorID()) {
+			doc->LoadFile("QASheet.txt");
+		    if (!doc->ErrorID()) {
+				printf("XML file QASheet.txt loaded and parsed successfully\n\n");
+		    }
+		}
+		else {
+			printf("XML file '%s' loaded and parsed successfully\n\n", newPath.c_str());
+		}
 	}
 	else {
 		doc->LoadFile(argv[1]);
+		if(!doc->ErrorID())
+			printf("XML file '%s' loaded and parsed succesfully\n\n", argv[1]);
 	}
 
 	int errorID = doc->ErrorID();
 	if (errorID) {
-		printf("XML file '%s' loaded and parsed failed: ErrorID=%d\n", argv[1], errorID);
+		printf("XML file loaded and parsed failed: ErrorID=%d\n", errorID);
 		cin.get();
 		exit(0);
 	}
-	printf("XML file '%s' loaded and parsed successfully\n\n", argv[1]);
 	
+	cin.get();    //press Enter to start
 	//-----------------------------------------------------------------------------
 	const char * name = "QuestionsAndAnswers";
 	XMLElement* root = doc->FirstChildElement(name);
@@ -106,7 +118,8 @@ int main(int argc, const char ** argv)
 			break;
 	}
 	
-	string newPath = "C:\\cygwin64\\home\\yali.zhu\\YaliSources\\QuickReviewer\\Debug\\NewlySavedXMLFile.xml";
+	//string newPath = "C:\\cygwin64\\home\\yali.zhu\\YaliSources\\QuickReviewer\\Debug\\NewlySavedXMLFile.xml";
+	
 	doc->SaveFile(newPath.c_str());
 	errorID = doc->ErrorID();
 	if (errorID) {
