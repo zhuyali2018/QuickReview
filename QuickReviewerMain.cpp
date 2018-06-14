@@ -51,6 +51,7 @@ vector<Question> GetAllQuestions(XMLElement * parent) {
 void promptAtQuestion() {
 	printf("\n\n\n\n --------------------------------------------\n");
 	printf("           Number: jump to question numbered \n");
+	printf("            Enter: Next \n");
 	printf("                x: Exit \n");
 	printf("       Your Input: ");
 }
@@ -82,30 +83,25 @@ int main(int argc, const char ** argv)
 	vector<Question> questions = GetAllQuestions(root);
 	
 	//loop through each questions
+	char k[32] = { 0 };
 	int questionNo = 1;
 	int qno = 0;
 	int total = questions.size();
 	for (Question q : questions) {
-		if (qno > 0) { 
-			if (qno > questionNo) {
-				questionNo++;
-				continue;
-			}
+		if (qno > questionNo) {
+			questionNo++;
+			continue;
 		}
 		qno = 0;  //reset goto question No
 		system("CLS");   //clear the screen of command line window
-		printf("(%d) Question %d/%d : %s\n", q.id,questionNo++,total, q.question.c_str());	
+		printf("[Qid:%d]  Question %d/%d : \n%s\n", q.id,questionNo++,total, q.question.c_str());	
+		cin.getline(k, 30);       //wait before show answer
 
-		cin.get();
-		printf("Answer : %s\n", q.answer.c_str());
-	
-		promptAtQuestion();
-		char k[32] = { 0 };
-		cin.getline(k, 4);
-		qno = atoi(k);
-		if ((qno > 0) && (qno > questionNo)) {
-			continue;
-		}
+		printf("Answer : \n%s\n", q.answer.c_str());
+		promptAtQuestion();    //show options to exit or job to another questions
+		
+		cin.getline(k, 30);
+		qno = atoi(k);		
 		if (k[0] == 'x')
 			break;
 	}
