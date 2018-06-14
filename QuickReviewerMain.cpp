@@ -2,6 +2,7 @@
 #include "tinyxml2.h"
 #include <cstring>
 #include <iostream>
+#include <istream>
 #include <ctime>
 #include <cstdlib>
 #include <stdio.h>
@@ -47,9 +48,15 @@ vector<Question> GetAllQuestions(XMLElement * parent) {
 	}
 	return Qs;
 }
+void promptAtQuestion() {
+	printf("\n\n\n\n --------------------------------------------\n");
+	printf("           Number: jump to question numbered \n");
+	printf("                x: Exit \n");
+	printf("       Your Input: ");
+}
 int main(int argc, const char ** argv) 
 {
-	cout << "Quick Reviewer version 1.0" << endl;
+	cout << "Quick Reviewer version 1.4" << endl;
 	
 	XMLDocument* doc = new XMLDocument();          //in tinyxml2 namespace
 	if (argc != 2) {
@@ -73,22 +80,43 @@ int main(int argc, const char ** argv)
 	const char * name = "QuestionsAndAnswers";
 	XMLElement* root = doc->FirstChildElement(name);
 	vector<Question> questions = GetAllQuestions(root);
+	
+	//loop through each questions
 	int questionNo = 1;
+	int qno = 0;
+	int total = questions.size();
 	for (Question q : questions) {
+		if (qno > 0) { 
+			if (qno > questionNo) {
+				questionNo++;
+				continue;
+			}
+		}
+		qno = 0;  //reset goto question No
 		system("CLS");   //clear the screen of command line window
-		printf("(%d) Question %d : %s\n", q.id,questionNo++, q.question.c_str());
+		printf("(%d) Question %d/%d : %s\n", q.id,questionNo++,total, q.question.c_str());	
+
 		cin.get();
 		printf("Answer : %s\n", q.answer.c_str());
-		cin.get();
+	
+		promptAtQuestion();
+		char k[32] = { 0 };
+		cin.getline(k, 4);
+		qno = atoi(k);
+		if ((qno > 0) && (qno > questionNo)) {
+			continue;
+		}
+		if (k[0] == 'x')
+			break;
 	}
-	cin.get();
+	
 	string newPath = "C:\\cygwin64\\home\\yali.zhu\\YaliSources\\QuickReviewer\\Debug\\NewlySavedXMLFile.xml";
 	doc->SaveFile(newPath.c_str());
 	errorID = doc->ErrorID();
 	if (errorID) {
-		printf("XML file '%s' Save failed: ErrorID=%d\n", argv[1], errorID);		
+		printf("\nXML file '%s' Save failed: ErrorID=%d\n", argv[1], errorID);		
 		exit(0);
 	}
-	printf("XML file '%s' Saved successfully: ErrorID=%d\n", newPath.c_str(), errorID);
+	printf("\nXML file '%s' Saved successfully: ErrorID=%d\n", newPath.c_str(), errorID);
 	return 0;
 }
