@@ -196,7 +196,7 @@
     set&lt;int&gt; myset;
     myset.insert(3);
     myset.insert(1);
-    myset.insert(7);   //myset: {1,3,7}
+    myset.insert(7);         //myset: {1,3,7}
 
     set&lt;int&gt;::iterator it;
     it=myset.find(7);       //fast, sequence containers do not have find() memeber function
@@ -218,7 +218,7 @@
   </Question>
   <Answer>
       Difference is that muti set allows duplcates while set does not allow duplicates
-      Same difference between map and multimap!
+      Difference between map and multimap is multimap allows duplicate keys
   </Answer>
 </QA>
 <QA ID="16" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
@@ -229,6 +229,95 @@
       Map/multimap is just a key-value paired version of set/multiset.
   </Answer>
 </QA>
+<QA ID="17" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+      What about unordered containers ? what are unordered containers and what are their pros and cons
+  </Question>
+  <Answer>
+      Unordered set/multiset, map/multimap are unordered containers
+      they are implemented as hash tables 
+      has following features:
+        -fast search O(1)
+        -fast insert O(1)
+        -element value can't be changed for unordered set/multiset
+        -element key can't be change for unordered map/multimap
+
+      snippet:
+        unordered_set&lt;string&gt; = { "red", "green", "blue" };
+        unordered_set&lt;string&gt;::const_iterator itr =  myset.find("green");  //fast, O(1)
+        if(itr != myset.end())   //need to check if found
+          cout &lt;&lt; *itr &lt;&lt; endl;
+        myset.insert("yellow");   // O(1), fast
+
+        vector&lt;string&gt; vec={"purple","pink"};    //an vector to be inserted into myset
+        myset.insert(vec.begin(), vec.end());    //insert a vector into a set 
+
+        //Hash table APIs: load_factor(),bucket(),bucket_count()
+        cout &lt;&lt; "load_factor="&lt;&lt; myset.load_factor() &lt;&lt; endl;
+        string x = "red";
+        cout &lt;&lt; x &lt;&lt; " is in buket #" &lt;&lt; myset.bucket(x) &lt;&lt; endl;
+        cout &lt;&lt; "Total bucket #=" &lt;&lt; myset.bucket_count() &lt;&lt; endl;
+
+  </Answer>
+</QA>
+<QA ID="18" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+      What is Associate Array?
+  </Question>
+  <Answer>
+      Associate Array is map and unordered map. They are Associate Containers with [] operators.
+      
+      Following snippet shows its usages:
+       
+      unordered_map&lt;char, string&gt; day={{'S',"Sunday"},{'M',"Monday"}};
+
+      cout &lt;&lt; day['S']    &lt;&lt; endl;    //No  range check
+      cout &lt;&lt; day.at('S') &lt;&lt; endl;    //Has range check
+
+      vector&lt;int&gt; vec={1,2,3};
+      vec[5]=5;                             // compile Error: out of range
+
+      day['W'] = "Wednesday";               //OK, inserting {'W',"Wednesday'}
+      day.insert(make_pair('F',"FRIDAY"));  //inserting, same as above
+
+      day.insert(make_pair('M',"MONDAY));   //Already exist for M, failed
+      day['M'] = "MONDAY";                  //Succeeded modifying: [] operator has write access
+
+      //Effect of [] operator's write access:
+      void foo (const unordered_map&lt;char, string&gt; &#38; m ) { //param m is const reference
+         m['S'] = "SUNDAY";                  //compile error, write access
+         cout &lt;&lt; m['S'] &lt;&lt; endl;            //compile error too for print access, which is write access writing this way
+         auto itr = m.find('S');
+         if(itr !=m.end())
+           cout &lt;&lt; itr-&gt;second &lt;&lt;endl;       //compile OK, no write access !
+      }
+
+      foo(day);
+
+      //so, use map or unordered map ? here are the factors to consider:
+      // Associate array: map and unordered_map only:
+      1 search O(1): unordered_map =&gt; may degrade to O(n)
+          O(log(n)): map =&gt; garanteed O(log(n)) search time
+      2 Can't use multimap and unordered_multimap:
+          they do not have [] operator, so can't be used as an array
+  </Answer>
+</QA>
+
+<QA ID="19" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+      What is Container Adapter ?
+  </Question>
+  <Answer>
+      Container Adapter provide restricted interface to underlying containers to meet special needs
+      they are implemetned with fundamental container classes. There are 3:
+      1. stack: LIFO: push(), Pop(), top()
+      2. queue: FIFO: push(), pop(), front, back()
+      3. priority queue: first item always has the greatest priority
+                push(), pop(), top() 
+      
+  </Answer>
+</QA>
+
 <QA ID="xxx" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
   <Question>
       What is weak poitner?
