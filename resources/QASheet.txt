@@ -201,7 +201,7 @@
     set&lt;int&gt;::iterator it;
     it=myset.find(7);       //fast, sequence containers do not have find() memeber function
                             //fast O(log(n))   &lt;=====outstanding feature
-    pair&lt;set&lt;int&gt;::iterator, bool&gt; set;
+    pair&lt;set&lt;int&gt;::iterator, bool&gt; ret;
     ret=myset.insert(3);    //no new element inserted, because no duplicates allowed
     if(ret.second==false)   //return a pair of values: ret.first, ret.second
       it=ret.first;         //"it" now points to element 3
@@ -217,7 +217,7 @@
       what is difference between set and muti set ?
   </Question>
   <Answer>
-      Difference is that muti set allows duplcates while set does not allow duplicates
+      Difference is that multi set allows duplcates while set does not allow duplicates
       Difference between map and multimap is multimap allows duplicate keys
   </Answer>
 </QA>
@@ -318,6 +318,351 @@
   </Answer>
 </QA>
 
+<QA ID="20" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+      What are the 5 kinds of the iterators ?
+  </Question>
+  <Answer>
+      1: Ramdom access iterators: vector, deque, array
+      2: Bidirectional Iterators: list, set/multiset, map/multimap
+      3: Forward Iterators: forward_list
+      4: Input Iterator: int x = *itr; //can only move forward
+      5: Output Iterator: *itr=100;    //can only move forward 
+
+      Every container has a iterator and a const_iterator (Snippet):
+      set&lt;int&gt;::iterator itr;           //RW access to container elements
+      set&lt;int&gt;::const_interator citr;   //readonly access to container elements
+
+      set&lt;int&gt; myset = {1,4,5,2,9};
+      for(citr=myset.begin();citr!=myset.end();++citr){
+        cout &lt;&lt; *citr &lt;&lt; endl;
+        //*citr=3;   //error, citr has readonly access
+      }
+
+      for_each(myset.cbegin();myset.cend(),myfunction);   //C++11
+
+      //iterator functions:
+      advance(itr,5);          //Move itr forward by 5: itr += 5;
+      distance(itr1,itr2);     //measure the distance between itr1 and itr2
+  </Answer>
+</QA>
+
+<QA ID="21" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+    What is Iterator Adapter ?
+  </Question>
+  <Answer>
+    Iterator adapters are predefined iterators, they are more powerful:
+
+      1. Insert iterator (back_insert_iterator,front_insert_iterator)
+      2. Stream iterator
+      3. Reverse iterator
+      4. Move iterator (c++11)
+
+    Snippet:
+      1. Insert iterator:
+
+      vector&lt;int&gt; vec1 = {4,5};
+      vector&lt;int&gt; vec2 = {13,14,16,18};
+      vector&lt;int&gt;::iterator it = find(vec2.begin(),vec2.end(),16);
+      insert_iterator&lt;vector&lt;int&gt;&gt; i_itr(vec2,it);
+      copy(vec1.begin(),vec1,end(),i_itr);   //vec2: {12,14,4,5,16,18}
+      // Other insert iterators: back-insert_iterator, front_insert_iterator
+
+      2. Stream iterator: iterat through the data to and from a string:
+         vector&lt;string&gt; vec4;
+         copy(istream_iterator&lt;string&gt;(cin), istream_iterator&lt;string&gt;(),     //copy source range
+             back_inserter(vec4));                                           //copy dest, insert everything into vec4 from input stream
+         copy(vec4.begin(),vec4.end(),ostream_iterator&lt;string&gt;(cout, " "));  //dump vec4 to cout with " " as delimiter       
+         //merge the 2 copy operation above into one:
+         copy(istream_iterator&lt;string&gt;(cin),istream_iterator&lt;string&gt;(),
+              ostream_iterator&lt;string&gt;(cout," "));  
+            
+      3. Reverse iterator: travese container in reversed order
+         vector&lt;int&gt; vec = {4,5,6,7};
+         reversee_iterator&lt;vector&lt;int&gt;::iterator&gt; ritr;
+         for(ritr = vec.rbegin(); ritr!=vec.rend();ritr++)
+             cout &lt;&lt; *ritr &lt;&lt; endl;     //prints: 7,6,5,4
+
+      4. Move iterator (c++11): ??
+
+  </Answer>
+</QA>
+
+<QA ID="22" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+      Why is pre increment (++i) is faster than post increment (i++) ?
+  </Question>
+  <Answer>
+      pre increment is faster because post-increment i++ needs to keep old value before increasing its own value,
+      so it needs to create a temporary variable to hold the old value.
+  </Answer>
+</QA>
+
+<QA ID="23" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     Please give some examples of algorithms function usage
+  </Question>
+  <Answer>
+      //algorithms - mostly loops
+
+      vector&lt;int&gt; vec = {4,2,5,1,3,9};
+      vector&lt;int&gt;::iterator itr = min_element(vec.begin(),vec.end()); //itr =&gt;1
+
+      //Note 1: Algorithm always process range in a half-open way: [begin,end)
+      sort(vec.begin(),itr);   //vec:{2,4,5,1,3,9}
+      reverse(itr,vec.end());  //vec: {2,4,5,9,3,1}    //itr=&gt;9
+
+      // Note 2: vec2 needs to have at least space for 3 elements:
+      vector&lt;int&gt; vec2(3);
+      copy(itr,vec.end(),       //Source
+            vec2.begin());      //Destination
+
+      //Note 3:  (back_inserter is inserting at the end of a container, I guess)
+      vector&lt;int&gt; vec3;
+      copy(itr,vec.end(),back_inserter(vec3));  //insert, not overwrite
+                   //back_insert_iterator is not efficient, slow, insert 1 at a time
+      vec3.insert(end3.end(),itr,vec.end());    //efficient, fast, insert all at a time
+
+      //Note 4: algorithms with functions
+      bool isOdd(int i){
+           return i%2;
+      }
+
+      int main() {
+         vector&lt;int&gt; vec ={2,4,5,9,2}
+         vector&lt;int&gt;::iterator itr = find_if(vec.begin(),vec.end(),isOdd);  //itr =&gt;5
+      }
+
+      //Note 5: Algorithm with native c++ array
+      int arr[4] = {6,3,7,4};
+      sort(arr,arr+4);
+
+  </Answer>
+</QA>
+
+<QA ID="24" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     What are all the implicit member functions of the class? 
+     Or what are all the functions which compiler implements for us if we don't define one?
+  </Question>
+  <Answer>
+      1. default ctor
+      2. copy ctor
+      3. assignment operator
+      4. default destructor
+      5. address operator
+  </Answer>
+</QA>
+
+<QA ID="25" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+      what is the difference between new and malloc() in terms of memory allocation ?
+  </Question>
+  <Answer>
+      In C++, if the runtime system cannot allocate sizeof(Fred) bytes of memory during p= new Fred(), 
+      a std::bad_alloc exception will be thrown. 
+
+      With malloc(), it will return NULL if allocation fails
+  </Answer>
+</QA>
+
+<QA ID="26" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+      Do I need to check for NULL before delete p?
+  </Question>
+  <Answer>
+      No !
+  </Answer>
+</QA>
+
+
+<QA ID="27" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+      Name 6 operators that cannot be overloaded ?
+  </Question>
+  <Answer>
+      (1) sizeof 
+      (2) dot : .  
+      (3) star: * 
+      (4) arrow: -> 
+      (5) Scope resolution operator: :: 
+      (6) ?:
+  </Answer>
+</QA>
+
+<QA ID="28" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+      How many ways are there to initialize an int with a constant?
+  </Question>
+  <Answer>
+      (1) int foo = 123;  
+      (2) int bar(123);
+  </Answer>
+</QA>
+
+<QA ID="29" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+      What are the debugging methods or steps you use ?
+  </Question>
+  <Answer>
+      1. GDB, DBG, Forte, Visual Studio.     (Forte for java ?)
+      2. Analyzing the Core dump.
+      3. Using tusc to trace the last system call before crash. (HP ?)
+      4. Putting Debug statements in the program source code.
+  </Answer>
+</QA>
+
+<QA ID="30" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+    Why do C++ compilers need name mangling?
+  </Question>
+  <Answer>
+        Name mangling is the rule according to which C++ compiler changes function's name 
+    into function signature before passing that function to a linker. This is how a linker 
+    differentiates between different functions with the same name.
+  </Answer>
+</QA>
+
+<QA ID="31" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+      What are C++ storage classes?
+  </Question>
+  <Answer>
+      There are 4 storage classes: 
+                       Lifetime:
+        1. auto        Function Block       
+        2. register    Function Block       
+        3. static      Whole Program
+        3. extern      Whole Program
+
+         auto: the default. Variables are automatically created and initialized when they 
+               are defined and are destroyed at the end of the block containing their 
+               definition. They are not visible outside that block.
+         (another auto for type of class) auto i = 1; //i is auto declared as integer, c++11 ?)
+         register: a type of auto variable. a suggestion to the compiler to use a 
+               CPU register for performance.
+         static: a variable that is known only in the function that contains its 
+               definition but is never destroyed and retains its value between calls 
+               to that function. It exists from the time the program begins execution.
+         extern: a static variable whose definition and placement is determined 
+               when all object and library modules are combined (linked) to form the 
+               executable code file. It can be visible outside the file where it is defined.
+
+  </Answer>
+</QA>
+
+<QA ID="32" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+      What is an Iterator class?
+  </Question>
+  <Answer>
+      A class that is used to traverse through the objects maintained by a container class.
+  </Answer>
+</QA>
+<QA ID="33" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+      How can I open a stream in binary mode?
+  </Question>
+  <Answer>
+      Use std::ios::binary.
+  </Answer>
+</QA>
+<QA ID="34" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+      What constant defined in &lt;climits&gt; header returns the number of bits in a char?
+
+      a) CHAR_SIZE    
+      b) SIZE_CHAR    
+      c) BIT_CHAR   
+      d) CHAR_BIT
+  </Question>
+  <Answer>
+      d, CHAR_BIT
+  </Answer>
+</QA>
+<QA ID="35" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+      The size_t integer type in C++ is?
+  </Question>
+  <Answer>
+      Unsigned integer of at least 16 bits.
+
+          The size_t type is used to represent the size of an object. 
+      Hence, it’s always unsigned. According to the language specification, 
+      it is at least 16 bits.
+  </Answer>
+</QA>
+<QA ID="36" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+      What are 3 float types? if extended precision is required, which one shoule be used ?
+  </Question>
+  <Answer>
+      3 types are: float, double and long double. 
+      Should use long double for extended precision.
+  </Answer>
+</QA>
+<QA ID="37" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+      If a decimal precision setting is required, what function to use and what header to include?
+  </Question>
+  <Answer>
+      Use setprecision(int p) function and include header &lt;iomanip&gt; for input/output manipulation
+  </Answer>
+</QA>
+<QA ID="38" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+      In which type does the enumerators are stored by the compiler?
+
+      a) string
+      b) integer
+      c) float
+      d) none of the mentioned
+
+  </Question>
+  <Answer>
+      b
+  </Answer>
+</QA>
+<QA ID="39" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+      What is the default calling convention for a compiler in c++?
+
+      a) __cdecl
+      b) __stdcall
+      c) __pascal
+      d) __fastcall	
+  </Question>
+  <Answer>
+      a
+  </Answer>
+</QA>
+<QA ID="40" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+      Function pointer example
+  </Question>
+  <Answer>
+      #include &lt;iostream&gt;
+      using namespace std;
+
+      int add(int first, int second){
+         return first + second + 15;
+      }
+
+      int operation(int first, int second, int(*functocall)(int, int)){
+         return (*functocall)(first, second);
+      }
+
+      int main(){
+        int  a;
+        int(*plus)(int, int) = add;
+        a = operation(15, 10, plus);
+        cout &lt;&lt; a;
+        return 0;
+      }
+  </Answer>
+</QA>
+
 <QA ID="xxx" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
   <Question>
       What is weak poitner?
@@ -326,5 +671,4 @@
       Weak pointer is a kind of pointer that does not own the object, does not affect the pointer count!
   </Answer>
 </QA>
-
 </QuestionsAndAnswers>
