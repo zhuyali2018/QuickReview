@@ -24,26 +24,41 @@ vector<Question> GetAllQuestions(XMLElement * parent) {
 		const char *category;
 		int countdown;
 		int resetto;
-		
+		bool firstTimeHide = false;   //first time to hide this question, when resetto >0 and countdown is 0
 		QA->QueryIntAttribute("ID", &id);
 		QA->QueryStringAttribute("type", &qtype);
 		QA->QueryStringAttribute("category", &category);
 		QA->QueryIntAttribute("countdown", &countdown);
 		QA->QueryIntAttribute("resetto", &resetto);
-		countdown--;
-		if (countdown <= 0) {			
-			QA->SetAttribute("countdown", resetto);
+		if (countdown > 0) {
+			countdown--;
 		}
 		else {
-			QA->SetAttribute("countdown", countdown);
+			if (resetto > 0)
+			   firstTimeHide = true;
 		}
 		const string question = QA->FirstChildElement("Question")->GetText();
 		const string answer = QA->FirstChildElement("Answer")->GetText();
-		
-		Question q(id, qtype, category, countdown, resetto,question,answer);
-		Qs.push_back(q);
+
+		Question q(id, qtype, category, countdown, resetto, question, answer);
+		q.Qc = QA;   //save pointer to QA in order to be able to set resetto
+        //now q is properly constructed, ready to be inserted in tovector 
+		if (countdown == 0) {
+			if (!firstTimeHide)
+			    Qs.push_back(q);
+			if (resetto > 0) {
+				QA->SetAttribute("countdown", resetto);
+			}
+			else {
+				QA->SetAttribute("countdown", countdown);     //if just decrease to 0 and reset was just reset to 0
+			}
+		}
+		else {  //if countdown is not 0 yest, not added for showing
+			QA->SetAttribute("countdown", countdown);
+		}
+
 		XMLElement * QB = (XMLElement *)QA->NextSibling();
-		if (!QB) break;
+		if (!QB) break;   //if no more questions, done and exit
 		QA = QB;
 	}
 	return Qs;
@@ -52,13 +67,14 @@ void promptAtQuestion() {
 	printf("\n\n\n\n --------------------------------------------\n");
 	printf("           Number: jump to question numbered \n");
 	printf("            Enter: Next \n");
-	printf("                x: Exit \n");
+	printf("        r<number>: skip this question for the next <number> round (default to 3 if number omitted)\n");
+	printf("           q or x: Exit \n");
 	printf("       Your Input: ");
 }
 int main(int argc, const char ** argv) 
 {
 	string newPath = "NewSavedXMLFile.xml";
-	cout << "Quick Reviewer version 1.5" << endl;
+	cout << "Quick Reviewer version 2.0" << endl;
 	
 	XMLDocument* doc = new XMLDocument();          //in tinyxml2 namespace
 	if (argc != 2) {
@@ -114,11 +130,19 @@ int main(int argc, const char ** argv)
 		
 		cin.getline(k, 30);
 		qno = atoi(k);		
-		if (k[0] == 'x')
+		if ((k[0] == 'x') || (k[0] == 'q'))
 			break;
+		else if (k[0] == 'r') {
+			if(k[1]==0)
+			  q.Qc->SetAttribute("resetto", 3);
+			else {
+				char *p = &k[1];
+				int n = atoi(p);
+				if(n>0 && n<999)
+				  q.Qc->SetAttribute("resetto", n);
+			}
+		}
 	}
-	
-	//string newPath = "C:\\cygwin64\\home\\yali.zhu\\YaliSources\\QuickReviewer\\Debug\\NewlySavedXMLFile.xml";
 	
 	doc->SaveFile(newPath.c_str());
 	errorID = doc->ErrorID();
