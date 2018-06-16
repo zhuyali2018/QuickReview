@@ -310,10 +310,10 @@
   <Answer>
       Container Adapter provide restricted interface to underlying containers to meet special needs
       they are implemetned with fundamental container classes. There are 3:
-      1. stack: LIFO: push(), Pop(), top()
-      2. queue: FIFO: push(), pop(), front, back()
-      3. priority queue: first item always has the greatest priority
-                push(), pop(), top() 
+      1. queue: FIFO:   push(), pop(), front(), back()
+      2. stack: LIFO:   push(), Pop(), top()
+      3. priority queue:push(), pop(), top(). First item always has the greatest priority
+                 
       
   </Answer>
 </QA>
@@ -422,7 +422,7 @@
       vector&lt;int&gt; vec3;
       copy(itr,vec.end(),back_inserter(vec3));  //insert, not overwrite
                    //back_insert_iterator is not efficient, slow, insert 1 at a time
-      vec3.insert(end3.end(),itr,vec.end());    //efficient, fast, insert all at a time
+      vec3.insert(vec3.end(),itr,vec.end());    //efficient, fast, insert all at a time
 
       //Note 4: algorithms with functions
       bool isOdd(int i){
@@ -443,7 +443,7 @@
 
 <QA ID="24" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
   <Question>
-     What are all the implicit member functions of the class? 
+     What are all the implicit member functions of a class? 
      Or what are all the functions which compiler implements for us if we don't define one?
   </Question>
   <Answer>
@@ -518,7 +518,7 @@
     Why do C++ compilers need name mangling?
   </Question>
   <Answer>
-        Name mangling is the rule according to which C++ compiler changes function's name 
+        Name mangling is the rule according to which C++ compiler changes function's name
     into function signature before passing that function to a linker. This is how a linker 
     differentiates between different functions with the same name.
   </Answer>
@@ -545,9 +545,9 @@
          static: a variable that is known only in the function that contains its 
                definition but is never destroyed and retains its value between calls 
                to that function. It exists from the time the program begins execution.
-         extern: a static variable whose definition and placement is determined 
-               when all object and library modules are combined (linked) to form the 
-               executable code file. It can be visible outside the file where it is defined.
+         extern: a static variable whose definition and placement is not determined until
+               all object and library modules are combined (linked) to form the executable 
+               code file. It can be visible outside the file where it is defined.
 
   </Answer>
 </QA>
@@ -589,7 +589,7 @@
       Unsigned integer of at least 16 bits.
 
           The size_t type is used to represent the size of an object. 
-      Hence, it’s always unsigned. According to the language specification, 
+      Hence, it&#39;s always unsigned. According to the language specification, 
       it is at least 16 bits.
   </Answer>
 </QA>
@@ -663,12 +663,531 @@
   </Answer>
 </QA>
 
-<QA ID="xxx" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+<QA ID="41" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
   <Question>
-      What is weak poitner?
+      What is keyword volatile and how to use it ?
   </Question>
   <Answer>
-      Weak pointer is a kind of pointer that does not own the object, does not affect the pointer count!
+        C's volatile keyword is a qualifier that is applied to a variable when it is declared. 
+      It tells the compiler that the value of the variable may change at any time--without 
+      any action being taken by the code the compiler finds nearby. 
+
+      volatile is used to prevent changes from compiler optimization; 
+
+      2 ways to declare it:
+
+      volatile uint16_t x; 
+      uint16_t volatile y;
+
+      if you really must have a volatile pointer to a volatile variable, you'd write:
+
+      uint16_t volatile * volatile p_y;
+
+      It is used for things like memory-mapped I/O registers
+
+      Proper Use of C's volatile Keyword:
+
+        A variable should be declared volatile whenever its value could change unexpectedly. 
+      In practice, only three types of variables could change:
+
+      1. Memory-mapped peripheral registers
+      2. Global variables modified by an interrupt service routine
+      3. Global variables accessed by multiple tasks within a multi-threaded application
+
+          Embedded systems contain real hardware, usually with sophisticated peripherals. 
+      These peripherals contain registers whose values may change asynchronously to the 
+      program flow. As a very simple example, consider an 8-bit status register that is 
+      memory mapped at address 0x1234. It is required that you poll the status register 
+      until it becomes non-zero. The naive and incorrect implementation is as follows:
+
+      uint8_t * p_reg = (uint8_t *) 0x1234;
+
+      // Wait for register to read non-zero 
+      do { ... } while (0 == *p_reg)
+
+      This code will almost certainly fail as soon as you turn compiler optimization on.
   </Answer>
 </QA>
+
+<QA ID="42" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+      By default members of a structure are: 
+       A - private
+       B - protected
+       C - public
+       D - Access specifiers not applicable for structures
+  </Question>
+  <Answer>
+      C.  default members of a class is private, structure is public 
+  </Answer>
+</QA>
+
+<QA ID="43" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+      Can a constructor be virtual
+  </Question>
+  <Answer>
+      No! (but why ? explain!)
+  </Answer>
+</QA>
+
+<QA ID="44" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+      What is the output of the following program ?
+       
+      #include &lt;iostream&gt;
+      using namespace std;
+
+      class Base{
+      public:
+          void f(){ cout &lt;&lt; "base\n"; }
+      };
+
+      class Derived:public Base {
+      public:
+         void f() { cout &lt;&lt; "Derived\n";}
+      };
+
+      main(){
+         Derived obj;
+         obj.Base::f();
+      }
+       
+      A - Base
+      B - Derived
+      C - Compile error
+      D - None of the above    
+  </Question>
+     
+  <Answer>
+      A
+  </Answer>
+</QA>
+
+<QA ID="45" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     #include &lt;iostream&gt;
+
+     using namespace std;
+     class abc{
+        void f();
+        void g();
+        int x;
+     };
+
+     main(){
+        cout &lt;&lt; sizeof(abc)&lt;&lt;endl;
+     }
+
+     A: 12
+     B: 4
+     C: 8
+     D: Compile error
+  </Question>
+  <Answer>
+      B.  it is the size of all variables, function declaration does not take any space
+  </Answer>
+</QA>
+
+<QA ID="46" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     In the following program, is f() overloaded ?
+ 
+     void f(int x){}
+     void f(signed x){}
+     main() {}
+
+  </Question>
+  <Answer>
+      No. Because Plain int is the same as signed, and is the same as signed int too.
+  </Answer>
+</QA>
+<QA ID="47" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+      Choose the respective delete operator usage for the expression: ptr=new int[100];
+ 
+      A: delete ptr;
+      B: delete ptr[];
+      C: delete [] ptr;
+      D: []delete ptr;
+  </Question>
+  <Answer>
+      C
+  </Answer>
+</QA>
+<QA ID="48" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+      An exception is 
+    
+      A: Runtime error
+      B: Compile time error
+      C: Logical error
+      D: None of the above
+
+  </Question>
+  <Answer>
+      D. Exception is not an error. 
+         Difference between Exception and Error is: 
+         Exceptions are those which can be handled at the run time whereas errors cannot be handled.
+  </Answer>
+</QA>
+<QA ID="49" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+      Pick up the valid declaration for overloading ++ in postfix form where T is the class name:
+     
+      A: T operator++();
+      B: T operator++(int);
+      C: T &#38; operator++();
+      D: T &#38; operator++(int);
+  </Question>
+  <Answer>
+      B. (but why ? look it up !)
+  </Answer>
+</QA>
+<QA ID="50" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+      HAS-A relationship between the classes is shown through:
+
+      A: Inheritance
+      B: Container classes
+      C: Polymorphism
+      D: None of the above
+  </Question>
+  <Answer>
+      Not A, It is B ! For example: A car is-a vehicle but A car has-a steering wheel
+  </Answer>
+</QA>
+<QA ID="51" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     What is the output of the following program ?
+ 
+     #include &lt;iostream&gt;
+
+     using namespace std;
+     void main(){
+         char *s = "Fine";
+         *s = 'N';
+         cout &lt;&lt; s &lt;&lt; endl;
+     }
+
+     A: Fine
+     B: Nine
+     C: Compile error
+     D: Runtime error
+
+  </Question>
+  <Answer>
+      Not B, It is D: Runtime error: Exception thrown: write access violation
+
+      if it was the line: char s[]="Fine"; 
+      the answer would be B:
+
+      This is because char * s="asdf"; is equivlant of const char *s ="asdf";
+
+      A literal string in a C program is considered to be read-only and the 
+      compiler/linker/loader may arrange for the memory of that string to be in 
+      memory that is protected against writing.
+
+  </Answer>
+</QA>
+<QA ID="52" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     What is the output of the following program ?
+ 
+     #include &lt;iostream&gt;
+
+     using namespace std;
+     void main(){
+         class student{
+            int rno=10;
+         } v;
+         cout &lt;&lt; v.rno &lt;&lt; endl;
+     }
+
+     A: 10
+     B: Garbage
+     C: Compile error
+     D: Runtime error
+
+  </Question>
+  <Answer>
+      Not A, But C: Compile error. Because it is trying to access private member rno!
+      class member is default to private. The test is testing for that knowledge !
+  </Answer>
+</QA>
+<QA ID="53" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     What is the output of the following program ?
+
+     #include &lt;iostream&gt;
+
+     using namespace std;
+     void main(){
+         short unsigned int i=0;
+         cout &lt;&lt; i-- ;
+     }
+
+     A: 0
+     B: Compile error
+     C: 65535
+     D: 32767
+  </Question>
+  <Answer>
+      Not C, it is A ! Because i-- is post increment, it will return 0 before 
+      decreases and becomes 65535 (All bit set, since it is unsigned, it is 65535)
+  </Answer>
+</QA>
+
+<QA ID="54" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     Which operator is required to be overloaded as member function only ?
+
+     A: _
+     B: __
+     C: ++ (postfix version)
+     D: =
+  </Question>
+  <Answer>
+      D. The "=" can not be overloaded as an independent function, like other operators do.
+  </Answer>
+</QA>
+
+<QA ID="55" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     What is the output of the following program ?
+
+     #include &lt;iostream&gt;
+
+     using namespace std;
+     class abc {
+     public:
+        int i;
+        abc(int i) {
+           i=i;
+        }
+     };
+     void main(){
+        abc m(5);
+        cout &lt;&lt; m.i;
+     }
+
+     A: 5
+     B: Garbage
+     C: Error at the statement i=i;
+     D: Compile error: i declared twice.
+
+  </Question>
+  <Answer>
+      Not A, it is B ! Because i in constructor is defined in constructor as int, which
+      hides the class variable i, so the 2 i's in the constructor are all i as the argument
+      and the class variable i never get a change to be initialized and left with garbage!
+  </Answer>
+</QA>
+<QA ID="56" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     What is the output of the following program ?
+
+     #include &lt;iostream&gt;
+
+     void main(){
+        int r, x=2;
+        float y=5;
+        r=y%x;
+        cout &lt;&lt; r;
+     }
+
+     A: 1
+     B: 0
+     C: 2
+     D: Compile error
+
+  </Question>
+  <Answer>
+      Not A, it is D ! Because y can't be float, it must be an integer to be meaningful.
+  </Answer>
+</QA>
+
+<QA ID="57" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     What is a generic class ?
+
+     A: Function template
+     B: Class template
+     C: inherited class
+     D: None of the above
+  </Question>
+  <Answer>
+     D. or the answer should be template class, not class template!
+     Templates are the foundation of generic programming, which involves writing code in a way 
+     that is independent of any particular type. A template is a blueprint or formula for 
+     creating a generic class or a function.    
+  </Answer>
+</QA>
+
+<QA ID="58" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     Identify the c++compiler of Linux:
+
+     A: cpp
+     B: g++
+     C: Borland
+     D: vc++
+
+  </Question>
+  <Answer>
+     B, not A !
+  </Answer>
+</QA>
+
+<QA ID="59" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     What is the output of the following program ?
+
+     #include &lt;iostream&gt;
+
+     void main(){
+        float t=2;
+        switch(t){
+        case 2: cout &lt;&lt "Hi";
+        default:cout &lt;&lt; "Hello";
+        }
+     }
+
+     A: Hi
+     B: HiHello
+     C: Hello
+     D: Error
+  </Question>
+  <Answer>
+     D.  Because the switch only takes integer !
+  </Answer>
+</QA>
+<QA ID="60" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     Which is the storage specifier used to modify the member variable even though
+     the class object is a constant object ?
+
+     A: auto
+     B: register
+     C: static
+     D: mutable
+  </Question>
+  <Answer>
+     D. Example Snippet: 
+     class Foo {
+     private:
+        mutable bool done;
+     public:
+        void doSomething() const{    //&lt;==notice the keyword const
+            done=true;               //&lt;==but can still modify mutable vars
+        }
+     };
+  </Answer>
+</QA>
+<QA ID="61" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     That is the full form of RTTI ?
+
+     A: Runtime type identification
+     B: Runtime template identification
+     C: Robust Template Type Inheritance
+     D: None of the above
+
+  </Question>
+  <Answer>
+     A
+  </Answer>
+</QA>
+
+<QA ID="62" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     What is the output of the following program ?
+
+     #include &lt;iostream&gt;
+      
+     using namespace std; 
+     void main(){
+        char s[]="C++";
+        cout &lt;&lt; s &lt;&lt;" ";
+        s++;
+        cout &lt;&lt; s &lt;&lt;" ";
+     }
+
+     A: C++ C++
+     B: C++ ++
+     C: ++ ++
+     D: Compile error
+  </Question>
+  <Answer>
+     D, Not B: although in char * s and char s[], s can be both used as an pointer, 
+     but s[] can not be used to do pointer math operations like post increment calculations!
+  </Answer>
+</QA>
+<QA ID="63" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     With respective to streams, operator &gt;&gt; is called as
+
+     A: Insertion operator
+     B: Extraction operator
+     C: Right shift operator
+     D: Left shift operator
+  </Question>
+  <Answer>
+     B. &gt;&gt; is extraction operator and &lt;&lt; is insertion operator!
+  </Answer>
+</QA>
+<QA ID="64" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     Which feature of the OOP gives the concept of reusability ?
+
+     A: Abstraction
+     B: Encapsulation
+     C: Inheritance
+     D: None of the above
+  </Question>
+  <Answer>
+     C
+  </Answer>
+</QA>
+
+<QA ID="65" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     What is the output of the following program ?
+
+     #include &lt;iostream&gt;
+      
+     using namespace std; 
+     void main(){
+        int *p= new int;
+        delete p;
+        delete p;
+        cout &lt;&lt; "Done";
+     }
+
+     A: Done
+     B: Compile error
+     C: Runtime error
+     D: None of the above
+  </Question>
+  <Answer>
+     C !, but why ? do some research on this when you have time !!!
+  </Answer>
+</QA>
+<QA ID="xx" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     What is a generic class ?
+  </Question>
+  <Answer>
+     asf
+  </Answer>
+</QA>
+<QA ID="xx" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     What is a generic class ?
+  </Question>
+  <Answer>
+     asf
+  </Answer>
+</QA>
+
 </QuestionsAndAnswers>
