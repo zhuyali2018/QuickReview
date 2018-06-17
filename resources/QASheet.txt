@@ -399,7 +399,7 @@
   </Answer>
 </QA>
 
-<QA ID="23"" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+<QA ID="23" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
   <Question>
      Please give some examples of algorithms function usage
   </Question>

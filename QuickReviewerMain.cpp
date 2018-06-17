@@ -74,10 +74,12 @@ void promptAtQuestion() {
 int main(int argc, const char ** argv) 
 {
 	string newPath = "NewSavedXMLFile.xml";
-	cout << "Quick Reviewer version 2.1" << endl;
+	cout << "Quick Reviewer version 3.0" << endl;
 	
 	XMLDocument* doc = new XMLDocument();          //in tinyxml2 namespace
-	if (argc != 2) {
+	XMLDocument* docCfg = nullptr;       //For Doc Question Settings only
+
+	if (argc == 1) {
 		cout << "Usage: " << argv[0] << " <questionDataFile>" << endl;
 		//return -1;
 		doc->LoadFile(newPath.c_str());
@@ -86,7 +88,10 @@ int main(int argc, const char ** argv)
 			    doc->LoadFile("QASheet.txt");
 		    if (!doc->ErrorID()) {
 				printf("XML file QASheet.txt loaded and parsed successfully\n\n");
-		    }
+			}
+			else {
+				printf("XML file '%s' and QASheet.txt loading or parsing failed\n\n", newPath.c_str());
+			}
 		}
 		else {
 			printf("XML file '%s' loaded and parsed successfully\n\n", newPath.c_str());
@@ -94,8 +99,24 @@ int main(int argc, const char ** argv)
 	}
 	else {
 		doc->LoadFile(argv[1]);
-		if(!doc->ErrorID())
+		if (!doc->ErrorID()) {
 			printf("XML file '%s' loaded and parsed succesfully\n\n", argv[1]);
+			//loading config file
+			if (argc == 3) {   //only when the first file loaded successfully
+				docCfg = new XMLDocument();       //For Doc Question Settings only
+				docCfg->LoadFile(argv[2]);
+				int errorID = docCfg->ErrorID();
+				if (errorID) {
+					printf("XML file %s loading or parsing failed: \n"
+						"                 ErrorID: %d\n"
+						"               Error Msg: %s\n"
+						"              Error Line: %d", argv[3], errorID, doc->ErrorName() + 4, doc->ErrorLineNum());
+				}
+				else {
+					printf("Question config file '%s' loaded and parsed succesfully\n\n", argv[3]);
+				}
+			}
+		}
 	}
 
 	int errorID = doc->ErrorID();
