@@ -74,7 +74,7 @@ void promptAtQuestion() {
 int main(int argc, const char ** argv) 
 {
 	string newPath = "NewSavedXMLFile.xml";
-	cout << "Quick Reviewer version 2.0" << endl;
+	cout << "Quick Reviewer version 2.1" << endl;
 	
 	XMLDocument* doc = new XMLDocument();          //in tinyxml2 namespace
 	if (argc != 2) {
@@ -82,7 +82,8 @@ int main(int argc, const char ** argv)
 		//return -1;
 		doc->LoadFile(newPath.c_str());
 		if (doc->ErrorID()) {
-			doc->LoadFile("QASheet.txt");
+			if (doc->ErrorID() == XML_ERROR_FILE_NOT_FOUND) 
+			    doc->LoadFile("QASheet.txt");
 		    if (!doc->ErrorID()) {
 				printf("XML file QASheet.txt loaded and parsed successfully\n\n");
 		    }
@@ -99,8 +100,11 @@ int main(int argc, const char ** argv)
 
 	int errorID = doc->ErrorID();
 	if (errorID) {
-		printf("XML file loaded and parsed failed: ErrorID=%d\n", errorID);
-		cin.get();
+		printf("XML file loaded and parsed failed: \n"
+			   "                 ErrorID: %d\n"
+			   "               Error Msg: %s\n"
+			   "              Error Line: %d", errorID,doc->ErrorName()+4, doc->ErrorLineNum());
+		//cin.get();
 		exit(0);
 	}
 	
