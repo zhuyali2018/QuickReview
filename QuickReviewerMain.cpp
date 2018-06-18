@@ -9,31 +9,24 @@
 #include <vector>
 #include <map>
 #include "Question.h"
+#include "Qusetting.h"
 
 using namespace tinyxml2;
 using namespace std;
-map<int, Question> GetAllQuestionConfigs(XMLElement * parent) {
+map<int, QuSetting> GetAllQuestionConfigs(XMLElement * parent) {
 	if (!parent) {
 		throw NoDataException();
 	}
-	map<int, Question> Qc;
+	map<int, QuSetting> Qc;
 	XMLElement* QA = parent->FirstChildElement("QA");;
 	while (true) {
 		int id;
-		const char *qtype;
-		const char *category;
 		int countdown;
 		int resetto;
-		bool firstTimeHide = false;   //first time to hide this question, when resetto >0 and countdown is 0
 		QA->QueryIntAttribute("ID", &id);
-		QA->QueryStringAttribute("type", &qtype);
-		QA->QueryStringAttribute("category", &category);
 		QA->QueryIntAttribute("countdown", &countdown);
 		QA->QueryIntAttribute("resetto", &resetto);
-		const string question = QA->FirstChildElement("Question")->GetText();
-		const string answer = QA->FirstChildElement("Answer")->GetText();
-
-		Question q(id, qtype, category, countdown, resetto, question, answer);
+		QuSetting q(id, countdown, resetto);
 		Qc.insert(make_pair(id, q));
 		XMLElement * QB = (XMLElement *)QA->NextSibling();
 		if (!QB) break;   //if no more questions, done and exit	
@@ -45,7 +38,7 @@ vector<Question> GetAllQuestions(XMLElement * parent, XMLElement * parent1) {
 	if (!parent) {
 		throw NoDataException();
 	}
-	map<int,Question> Qc=GetAllQuestionConfigs(parent1);
+	map<int,QuSetting> Qc=GetAllQuestionConfigs(parent1);
 	printf("config file nodes: %d\n",Qc.size());
 	vector<Question> Qs;
 	XMLElement* QA = parent->FirstChildElement("QA");;
@@ -62,9 +55,9 @@ vector<Question> GetAllQuestions(XMLElement * parent, XMLElement * parent1) {
 		QA->QueryIntAttribute("countdown", &countdown);
 		QA->QueryIntAttribute("resetto", &resetto);
 
-		map<int, Question>::iterator itr = Qc.find(id);
+		map<int, QuSetting>::iterator itr = Qc.find(id);
 		if (itr != Qc.end()) {
-			Question Qcfg = itr->second;
+			QuSetting Qcfg = itr->second;
 			countdown = Qcfg.countdown;
 			resetto = Qcfg.resetto;
 			QA->SetAttribute("resetto", resetto);    //if found, always reset reseto
@@ -169,7 +162,7 @@ int main(int argc, const char ** argv)
 {
 	bool applyConfigfile = false;
 	string newPath = "NewSavedXMLFile.xml";
-	cout << "\n Quick Reviewer version 3.2" << endl;
+	cout << "\n Quick Reviewer version 3.3" << endl << endl;
 	
 	XMLDocument* doc = new XMLDocument();          //in tinyxml2 namespace
 	XMLDocument* docCfg = nullptr;       //For Doc Question Settings only
