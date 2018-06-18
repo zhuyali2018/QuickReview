@@ -169,13 +169,14 @@ int main(int argc, const char ** argv)
 {
 	bool applyConfigfile = false;
 	string newPath = "NewSavedXMLFile.xml";
-	cout << "Quick Reviewer version 3.0" << endl;
+	cout << "\n Quick Reviewer version 3.2" << endl;
 	
 	XMLDocument* doc = new XMLDocument();          //in tinyxml2 namespace
 	XMLDocument* docCfg = nullptr;       //For Doc Question Settings only
 
 	if (argc == 1) {
-		cout << "Usage: " << argv[0] << " <questionDataFile>" << endl;
+		cout << "\n Usage: " << argv[0] << " <questionDataFile> [oldQuestionDataFile]" << endl;
+		cout << "\n Note: oldQuestionDataFile for question rotation settings only" << endl << endl;
 		//return -1;
 		doc->LoadFile(newPath.c_str());
 		if (doc->ErrorID()) {
