@@ -7,15 +7,46 @@
 #include <cstdlib>
 #include <stdio.h>
 #include <vector>
+#include <map>
 #include "Question.h"
 
 using namespace tinyxml2;
 using namespace std;
-
-vector<Question> GetAllQuestions(XMLElement * parent) {
+map<int, Question> GetAllQuestionConfigs(XMLElement * parent) {
 	if (!parent) {
 		throw NoDataException();
 	}
+	map<int, Question> Qc;
+	XMLElement* QA = parent->FirstChildElement("QA");;
+	while (true) {
+		int id;
+		const char *qtype;
+		const char *category;
+		int countdown;
+		int resetto;
+		bool firstTimeHide = false;   //first time to hide this question, when resetto >0 and countdown is 0
+		QA->QueryIntAttribute("ID", &id);
+		QA->QueryStringAttribute("type", &qtype);
+		QA->QueryStringAttribute("category", &category);
+		QA->QueryIntAttribute("countdown", &countdown);
+		QA->QueryIntAttribute("resetto", &resetto);
+		const string question = QA->FirstChildElement("Question")->GetText();
+		const string answer = QA->FirstChildElement("Answer")->GetText();
+
+		Question q(id, qtype, category, countdown, resetto, question, answer);
+		Qc.insert(make_pair(id, q));
+		XMLElement * QB = (XMLElement *)QA->NextSibling();
+		if (!QB) break;   //if no more questions, done and exit	
+		QA = QB;
+	}
+	return Qc;
+}
+vector<Question> GetAllQuestions(XMLElement * parent, XMLElement * parent1) {
+	if (!parent) {
+		throw NoDataException();
+	}
+	map<int,Question> Qc=GetAllQuestionConfigs(parent1);
+	printf("config file nodes: %d\n",Qc.size());
 	vector<Question> Qs;
 	XMLElement* QA = parent->FirstChildElement("QA");;
 	while (true) {
@@ -30,6 +61,18 @@ vector<Question> GetAllQuestions(XMLElement * parent) {
 		QA->QueryStringAttribute("category", &category);
 		QA->QueryIntAttribute("countdown", &countdown);
 		QA->QueryIntAttribute("resetto", &resetto);
+
+		map<int, Question>::iterator itr = Qc.find(id);
+		if (itr != Qc.end()) {
+			Question Qcfg = itr->second;
+			countdown = Qcfg.countdown;
+			resetto = Qcfg.resetto;
+			QA->SetAttribute("resetto", resetto);    //if found, always reset reseto
+		}
+		else {
+			printf("********Config file not found Qid:%d\n",id);
+		}
+
 		if (countdown > 0) {
 			countdown--;
 		}
@@ -63,6 +106,57 @@ vector<Question> GetAllQuestions(XMLElement * parent) {
 	}
 	return Qs;
 }
+vector<Question> GetAllQuestions(XMLElement * parent) {
+	if (!parent) {
+		throw NoDataException();
+	}
+	vector<Question> Qs;
+	XMLElement* QA = parent->FirstChildElement("QA");;
+	while (true) {
+		int id;
+		const char *qtype;
+		const char *category;
+		int countdown;
+		int resetto;
+		bool firstTimeHide = false;   //first time to hide this question, when resetto >0 and countdown is 0
+		QA->QueryIntAttribute("ID", &id);
+		QA->QueryStringAttribute("type", &qtype);
+		QA->QueryStringAttribute("category", &category);
+		QA->QueryIntAttribute("countdown", &countdown);
+		QA->QueryIntAttribute("resetto", &resetto);
+		if (countdown > 0) {
+			countdown--;
+		}
+		else {
+			if (resetto > 0)
+				firstTimeHide = true;
+		}
+		const string question = QA->FirstChildElement("Question")->GetText();
+		const string answer = QA->FirstChildElement("Answer")->GetText();
+
+		Question q(id, qtype, category, countdown, resetto, question, answer);
+		q.Qc = QA;   //save pointer to QA in order to be able to set resetto
+					 //now q is properly constructed, ready to be inserted in tovector 
+		if (countdown == 0) {
+			if (!firstTimeHide)
+				Qs.push_back(q);
+			if (resetto > 0) {
+				QA->SetAttribute("countdown", resetto);
+			}
+			else {
+				QA->SetAttribute("countdown", countdown);     //if just decrease to 0 and reset was just reset to 0
+			}
+		}
+		else {  //if countdown is not 0 yest, not added for showing
+			QA->SetAttribute("countdown", countdown);
+		}
+
+		XMLElement * QB = (XMLElement *)QA->NextSibling();
+		if (!QB) break;   //if no more questions, done and exit
+		QA = QB;
+	}
+	return Qs;
+}
 void promptAtQuestion() {
 	printf("\n\n\n\n --------------------------------------------\n");
 	printf("           Number: jump to question numbered \n");
@@ -73,6 +167,7 @@ void promptAtQuestion() {
 }
 int main(int argc, const char ** argv) 
 {
+	bool applyConfigfile = false;
 	string newPath = "NewSavedXMLFile.xml";
 	cout << "Quick Reviewer version 3.0" << endl;
 	
@@ -113,7 +208,8 @@ int main(int argc, const char ** argv)
 						"              Error Line: %d", argv[3], errorID, doc->ErrorName() + 4, doc->ErrorLineNum());
 				}
 				else {
-					printf("Question config file '%s' loaded and parsed succesfully\n\n", argv[3]);
+					printf("Question config file '%s' loaded and parsed succesfully\n\n", argv[2]);
+					applyConfigfile = true;   //set the configfile flag
 				}
 			}
 		}
@@ -133,8 +229,17 @@ int main(int argc, const char ** argv)
 	//-----------------------------------------------------------------------------
 	const char * name = "QuestionsAndAnswers";
 	XMLElement* root = doc->FirstChildElement(name);
-	vector<Question> questions = GetAllQuestions(root);
-	
+	XMLElement* root1=nullptr;  //for configfile
+	vector<Question> questions;
+
+	if (applyConfigfile) {
+		root1 = docCfg->FirstChildElement(name);
+		questions = GetAllQuestions(root, root1);
+	}
+	else {
+		questions = GetAllQuestions(root);
+	}
+	//cin.get();
 	//loop through each questions
 	char k[32] = { 0 };
 	int questionNo = 1;
