@@ -122,10 +122,14 @@
 </QA>
 <QA ID="11" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
   <Question>
-      What is weak poitner?
+      What is RAII ??
   </Question>
   <Answer>
-      Weak pointer is a kind of pointer that does not own the object, does not affect the pointer count!
+      It is Resource Acquisition is initialization.
+         In RAII, holding a resource is tied to object lifetime: resource allocation
+      (or acquisition) is done during object creation by the constructor, 
+      while resource deallocation (release) is done during object destruction
+      by the destructor.
   </Answer>
 </QA>
 <QA ID="12" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
@@ -404,6 +408,12 @@
      Please give some examples of algorithms function usage
   </Question>
   <Answer>
+      functions:
+      1: min_element(range)
+      2: sort(range)
+      3: reverse(range)
+      4: copy(range, (iterator adapter))
+      5: find_if(range, Boolfunction)
       //algorithms - mostly loops
 
       vector&lt;int&gt; vec = {4,2,5,1,3,9};
@@ -1219,15 +1229,15 @@
      According to C++'03 Standard 2.3/1:
 
      Before any other processing takes place, each occurrence of one of the 
-     following sequences of three characters (“trigraph sequences”) is replaced 
+     following sequences of three characters (trigraph sequences) is replaced 
      by the single character indicated in following Table:
 
     ----------------------------------------------------------------------------
     | trigraph | replacement | trigraph | replacement | trigraph | replacement |
     ----------------------------------------------------------------------------
-    | ??=      | #           | ??(      | [           | ??&lt;   | {           |
-    | ??/      | \           | ??)      | ]           | ??&gt;   | }           |
-    | ??’      | ˆ           | ??!      | |           | ??-      | ˜           |
+    | ??=      | #           | ??(      | [           | ??&lt;     | {            |
+    | ??/      | \           | ??)      | ]           | ??&gt;     | }            |
+    | ??&#39;      | ^           | ??!      | |           | ??-     | &apos;            |
     ----------------------------------------------------------------------------
   </Answer>
 </QA>
@@ -1334,7 +1344,7 @@
      What does extern mean in a function declaration ?
   </Question>
   <Answer>
-     Extern indicates that the function’s definition is in another source file. 
+     Extern indicates that the function&apos;s definition is in another source file. 
      But there is no formal difference between extern int a (); and int a (); 
   </Answer>
 </QA>
@@ -1404,7 +1414,326 @@
   </Answer>
 </QA>
 
-<QA ID="81" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+<QA ID="82" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     What is cout and what is cin in STL ?
+  </Question>
+  <Answer>
+     std::cout and std::cin are global objects of classes std::ostream and std::istream 
+     respectively, of which they've overloaded operator &lt;&lt; and &gt;&gt; 
+  </Answer>
+</QA>
+
+<QA ID="83" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     how can we pass an object into a thread by reference so that we can get the return value from it?
+  </Question>
+  <Answer>
+     by using std::ref(obj);
+ 
+     Snippet:
+     class Fnctor{
+     public:
+        void operator()(string &amp; msg){
+           cout &lt;&lt; "t1 says: "&lt;&lt; msg &lt;&lt; endl;
+           msg="Trues is the mother of deceit";        //pass back a diff msg to show it is by ref
+        }
+     };
+     void main(){
+       string s="main org msg";     //notice how to pass a param to thread the line below, use 2nd parm to thread
+       std::therad t1((fnctor())), std:ref(s));  //extral pair of () is needed here to make t1 not a def of fn
+       t1.join();                   //if not use ref() here, it will auto use pass by value even though callee is &#38;msg 
+       cout &lt;&lt; "From main: " &lt;&lt; s &lt;&lt; endl;
+     }
+
+     However, this could cause the 2 threads (parent and child) both have access to the same object, 
+     so, access to it needs to be synchronized between the 2 threads.
+     If this situation is required, we recommend using std::async() instead of spawn a thread!
+
+     * To pass an object to thread by value is costly, by reference is not safe. 
+      using move is both safe and efficient:
+      std::thread t1((Fnctor()),std::move(s));
+
+      * thead can not be copied, only be moved:
+      std::thread t2 = std::move(t1);
+      t2.join();
+
+      * to get thread ID using:
+       std::thread_thread::get_id()
+       or
+       t2.get_id();
+  </Answer>
+</QA>
+
+<QA ID="84" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     Through what do threads communicate with each other ?
+     Through what do processes communicate ?
+  </Question>
+  <Answer>
+     Threads communicate through shared memory
+     Processes communicate through IPC, interprocess communication like files, pipes, message queues etc.
+     Shared memory is faster than IPC.
+     Threads can not be run on different computers.
+     Processes can be run on a distributed system
+  </Answer>
+</QA>
+
+<QA ID="85" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     How to use std::thread to spawn a thread ?
+  </Question>
+  <Answer>
+     Snippet:
+
+     void function_1(){}
+     void main(){
+        std::thread t1(function_1);  //t1 starts running
+        t1.join() // main thread waits for t1 to finish here               
+     }
+
+     After a thread is spawn, it can join in or detach from 
+     main thread once.
+     
+     To tell if a thread is joinable, do test first:
+
+     if(t1.joinable())
+        ti.join();
+
+     //if not joinable, it will crash if you call join()
+     //the thread can also detach from main thread:
+
+      t1.detach(); //t1 will run freely, a daemon process, 
+     // c++ runtime library will reclaim the resources when t1 finishes
+
+     //if t1 is finished before it is detached or joined the main thread
+     //the process will end!, so it has to be joined or detached before it finishes!
+
+  </Answer>
+</QA>
+
+<QA ID="86" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     What is daemon ?
+  </Question>
+  <Answer>
+     A daemon is a long-running background process that answers requests for services. 
+     The term originated with Unix, but most operating systems use daemons in some 
+     form or another. In Unix, the names of daemons conventionally end in "d". Some 
+     examples include inetd , httpd , nfsd , sshd , named , and lpd 
+  </Answer>
+</QA>
+
+<QA ID="87" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     What is lpd process doing ?
+  </Question>
+  <Answer>
+     The lpd daemon places files specified in print requests in the directory 
+     /var/spool/lpd. The print request is then managed by the qdaemon and the 
+     appropriate backend (usually piobe) on the remote server. The /etc/locks/lpd file 
+     contains the process ID of the currently running instance of the lpd daemon.
+  </Answer>
+</QA>
+
+<QA ID="88" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     What is Spurious wakeup ?
+  </Question>
+  <Answer>
+     Spurious wakeup describes a complication in the use of condition variables as provided 
+     by certain multithreading APIs such as POSIX Threads and the Windows API.
+     It is a wait-signal setup for multi-thread synchronizing machinism: 
+
+     /* In any waiting thread: */
+     while(!buf->full)
+        wait(&#38;buf->cond, &#38;buf->lock);
+
+     /* In any other thread: */
+     if(buf->n >= buf->size){
+	buf->full = 1;
+	signal(&#38;buf->cond);
+     }
+     
+  </Answer>
+</QA>
+<QA ID="89" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     What does POSIX stand for ?
+  </Question>
+  <Answer>
+     It stands for Portable Operating System Interface (POSIX). It is a family of standards 
+     specified by the IEEE Computer Society for maintaining compatibility between operating 
+     systems. POSIX defines the application programming interface (API), along with command
+     line shells and utility interfaces, for software compatibility with variants of Unix 
+     and other operating systems.
+  </Answer>
+</QA>
+<QA ID="90" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     What is called preemptive multitasking ?
+  </Question>
+  <Answer>
+     Preemptive multitasking is task in which a computer operating system uses some criteria 
+     to decide how long to allocate to any one task before giving another task a turn to use 
+     the operating system. 
+     The act of taking control of the operating system from one task and giving it to another 
+     task is called preempting.
+  </Answer>
+</QA>
+<QA ID="91" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     What is SaaS ?
+  </Question>
+  <Answer>
+     Software as a service (SaaS /sæs/) is a software licensing and delivery model in which 
+     software is licensed on a subscription basis and is centrally hosted. SaaS is typically 
+     accessed by users using a thin client via a web browser. SaaS has become a common delivery 
+     model for many business applications, including office software, messaging software etc.
+  </Answer>
+</QA>
+<QA ID="92" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     What is RESTful ?
+  </Question>
+  <Answer>
+     Representational State Transfer (REST) is an architectural style that defines a set of 
+     constraints and properties based on HTTP. Web Services that conform to the REST architectural 
+     style, or RESTful web services, provide interoperability between computer systems on the Internet. 
+     REST-compliant web services allow the requesting systems to access and manipulate textual 
+     representations of web resources by using a uniform and predefined set of stateless operations. 
+     Other kinds of web services, such as SOAP web services, expose their own arbitrary sets of 
+     operations.
+  </Answer>
+</QA>
+<QA ID="93" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     How to determin how many threads to use for the best performance ?
+  </Question>
+  <Answer>
+     use this API function call:
+     std::thread::hardware_concurrency();
+  </Answer>
+</QA>
+<QA ID="94" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     How to avoid deadlock ?
+  </Question>
+  <Answer>
+     1: Avoid using more than one mutex at the same time
+     2: Avoid calling user function while holding one or more mutex
+     3: Use std::lock() to lock more than one mutex if more than one mutex are needed.
+     4: Lock more than one mutexes in the same order
+
+  </Answer>
+</QA>
+<QA ID="95" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     What is a race condition ?
+  </Question>
+  <Answer>
+     Race condition is the behavior of software where the output is dependent on the sequence or timing 
+     of the other threads in multi-threaded application. 
+  </Answer>
+</QA>
+<QA ID="96" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     How to use mutex in c++ ?
+  </Question>
+  <Answer>
+     1. Declare an mutex object:               std::mutex mu;  //accessible by all theads like a global variable
+     2. Lock it before access shared resource: mu.lock();
+     3. unlock it after access:                mu.unlock();
+  </Answer>
+</QA>
+<QA ID="97" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     Why the direct use of mutex is not recommended ? 
+     What is recommended for using mutex ?
+  </Question>
+  <Answer>
+     When mutex is used directly, if an exceptions happens while a thread is accessing the protected 
+     resources while mutex is locked, then there would be no way to unlock the mutex and all the other 
+     threads will be blocked from accessing forever.
+
+     std::lock_guard class template is recommended to use with mutex. so, just use following line
+     std::lock_guard&lt;std::mutex&gt; guard(mu);
+     in the place of mu.lock() and remove the mu.unlock().
+     when exception happens, guard will be destroyed and its destructor will auto unlock the mutex (RAII)
+  </Answer>
+</QA>
+<QA ID="98" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     What is data race, now to avoid it ?
+  </Question>
+  <Answer>
+     A data race occurs when 2 instructions from different threads in a single process access the same memory 
+     location concurrently, and at least one of these accesses is a write and there is no synchronization 
+     that is mandating any particular order among these accesses.
+
+     To avoid data race:
+      1. Use muex to synchronize the data access
+      2. Never leak a handle of data to outside
+      3. Design interface appropriately
+  </Answer>
+</QA>
+<QA ID="99" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     What is a generic class ?
+  </Question>
+  <Answer>
+     asf
+  </Answer>
+</QA>
+<QA ID="100" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     What is a generic class ?
+  </Question>
+  <Answer>
+     asf
+  </Answer>
+</QA>
+<QA ID="101" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     What is a generic class ?
+  </Question>
+  <Answer>
+     asf
+  </Answer>
+</QA>
+<QA ID="102" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     What is a generic class ?
+  </Question>
+  <Answer>
+     asf
+  </Answer>
+</QA>
+<QA ID="103" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     What is a generic class ?
+  </Question>
+  <Answer>
+     asf
+  </Answer>
+</QA>
+<QA ID="104" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     What is a generic class ?
+  </Question>
+  <Answer>
+     asf
+  </Answer>
+</QA>
+<QA ID="105" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     What is a generic class ?
+  </Question>
+  <Answer>
+     asf
+  </Answer>
+</QA>
+<QA ID="106" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
   <Question>
      What is a generic class ?
   </Question>
