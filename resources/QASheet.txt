@@ -10,7 +10,8 @@
   </Question>
 
   <Answer>
-     throw an exception. Constructors don't have a return type, so it's not possible to use return codes. The best way to signal constructor failure is therefore to throw an exception.
+     By throwing an exception. Constructors don't have a return type, so it's not possible to use
+     return codes. The best way to signal constructor failure is therefore to throw an exception.
   </Answer>
 </QA>
 
@@ -20,30 +21,10 @@
       What is difference between process and thread ?
   </Question>
   <Answer>
-      A process provides the resources needed to execute a program. A process has:
-        - a virtual address space, 
-        - executable code, 
-        - open handles to system objects, 
-        - a security context,          - process identifier, 
-        - environment variables, 
-        - at least one thread of execution ( Each process is started with a single thread, often called the primary thread, but can create additional threads from any of its threads.)
-
-      A thread is the entity within a process that can be scheduled for execution. 
-        - All threads of a process share its:
-           - virtual address space and 
-           - system resources. 
-        - each thread maintains 
-           - exception handlers, 
-           - a scheduling priority, 
-           - thread local storage, 
-           - a unique thread identifier, 
-           - a set of structures the system use to save the thread context until it is scheduled. 
-           - each thread context includes :
-              - the thread's set of machine registers, 
-              - the kernel stack, 
-              - a thread environment block, 
-              - a user stack in the address space of the thread's process. 
-              - a security context, which can be used for impersonating clients.
+     The typical difference is that threads (of the same process) run in a shared memory space, 
+     while processes run in separate memory spaces.
+     Each thread has its own storage, stack, environment block, security context, set of registers
+     exception handlers, priority. But all threads in one process share the same heap.
   </Answer>
 </QA>
 <QA ID="3" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
@@ -59,8 +40,11 @@
       Difference between mutex and semorephone ?
   </Question>
   <Answer>
-      A mutex can be owned by only one thread at a time, enabling threads to coordinate mutually exclusive access to a shared resource.
-      A semaphore maintains a count between zero and some maximum value, limiting the number of threads that are simultaneously accessing a shared resource.
+    - A mutex can be owned by only one thread at a time, enabling threads to coordinate mutually 
+      exclusive access to a shared resource.
+
+    - A semaphore maintains a count between zero and some maximum value, limiting the number of 
+      threads that are simultaneously accessing a shared resource.
   </Answer>
 </QA>
 <QA ID="5" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
@@ -68,13 +52,16 @@
       What is Unique pointer and what is the diffrence between unique pointer and shared pointer?
   </Question>
   <Answer>
-      Unique pointer and Shared pointer are all smart pointers. Unique pointer means an object can only be pointered by one pointer
-      shared poitners keeps a count on number of pointers to an object and when the count drops to 0, the object is destroied !
+    - Unique pointer and Shared pointer are all smart pointers. Unique pointer means an object 
+      can only be pointered by one pointer
+
+    - shared pointers keeps a count on number of pointers to an object and when the count drops 
+      to 0, the object is destroyed !
   </Answer>
 </QA>
 <QA ID="6" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
   <Question>
-      What is weak poitner?
+      What is weak pointer?
   </Question>
   <Answer>
       Weak pointer is a kind of pointer that does not own the object, does not affect the pointer count!
@@ -85,7 +72,8 @@
       What is vector?
   </Question>
   <Answer>
-    A vector is a dynamic array that can only grow in one direction, and is contiguously allocated in memory.
+    A vector is a dynamic array that can only grow in one direction, and is contiguously allocated 
+    in memory.
 
    vector pros and cons:
    - fast insert/remove at the end: O(1)
@@ -100,7 +88,25 @@
       What is deque ?
   </Question>
   <Answer>
-      A deque is a dynamic array that can grow in both directions, and is contiguously allocated in memory.
+      A deque is a dynamic array that can grow in both directions, it is an indexed sequence container 
+      that allows fast insertion and deletion at both its beginning and its end. In addition, insertion 
+      and deletion at either end of a deque never invalidates pointers or references to the rest of 
+      the elements. As opposed to std::vector, the elements of a deque are not stored contiguously: 
+      typical implementations use a sequence of individually allocated fixed-size arrays, with additional 
+      bookkeeping, which means indexed access to deque must perform two pointer dereferences, compared 
+      to vector's indexed access which performs only one.
+
+      The storage of a deque is automatically expanded and contracted as needed. Expansion of a deque is 
+      cheaper than a std::vector because it does not involve copying of the existing elements to a new 
+      memory location. On the other hand, deques typically have large minimal memory cost; a deque 
+      holding just one element has to allocate its full internal array (e.g. 8 times the object size on 
+      64-bit libstdc++; 16 times the object size or 4096 bytes, whichever is larger, on 64-bit libc++).
+
+      The complexity (efficiency) of common operations on deques is as follows:
+
+      1. Fast Random access - constant O(1)
+      2. Fast Insertion or removal of elements at the end or beginning - constant O(1)
+      3. Slow Insertion or removal of elements - linear O(n)
   </Answer>
 </QA>
 
@@ -180,7 +186,7 @@
   <Answer>
       Associate containers refer to map/multimap and set/multiset.
       Associate means keys are associated with values
-      For set/map, the keys can be considered the same as values
+      For set/multiset, the keys can be considered the same as values
       - They are always sorted, so no push_front(), push_back() methods
       - They are implemented as binary tree.
       - They are fast in search
@@ -247,7 +253,7 @@
         -element key can't be change for unordered map/multimap
 
       snippet:
-        unordered_set&lt;string&gt; = { "red", "green", "blue" };
+        unordered_set&lt;string&gt; myset= { "red", "green", "blue" };
         unordered_set&lt;string&gt;::const_iterator itr =  myset.find("green");  //fast, O(1)
         if(itr != myset.end())   //need to check if found
           cout &lt;&lt; *itr &lt;&lt; endl;
@@ -549,7 +555,7 @@
          auto: the default. Variables are automatically created and initialized when they 
                are defined and are destroyed at the end of the block containing their 
                definition. They are not visible outside that block.
-         (another auto for type of class) auto i = 1; //i is auto declared as integer, c++11 ?)
+         (another auto for data type / class) auto i = 1; //i is auto declared as integer, c++11 ?)
          register: a type of auto variable. a suggestion to the compiler to use a 
                CPU register for performance.
          static: a variable that is known only in the function that contains its 
@@ -1410,7 +1416,7 @@
   </Question>
   <Answer>
      1: Infinite or very deep recursive call
-     2: Assign a very large size variable in stack
+     2: Assign a very large size variable on stack
   </Answer>
 </QA>
 
@@ -1441,7 +1447,7 @@
      };
      void main(){
        string s="main org msg";     //notice how to pass a param to thread the line below, use 2nd parm to thread
-       std::therad t1((fnctor())), std:ref(s));  //extral pair of () is needed here to make t1 not a def of fn
+       std::thread t1((fnctor())), std:ref(s));  //extra pair of () is needed here to make t1 not a def of fn
        t1.join();                   //if not use ref() here, it will auto use pass by value even though callee is &#38;msg 
        cout &lt;&lt; "From main: " &lt;&lt; s &lt;&lt; endl;
      }
@@ -1533,6 +1539,9 @@
      /var/spool/lpd. The print request is then managed by the qdaemon and the 
      appropriate backend (usually piobe) on the remote server. The /etc/locks/lpd file 
      contains the process ID of the currently running instance of the lpd daemon.
+
+     Key words: /var/spool/lpd       //print request queue
+                /etc/locks/lpd       //process ID
   </Answer>
 </QA>
 
@@ -1574,8 +1583,8 @@
      What is called preemptive multitasking ?
   </Question>
   <Answer>
-     Preemptive multitasking is task in which a computer operating system uses some criteria 
-     to decide how long to allocate to any one task before giving another task a turn to use 
+     Preemptive multitasking is a task in which a computer operating system uses some criteria 
+     to decide how much time to allocate to any one task before giving another task a turn to use 
      the operating system. 
      The act of taking control of the operating system from one task and giving it to another 
      task is called preempting.
@@ -1586,7 +1595,7 @@
      What is SaaS ?
   </Question>
   <Answer>
-     Software as a service (SaaS /sæs/) is a software licensing and delivery model in which 
+     Software as a service (SaaS) is a software licensing and delivery model in which 
      software is licensed on a subscription basis and is centrally hosted. SaaS is typically 
      accessed by users using a thin client via a web browser. SaaS has become a common delivery 
      model for many business applications, including office software, messaging software etc.
@@ -1672,52 +1681,567 @@
      that is mandating any particular order among these accesses.
 
      To avoid data race:
-      1. Use muex to synchronize the data access
+      1. Use mutex to synchronize the data access
       2. Never leak a handle of data to outside
       3. Design interface appropriately
   </Answer>
 </QA>
 <QA ID="99" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
   <Question>
-     What is a generic class ?
+     What is baffling ?
   </Question>
   <Answer>
-     asf
+     Very Strange     
+     usage example:it appears baffling
   </Answer>
 </QA>
 <QA ID="100" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
   <Question>
-     What is a generic class ?
+     Which of the following is a pointer pointing to function ?
+     
+     A: int *a()
+     B: int a(*a)
+     C: int a()*
+     D: int (*a)
   </Question>
   <Answer>
-     asf
+     A, I think !
   </Answer>
 </QA>
 <QA ID="101" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
   <Question>
-     What is a generic class ?
+     What are the 9 unary operators in c ?
   </Question>
   <Answer>
-     asf
+     1: - minus
+     2: + plus
+     3: ! logical negation
+     4: ++ prefix/postfix increment
+     5: -- prefix/postfix decrement
+     6: &amp;  Address operator
+     7: *  indrection operator
+     8: () cast operator
+     9: sizeof() operator
   </Answer>
 </QA>
 <QA ID="102" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
   <Question>
-     What is a generic class ?
+     What is the output of the following program ?
+     ...
+     void main(){
+        char c[]={'a','b','c','d'};
+        char d[]="abcd";
+        printf("%d - %d",sizeof(c),sizeof(d));
+     }
+
+     A: 4 - 4
+     B: 4 - 5
+     C: 5 - 5 
+     D: 1 - 1
   </Question>
   <Answer>
-     asf
+     B. Length of a string includes the ending 0, size of array has no ending 0
   </Answer>
 </QA>
 <QA ID="103" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
   <Question>
-     What is a generic class ?
+     In C, which of the following options is not a predefined function in string ?
+
+     A: strcpy()
+     B: strlen()
+     C: strnicmp()
+     D: None of the given options
   </Question>
   <Answer>
-     asf
+     D. strnicmp() is a predefined function !!!
   </Answer>
 </QA>
-<QA ID="104" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+<QA ID="104" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     Which of the following UNX commands is used to resursive listing of files ?
+     
+     A: ls -r
+     B: ls -R
+     C: ls -a
+     D: ls -F
+  </Question>
+  <Answer>
+     B
+  </Answer>
+</QA>
+<QA ID="105" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     The mv commaind in UNIX will chagne:
+ 
+     A: The i-node number
+     B: only the directory entry
+     C: directory and the i-node
+     D: None of the options above
+
+  </Question>
+  <Answer>
+     B
+  </Answer>
+</QA>
+<QA ID="106" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     When used without arguments, the cd command in UNIX will:
+
+     A: change to next directory
+     B: bring back to previous directory
+     C: bring back to home directory
+     D: display an error
+  </Question>
+  <Answer>
+     C
+  </Answer>
+</QA>
+<QA ID="107" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     What does the cat command in UNIX do  ?
+
+     A: Create a file
+     B: Displays the contents of file
+     C: Concatenates two files
+     D: All of the given options
+  </Question>
+  <Answer>
+     D, not B!
+     You can create a new file with the name file1.txt using the following cat command 
+     and you can type the text you want to insert in the file. Make sure you type 
+     &apos;Ctrl-d&apos; at the end to save the file.
+
+     cat > file1.txt
+  </Answer>
+</QA>
+<QA ID="108" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     Which of the following UNIX commands is not a filter ?
+     
+     A: sort
+     B: grep
+     C: cal
+     D: cut
+  </Question>
+  <Answer>
+     C
+  </Answer>
+</QA>
+<QA ID="109" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     Which of the following UNIX commands cannot be used for communication in UNIX ?
+     
+     A: wall
+     B: write
+     C: mail
+     D: more     
+  </Question>
+  <Answer>
+     D
+  </Answer>
+</QA>
+<QA ID="110" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     What is Unix command wall for ?
+  </Question>
+  <Answer>
+     wall (an abbreviation of write to all) is a Unix command-line utility that displays the contents of a file 
+     or standard input to all logged-in users. It is typically used by root to send out shutting down message 
+     to all users just before poweroff.
+  </Answer>
+</QA>
+<QA ID="111" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     What is write command in UNIX ?
+  </Question>
+  <Answer>
+     In Unix and Unix-like operating systems, write is a utility used to send messages to another user 
+     by writing a message directly to another user's TTY
+  </Answer>
+</QA>
+<QA ID="112" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     Fill inthe blank:
+     Function sub() is part of ____.
+
+     A: sed
+     B: awk
+     C: grep
+     D: nawk
+     E: ak
+  </Question>
+  <Answer>
+     B, ?
+  </Answer>
+</QA>
+<QA ID="113" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     Which of the following commands will you use to find a character or a word inside a string ?
+     A: search
+     B: find
+     C: get
+     D: grep
+     E: wc -c
+  </Question>
+  <Answer>
+     D, not B!
+  </Answer>
+</QA>
+<QA ID="114" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     While asking for input from user, how to get first name in fname variable and lastname in lname 
+     variable. Which of the following commands will allow you to do so ?
+    
+     A: By default, input will go to fname. you need to separate them inside code
+     B: By default, input will go to lanme, you need to separate them inside code
+     C: get fname lname
+     D: read fname lname
+     E: getname fname lname
+
+  </Question>
+  <Answer>
+     D
+  </Answer>
+</QA>
+<QA ID="115" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     What software tool have you used for managing projects, tracking bugs ?
+  </Question>
+  <Answer>
+     I have used: Jenkins, Rally, Conflunce, MKS (Application lifecycle management, used in Airblue)
+  </Answer>
+</QA>
+<QA ID="116" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     what does the keyword explicit for ?
+  </Question>
+  <Answer>
+     Prefixing the explicit keyword to the constructor prevents the compiler from using that constructor 
+     for implicit conversions. You have to cast it to do the conversion
+
+     The explicit keyword prevents an implicit conversion
+  </Answer>
+</QA>
+<QA ID="117" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     What is the difference between pointer and reference ?
+  </Question>
+  <Answer>
+     A difference between pointers and references is that a pointer is an indepedent variable and can be 
+     assigned NEW address values; whereas a reference, once assigned, can never refer to any new object 
+     until the variable goes out of scope.
+
+     snippet example:
+
+       string s1("Nancy");
+       string s2("Clancy");
+
+       string &amp;rs = s1;  // rs refers to s1
+       string *ps = &amp;s1; // ps points to s1
+
+       Note: this looks like you can change what a reference refers, it actuallly changes refered variable value:
+       rs = s2;          // rs still refers to s1,   
+                         // but s1's value is now "Clancy"
+
+       ps = &amp;s2;         // ps now points to s2; s1 is unchanged
+
+       =========================================================
+       The example shows the difference:
+ 
+       reference assignment:  rs=s1;   //changes the value of variable it referes
+       pointer assignment:    ps=&amp;s1;  //changes the address value the ps holds, make it points to a new 
+                                       //variable holding the assigned value
+
+       So, we can say that a reference to a variable is just an alias for the variable!
+  </Answer>
+</QA>
+<QA ID="118" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+    What are 4 C++ style casts ?
+  </Question>
+  <Answer>
+    C++ introducing 4 new cast operators:
+     
+    1: static_cast: for c cast except casting away the const
+    2: const_cast: cast away the const-ness
+    3: dynamic_cast: safe cast down or across an inheritance hierarchy casting from base into derived class objects.
+                       return null if failed. no cast away const-ness
+    4: reinterpret_cast: perform type conversions whose result is always implementation-defined. Used for casting function pointer types
+
+    Snippet example:
+
+    double result=(double)A/B;
+    should become:
+    double result=static_cast&lt;double&gt;A/B;
+  </Answer>
+</QA>
+<QA ID="119" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     Why should we always provide default constructors when we design a class ?
+  </Question>
+  <Answer>
+     Default constructor is a one without argument!
+     If a class lacks a default constructor, its use may be problematic in three contexts:
+
+     1: Creation of arrays: when creating an array of objects, default constructor is always called.
+
+     2: They are ineligible for use with many template-based container classes. Classes without default constructors 
+        will be incompatible with many templates.
+
+     3: Virtual base classes lacking default constructors are a pain to work with. That's because the arguments for virtual base class 
+        constructors must be provided by the most derived class of the object being constructed. As a result, a virtual base class 
+        lacking a default constructor requires that all classes derived from that class — no matter how far removed — must know about, 
+        understand the meaning of, and provide for the virtual base class's constructors' arguments. Authors of derived classes 
+        neither expect nor appreciate this requirement.
+  </Answer>
+</QA>
+<QA ID="120" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     What is smart pointer called in C++ standard library ?
+  </Question>
+  <Answer>
+     std::auto_ptr
+  </Answer>
+</QA>
+<QA ID="121" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     What is difference between a member function and non-member function ?
+  </Question>
+  <Answer>
+     3 differences:
+
+     1: A non-member function always appears outside of a class
+     2: They are called differently. for member fuction calls you have to specify object
+     3: Member functions can be virtual and non-member functions can't.
+  </Answer>
+</QA>
+<QA ID="122" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     What are the cases where you should make a function a member function ?
+  </Question>
+  <Answer>
+     3 cases:
+     
+     1) operator &lt;&lt; and operator &gt;&gt;
+     2) Only non-member functions get implicit type conversions on all arguments
+         so, if that is a need, make it a non-member functions. 
+     3) if it also need to access non-public members of a class, make it a friend of the class.
+  </Answer>
+</QA>
+<QA ID="123" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     Why cannot the operator &lt;&lt; and &gt;&gt; be overloaded as member functions ?
+  </Question>
+  <Answer>
+     When overloaded as a member function, a &lt;&lt; b is interpreted as a.operator&lt;&lt;(b), so it only takes 
+     one explicit parameter (with this as a hidden parameter).
+
+     Since this requires that the overload be part of the class used as the left-hand operand, it's not useful 
+     with normal ostreams and such. It would require that your overload be part of the ostream class, not part 
+     of your class. Since you're not allowed to modify ostream, you can't do that. That leaves only the global 
+     overload as an alternative.
+
+  </Answer>
+</QA>
+<QA ID="124" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     why should we avoid data members in public interface ??
+  </Question>
+  <Answer>
+     1: Private variables help prevent people from depending on certain parts of your code
+        It is easier to provide a steady interface when your design of the class changes.
+     2: Public variables can be accessed from anywhere, makeing troubleshooting harder
+  </Answer>
+</QA>
+<QA ID="125" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     What is difference between private and public inheriance ?
+  </Question>
+  <Answer>
+     With private inheritance, public and protected member of the base class become private 
+     members of the derived class
+  </Answer>
+</QA>
+<QA ID="126" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     How to minimize compilation dependencies between files ?
+  </Question>
+  <Answer>
+     1. Avoid using objects when object references and pointers will do.
+     2. Use class declarations instead of class definitions whenever you can
+     3. Don't #include header files in your header files unless your headers won't compile without them
+  </Answer>
+</QA>
+<QA ID="127" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     How to keep people from calling an compiler auto generated member function ?
+  </Question>
+  <Answer>
+     By declaring the member function explicitly and make it private!
+  </Answer>
+</QA>
+<QA ID="128" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     How to declare const pointer and const data ?
+  </Question>
+  <Answer>
+     char *p         = "Hello";       // non-const pointer, non-const data
+     const char *p   = "Hello";       // non-const pointer, const data
+     char * const p  = "Hello";       // const pointer, non-const data
+const char * const p = "Hello";       // const pointer, const data
+  </Answer>
+</QA>
+<QA ID="129" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     Pass by reference or by value ?
+  </Question>
+  <Answer>
+     
+	1: pass-by-value is expensive: copy constructor and destructor will be called
+	2: pass-by-reference is efficient: no copy constructor and destructor will be called
+	3: pass-by-reference can avoid slicing problem
+
+           if you have a small object — an int, for example — it may actually be more efficient 
+        to pass it by value than to pass it by reference
+
+  </Answer>
+</QA>
+<QA ID="130" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     Why should we avoid overloading a function on a pointer and a numerical type ?
+  </Question>
+  <Answer>
+     Because a pointer is actually a number, it will be confusing!
+  </Answer>
+</QA>
+<QA ID="131" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     What data members of a class must be initialized with initialization list ?
+  </Question>
+  <Answer>
+     const members and referece members. Because those members can only be initialized, 
+     never assigned inside constructor
+  </Answer>
+</QA>
+<QA ID="132" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     How to order the initialization list ?
+  </Question>
+  <Answer>
+     List members in an initialization list in the order in which they are declared.
+     base class data members are initialized before derived class data members
+  </Answer>
+</QA>
+<QA ID="133" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     Why should we always make the base class&apos;s destructor virtual ?
+  </Question>
+  <Answer>
+     When you try to delete a derived class object through a base class pointer and the base class
+     has a non virtual destructor, the results are undefined. What often happens at runtime is that 
+     the derived class's destructor is never called.
+  </Answer>
+</QA>
+<QA ID="134" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     When should we not make a class&apos;s destructor virtual ? why ?
+  </Question>
+  <Answer>
+     When a class is not intended to be used as a base class, making the destructor virtual is usually 
+     a bad idea, Because:
+     1: won&apos;t fit a 32 bit registers. 
+     2: its object size doubles. 
+     3: It will create a virtual table for virtual table pointers
+  </Answer>
+</QA>
+<QA ID="135" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     Why do you still need definition block when you declare a pure virtual destructor ?
+  </Question>
+  <Answer>
+     You need this definition, because the way virtual destructors work is that the most derived 
+     class&apos;s destructor is called first, then the destructor of each base class is called. 
+     That means that compilers will generate a call to ~AWOV even though the class is abstract, 
+     so you have to be sure to provide a body for the function. If you don't, the linker will 
+     complain about a missing symbol.
+  </Answer>
+</QA>
+<QA ID="136" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     Why should we always return a reference to *this in member function operator=  ?
+  </Question>
+  <Answer>
+     Because if you return void, it will prevent chains of assignment like x1=x2=x3=0; prevent 
+     implicit type conversions at call sites, or both.
+  </Answer>
+</QA>
+<QA ID="137" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     Which of the following C++ classes is used for opening agile as read-only?
+
+     A: ofstream
+     B: ifstream
+     C: fstream
+     D: iostream
+  </Question>
+  <Answer>
+     B
+  </Answer>
+</QA>
+<QA ID="138" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     Which one of the following programs do you run on your computer in order to allow connections 
+     to your server using a serial terminal connected to a serial port ?
+
+	a: login
+	b: getty
+	c: sh
+	d: kermit
+	e: tcflow
+  </Question>
+  <Answer>
+     b.  getty, short for get &quot;teletype&quot;, is a Unix program running on a host computer 
+     that manages physical or virtual terminals (TTYs). When it detects a connection, it prompts 
+     for a username and runs the &apos;login&apos; program to authenticate the user.
+  </Answer>
+</QA>
+<QA ID="139" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     which one of the following signal commands do you use to determin which siganls have been 
+     sent to a process but which have not yet been processed?
+
+	A: sigprocmask
+	B: sigwaiting
+	C: sigsent
+	D: sigpending
+	E: signal
+  </Question>
+  <Answer>
+      D
+  </Answer>
+</QA>
+<QA ID="140" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     Explain how 2 processes communicate using message queue in unix.
+  </Question>
+  <Answer>
+     Two (or more) processes can exchange information via access to a common system message queue. 
+     The sending process places a message onto a queue which can be read by another process. Each 
+     message is given an identification or type so that processes can select the appropriate message. 
+     Process must share a common key in order to gain access to the queue in the first place.
+
+     IPC messaging lets processes send and receive messages, and queue messages for processing in 
+     an arbitrary order. Each IPC message has an explicit length. Messages can be assigned a specific 
+     type. Because of this, a server process can direct message traffic between clients on its queue
+     by using the client process PID as the message type. For single-message transactions, multiple 
+     server processes can work in parallel on transactions sent to a shared message queue.
+
+     Before a process can send or receive a message, the queue must be initialized (through the msgget 
+     function see below) Operations to send and receive messages are performed by the msgsnd() and 
+     msgrcv() functions, respectively.
+  </Answer>
+</QA>
+<QA ID="141" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
   <Question>
      What is a generic class ?
   </Question>
@@ -1725,15 +2249,7 @@
      asf
   </Answer>
 </QA>
-<QA ID="105" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
-  <Question>
-     What is a generic class ?
-  </Question>
-  <Answer>
-     asf
-  </Answer>
-</QA>
-<QA ID="106" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+<QA ID="142" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
   <Question>
      What is a generic class ?
   </Question>
