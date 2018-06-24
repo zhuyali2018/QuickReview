@@ -628,7 +628,7 @@
 </QA>
 <QA ID="38" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
   <Question>
-      In which type does the enumerators are stored by the compiler?
+      In which type are the enumerators stored by the compiler?
 
       a) string
       b) integer
@@ -893,7 +893,7 @@
 
   </Question>
   <Answer>
-      Not B, It is D: Runtime error: Exception thrown: write access violation
+      D. Not B: Runtime error: Exception thrown: write access violation
 
       if it was the line: char s[]="Fine"; 
       the answer would be B:
@@ -1196,16 +1196,7 @@
   </Question>
   <Answer>
      Stack is used for static memory allocation and Heap for dynamic memory allocation.  
-     Variables allocated on the stack are stored directly to the memory and access to 
-     this memory is very fast, and it's allocation is done at compile time
-  
-     Variables allocated on the heap have their memory allocated at run time and 
-     accessing this memory is a bit slower, but the heap size is only limited by the 
-     size of virtual memory. Element of the heap have no dependencies with each other 
-     and can always be accessed randomly at any time. You can allocate a block at any 
-     time and free it at any time. This makes it much more complex to keep track of 
-     which parts of the heap are allocated or free at any given time. 
-
+       
      Use stack if you know the size before compile time.
      Use heap if you do not know the size until runtime.
 
@@ -1988,19 +1979,22 @@
      2: They are ineligible for use with many template-based container classes. Classes without default constructors 
         will be incompatible with many templates.
 
-     3: Virtual base classes lacking default constructors are a pain to work with. That's because the arguments for virtual base class 
-        constructors must be provided by the most derived class of the object being constructed. As a result, a virtual base class 
-        lacking a default constructor requires that all classes derived from that class — no matter how far removed — must know about, 
-        understand the meaning of, and provide for the virtual base class's constructors' arguments. Authors of derived classes 
-        neither expect nor appreciate this requirement.
+     3: Virtual base classes lacking default constructors are a pain to work with. That's because the arguments for 
+        virtual base class constructors must be provided by the most derived class of the object being constructed. 
+        As a result, a virtual base class lacking a default constructor requires that all classes derived from that 
+        class - no matter how far removed - must know about, understand the meaning of, and provide for the virtual 
+        base class&apos;s constructors&apos; arguments. Authors of derived classes neither expect nor appreciate 
+        this requirement.
   </Answer>
 </QA>
 <QA ID="120" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
   <Question>
-     What is smart pointer called in C++ standard library ?
+     What is std::auto_ptr pointer in C++ standard library ?
   </Question>
   <Answer>
-     std::auto_ptr
+     std::auto_ptr was a class template available in the C++ Standard Library 
+     (declared in the &lt;memory&gt; header file) that provided some basic RAII features for 
+     C++ raw pointers. It has been replaced by the unique_ptr class.
   </Answer>
 </QA>
 <QA ID="121" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
@@ -2101,7 +2095,7 @@ const char * const p = "Hello";       // const pointer, const data
 	2: pass-by-reference is efficient: no copy constructor and destructor will be called
 	3: pass-by-reference can avoid slicing problem
 
-           if you have a small object — an int, for example — it may actually be more efficient 
+           if you have a small object - an int, for example - it may actually be more efficient 
         to pass it by value than to pass it by reference
 
   </Answer>
@@ -2151,7 +2145,7 @@ const char * const p = "Hello";       // const pointer, const data
      a bad idea, Because:
      1: won&apos;t fit a 32 bit registers. 
      2: its object size doubles. 
-     3: It will create a virtual table for virtual table pointers
+     3: It will create a virtual table for virtual function pointers
   </Answer>
 </QA>
 <QA ID="135" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
@@ -2161,9 +2155,9 @@ const char * const p = "Hello";       // const pointer, const data
   <Answer>
      You need this definition, because the way virtual destructors work is that the most derived 
      class&apos;s destructor is called first, then the destructor of each base class is called. 
-     That means that compilers will generate a call to ~AWOV even though the class is abstract, 
-     so you have to be sure to provide a body for the function. If you don't, the linker will 
-     complain about a missing symbol.
+     That means that compilers will generate a call to base class destructor even though the class
+     is abstract, so you have to be sure to provide a body for the function. If you don't, the 
+     linker will complain about a missing symbol.
   </Answer>
 </QA>
 <QA ID="136" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
@@ -2237,19 +2231,1051 @@ const char * const p = "Hello";       // const pointer, const data
      server processes can work in parallel on transactions sent to a shared message queue.
 
      Before a process can send or receive a message, the queue must be initialized (through the msgget 
-     function see below) Operations to send and receive messages are performed by the msgsnd() and 
-     msgrcv() functions, respectively.
+     function) Operations to send and receive messages are performed by the msgsnd() and msgrcv() 
+     functions, respectively.
   </Answer>
 </QA>
 <QA ID="141" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
   <Question>
-     What is a generic class ?
+     which functions do unix programming message queue provide ?
   </Question>
   <Answer>
-     asf
+     They allow two or more processes to exchange information
   </Answer>
 </QA>
 <QA ID="142" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     Please give example of key word &quot;using&quot; in c++11
+  </Question>
+  <Answer>
+     using for type alias:
+       usage: using identifier attr(optional) = type-id 
+       example:
+
+		// type alias, identical to
+		// typedef void (*func)(int, int);
+
+		using func = void (*) (int, int);
+
+		void example(int, int) {}
+		func f = example;
+
+  </Answer>
+</QA>
+
+<QA ID="143" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     What is inode ?
+  </Question>
+  <Answer>
+     The inode is a data structure that describes a filesystem object 
+     such as a file or a directory. Each inode stores the attributes 
+     and disk block location(s) of the object's data. 
+     A directory contains (in its inode table) an entry for itself, 
+     its parent, and each of its children.
+  </Answer>
+</QA>
+
+
+<QA ID="144" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     What is inode number ?
+  </Question>
+  <Answer>
+     An inode is an entry in inode table, containing information ( the metadata ) 
+     about a regular file and directory
+
+     Inode number also called index number, it consists following attributes.
+
+     1: File types ( executable, block special etc )
+     2: Permissions ( read, write etc )
+     3: UID ( Owner )
+     4: GID ( Group )
+     5: FileSize
+     6: Time stamps, including last access, last modification and last inode number change.
+     7: File deletion time
+     8: Number of links ( soft/hard )
+     9: Location of File on harddisk.
+     10:Some other metadata about file.
+
+     to check inode number of file, use following command. The first field is inode number:
+
+     $ls -il readme.txt
+      1150561 -rw-r--r-- 1 root root 0 Mar 10 01:06 tecadmin.txt
+
+     you can search for a file by inode number using find:
+
+     $find -inum 1150561 
+     ./readme.txt
+
+     move and rename does not change the inode number (within one file system),  they only change
+     the time stamps in inode table (a table for a directory for all its files, subdirs,parent dirs)
+  </Answer>
+</QA>
+
+<QA ID="145" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     what is hardlink ?
+  </Question>
+  <Answer>
+     A hard link is just an additional name for an existing file 
+     Hard links can also be created to other hard links. Any number 
+     of hard links, and thus any number of names, can be created for 
+     any file. Hard links can also be created to other hard links. 
+     However, they cannot be created for directories, and they cannot 
+     cross filesystem boundaries or span across partitions
+
+     Perhaps the most useful application for hard links is to allow 
+     files, programs and scripts to be easily accessed in a different 
+     directory from the original file or executable file. Typing the 
+     name of the hard link will cause the program or script to be 
+     executed in the same way as using its original name.
+   
+     use the command ln to create a hard link:
+     $ln file1 hlink1 
+
+     Example:
+
+     $ ln aaa opennote
+     $ ls -l
+                 number of hlinks
+                    |
+	total 48K   V
+	-rwxr-xr-x  2 yali.zhu None  748 Jun 20 14:55 aaa*
+	drwxr-xr-x+ 1 yali.zhu None    0 Jun 17 23:52 bin/
+	drwxr-xr-x+ 1 yali.zhu None    0 Jun 22 11:51 boostNote/
+	drwxr-xr-x+ 1 yali.zhu None    0 Jun 20 14:56 C++Review/
+	-rw-r--r--  1 yali.zhu None  177 Jun 18 12:06 commandsUsed.txt
+	-rwxr-xr-x  1 yali.zhu None 6.1K Jun 21 12:29 JobSearch2018.txt*
+	-rwxr-xr-x  2 yali.zhu None  748 Jun 20 14:55 opennote*
+	-rwxr-xr-x  1 yali.zhu None  143 May 23 16:40 processChanges*
+	-rwxr-xr-x  1 yali.zhu None  142 Jun  4 13:30 processChanges2*
+	-rwxr-xr-x  1 yali.zhu None  144 Jun  4 13:32 processChanges2.bash*
+	drwxr-xr-x+ 1 yali.zhu None    0 Jun  1 00:26 projects/
+	drwxr-xr-x+ 1 yali.zhu None    0 Jun 19 23:21 yalishare/
+	drwxr-xr-x+ 1 yali.zhu None    0 Jun 21 13:25 YaliSources/
+
+        $ ls -il aaa opennote
+        56013520365968768 -rwxr-xr-x 2 yali.zhu None 748 Jun 20 14:55 aaa*
+        56013520365968768 -rwxr-xr-x 2 yali.zhu None 748 Jun 20 14:55 opennote*   //inode number is the same as aaa above
+
+        $ find -inum 56013520365968768
+        ./aaa
+        ./opennote
+
+
+  </Answer>
+</QA>
+
+<QA ID="146" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     what is softlink ?
+  </Question>
+  <Answer>
+     A symbolic link, also termed a soft link, is a special kind 
+     of file that points to another file, much like a shortcut in 
+     Windows or a Macintosh alias. Unlike a hard link, a symbolic 
+     link does not contain the data in the target file. It simply 
+     points to another file(entry) somewhere in the file system.
+     And it can cross filesystem boundaries
+
+     Soft links is a special kind of file that points to another 
+     file, much like a shortcut. Unlike a hard link, a symbolic 
+     link does not contain the data in the target file. It simply 
+     points to another entry somewhere in the file system. 
+
+     To create a soft link:
+     ln -s file linkname
+     
+     example:
+
+     $ ln -s aaa opennoteSoft
+     $ ls -il aaa open*
+                       l in this column shows it is a softlink
+                        |                                   Arrow shows where the soft link point to
+                        V                                                         |
+      56013520365968768 -rwxr-xr-x 2 yali.zhu None 748 Jun 20 14:55 aaa*          | 
+      56013520365968768 -rwxr-xr-x 2 yali.zhu None 748 Jun 20 14:55 opennote*     v
+      60517119993349091 lrwxrwxrwx 1 yali.zhu None   3 Jun 22 15:58 opennoteSoft -> aaa*    
+
+  </Answer>
+</QA>
+
+<QA ID="147" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     What is difference between hardlink and soft link ?
+  </Question>
+  <Answer>
+     This difference gives symbolic links certain qualities that 
+     hard links do not have, such as the ability to link to directories, 
+     or to files on remote computers networked through NFS. Also, when 
+     you delete a target file, symbolic links to that file become unusable, 
+     whereas hard links preserve the contents of the file. 
+
+	inode &lt;--------
+	   ^          |
+	   |          | 
+	myHardLink  myfile.txt &lt;----------  mySoftLink
+  </Answer>
+</QA>
+
+<QA ID="148" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     What is a file descriptor ?
+  </Question>
+  <Answer>
+     File descriptor is an abstract indicator used to access a file or other IO resource, 
+     such as a file or network socket. It forms a part of the POSIX API. 
+     A file descriptor is a non-negative integer and in C language, it is an integer.
+     POSIX has 3 standard file descriptors:
+   
+     stdio.h file stream    Integer Value
+     ------------------------------------
+     stdin                    0
+     stdout                   1
+     stderror                 2
+     ------------------------------------
+  </Answer>
+</QA>
+
+<QA ID="149" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     What does aka mean as in aka Unix Platform ?
+  </Question>
+  <Answer>
+     aka is a short form of Also Known As. So, you would know this:
+     Linux, aka Unix Platform, ...
+   
+  </Answer>
+</QA>
+
+<QA ID="150" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     What is process control block in Linux ?
+  </Question>
+  <Answer>
+     Process Control Block (PCB, also called Task Controlling Block, Entry of 
+     the Process Table, Task Struct, or Switchframe) is a data structure in 
+     the operating system kernel containing the information needed to manage 
+     the scheduling of a particular process
+  </Answer>
+</QA>
+
+<QA ID="151" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     What is process table in Linux ?
+  </Question>
+  <Answer>
+     Process table is a data structure in Linux kernel, which store information 
+     about all currently running process. The process table contains process ID's, 
+     memory usage of the process, all the file descriptors used in the process, etc.
+  </Answer>
+</QA>
+
+<QA ID="152" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     What command to use to change file access permission ?
+  </Question>
+  <Answer>
+     chmod
+  </Answer>
+</QA>
+
+<QA ID="153" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     Where is shell located on linux system ?
+  </Question>
+  <Answer>
+     $ echo $SHELL
+     /bin/csh
+
+  </Answer>
+</QA>
+
+<QA ID="154" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     What is a shell ?
+  </Question>
+  <Answer>
+     The shell is a program that takes commands from the keyboard and gives them 
+     to the operating system to perform.
+  </Answer>
+</QA>
+
+<QA ID="155" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     What are the a few most popular shells nowadays ?
+  </Question>
+  <Answer>
+     1: bash - GNU Bourne A-gain SHell
+     2: ksh  - Korn Shell
+     3: Zsh
+     4: Fish - friendly interactive shell
+     5: Tcsh / Csh, enhanced C shell, C like syntax
+
+  </Answer>
+</QA>
+
+<QA ID="156" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     What does the export command do ?
+  </Question>
+  <Answer>
+     We need to export the variable for it to be inherited by another program 
+     - including a shell script
+  </Answer>
+</QA>
+
+<QA ID="157" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     What are frequent use shell variables ?
+  </Question>
+  <Answer>
+     Shell variables are usually named in uppercase.Most frequeltly used are:
+     1. SHELL
+     2. HOSTNAME
+     3. HISTFILE
+     4. HOME
+     5. LOGONSERVER
+     6. NUMBER_OF_PROCESSORS
+     7. OS
+     8. PWD
+     9. TERM
+     10. USERNAME
+     11. USERDOMAIN
+  </Answer>
+</QA>
+
+<QA ID="158" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     What does the finger command do ?
+  </Question>
+  <Answer>
+     Finger may be used to look up users on a remote machine.
+     It displays information about a user on a specified system running the
+     finger service. Output varies based on the remote system.
+  </Answer>
+</QA>
+
+<QA ID="159" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     What does the logname command do ?
+  </Question>
+  <Answer>
+     logname (stands for Login Name) is a program in Unix and Unix-like 
+     operating systems that prints the name of the user executing the command.
+  </Answer>
+</QA>
+
+<QA ID="160" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     What is Camel case in naming convension?
+  </Question>
+  <Answer>
+     Camel case is the practice of writing compound words or phrases such that 
+     each word or abbreviation in the middle of the phrase begins with a 
+     capital letter, with no intervening spaces or punctuation.
+
+     Example:
+        thisIsAmerica, getProperties etc
+
+     But Pascal Case is similar, with first letter capitalized:
+        ThisIsAmerica, GetProperties etc
+  </Answer>
+</QA>
+
+<QA ID="161" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     What is CGI ?
+  </Question>
+  <Answer>
+     Common Gateway Interface
+  </Answer>
+</QA>
+
+<QA ID="162" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     In Perl, all variables start with what ?
+  </Question>
+  <Answer>
+     with $, like $abc, is a variable
+     All variables are marked with leading sigils in perl script
+  </Answer>
+</QA>
+<QA ID="163" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     In what areas is Perl used for ?
+  </Question>
+  <Answer>
+     In addition to CGI, Perl 5 is used for system administration, network 
+     programming, finance, bioinformatics, and other applications, such as 
+     for GUIs, because of its flexibility and power.
+
+     GUIs may be developed using Perl. For example, Perl/Tk and wxPerl are 
+     commonly used to enable user interaction with Perl scripts. Such 
+     interaction may be synchronous or asynchronous, using callbacks to 
+     update the GUI.
+
+  </Answer>
+</QA>
+
+<QA ID="164" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     Who is going to interview me on June 25 ?
+  </Question>
+  <Answer>
+     Who to ask for: Chad Komer or Jason Walston
+  </Answer>
+</QA>
+
+<QA ID="165" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     What does top command do ?
+  </Question>
+  <Answer>
+     top command displays processor activity of your Linux box and also 
+     displays tasks managed by kernel in real-time. It'll show processor 
+     and memory are being used and other information like running processes. 
+     This may help you to take correct action. top command found in 
+     UNIX-like operating systems.
+  </Answer>
+</QA>
+
+<QA ID="166" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     which command
+  </Question>
+  <Answer>
+     which is a Unix command used to identify the location of executables. 
+     The command takes one or more arguments; for each of these arguments, 
+     it prints the full path of the executable to stdout that would have 
+     been executed if this argument had been entered into the shell
+  </Answer>
+</QA>
+
+<QA ID="167" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     who command ?
+  </Question>
+  <Answer>
+     The standard Unix command who displays a list of users who are 
+     currently logged into the computer. The who command is related to 
+     the command w , which provides the same information but also 
+     displays additional data and statistics.
+  </Answer>
+</QA>
+
+<QA ID="168" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     w command ?
+  </Question>
+  <Answer>
+     The command w on many Unix-like operating systems provides a quick 
+     summary of every user logged into a computer, what each user is 
+     currently doing, and what load all the activity is imposing on the 
+     computer itself. The command is a one-command combination of several 
+     other Unix programs: who, uptime, and ps -a.
+
+     example:
+
+     $ w
+        11:12am up 608 day(s), 19:56,  6 users,  load average: 0.36, 0.36, 0.37
+     	User     tty       login@  idle  what
+	smithj   pts/5      8:52am       w
+	jonesm   pts/23    20Apr06    28 -bash
+	harry    pts/18     9:01am     9 pine
+	peterb   pts/19    21Apr06       emacs -nw html/index.html
+	janetmcq pts/8     10:12am 3days -csh
+	singh    pts/12    16Apr06  5:29 /usr/bin/perl -w perl/test/program.pl
+  </Answer>
+</QA>
+
+<QA ID="169" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     source command  ?
+  </Question>
+  <Answer>
+     The source command can be used to load any functions file into the 
+     current shell script or a command prompt. It read and execute commands 
+     from given FILENAME and return.
+    
+     The source command can be abbreviated as just a dot (.) in Bash and 
+     similar POSIX-ish shells. 
+  </Answer>
+</QA>
+
+<QA ID="170" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     tar command ?
+  </Question>
+  <Answer>
+     The Linux &quot;tar&quot; stands for tape archive, which is used by large number 
+     of Linux/Unix system administrators to deal with tape drives backup. 
+     The tar command used to rip a collection of files and directories into 
+     highly compressed archive file commonly called tarball or tar, gzip 
+     and bzip in Linux
+  </Answer>
+</QA>
+
+<QA ID="171" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     ifconfig command ?
+  </Question>
+  <Answer>
+     ifconfig is a system administration utility in Unix-like operating 
+     systems for network interface configuration. The utility is a command 
+     line interface tool and is also used in the system startup scripts of 
+     many operating systems.
+  </Answer>
+</QA>
+
+<QA ID="172" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     How to use boost library lexical cast ?
+  </Question>
+  <Answer>
+     lexical cast makes type conversion so much easier.
+   1: #include "boost/lexical_cast.hpp"
+   2: using boost::lexical_cast;
+   3: using boost::bad_lexical_cast;
+   4: ready to use it: convert an integer to string:
+       int s=123;
+       string str0=lexical_cast&lt;string&gt;(s);
+       string str1=lexical_cast&lt;string&gt;(2.3);
+       string str2=lexical_cast&lt;string&gt;('A');
+       array&lt;char,64&gt; msg=lexical_cast&lt;array&lt;char,64&gt;&gt;(23);   //array with specific size is a type
+
+       try {
+          s=lexical_cast&lt;int&gt;("56.78");
+       }catch(bad_lexical_cast &e}{
+          cout &lt;&lt; e.what() &lt;&lt; endl;
+       }
+
+       s=lexical_cast&lt;int&gt;("5678yu");    //bad_lexical_cast
+       s=lexical_cast&lt;int&gt;("5678yu",4);  //good
+
+  </Answer>
+</QA>
+
+<QA ID="173" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     How to use boost library variant ?
+  </Question>
+  <Answer>
+     boost variant to solve the traditional problem:
+         union{int i; float f;} u;   //good:
+         union{int i; string f;} u;  //bad
+     usage:
+     1: #include "boot\variant.hpp"
+     2: declaration: 
+         boost::variant&lt;int,string&gt; u1,u1;    //boost's way of union
+         u1=2;
+         u2="hello";
+         u1=boost::get&lt;int&gt;(u1)*2;      //has to use get to change u1 to a number ?
+         string st=boost::get&lt;string&gt;(u1);     //bad get
+                st=boost::get&lt;string&gt;(u2);     //good get
+
+         boost::variant &lt;int,string&gt; u3; //u3 is 0 now until you assign a number or a string
+
+        //then how to know v's type ?
+        void Double(boost:variant&lt;int, string&gt; v);
+
+        //solution: using boost visitor template boost::static_visitor&lt;&gt;
+
+        class DoubleVisitor : public boost::static_visitor&lt;&gt;{
+        public:
+           void operator()(int &1) cont{
+               i+=i;
+           }
+           void operator()(string & str){
+               str+=str;
+           }
+        };
+
+        u1=2;
+
+        boost::apply_visitor(DoubleVisitor(),u1);   //like creating a thread, passing argument 
+                                                    //in second position, result: u1 becomes 4
+        u2="hello";
+
+        boost::apply_visitor(DoubleVisitor(),u2);   // u2 becomes "HelloHello"
+
+        //visitor is like polymorphism on variant
+
+        std::vector&lt;boost::variant&lt;int,string&gt;&gt; vec;
+        vec.push_back("good");
+        vec.push_back(23);
+        vec.push_back("bad");
+        DoubleVisitor f;
+        for(auto x: vec){
+           boost::apply_visitor(f,x);
+        }
+
+        //Note variant can never be empty, but any can be empty
+  </Answer>
+</QA>
+
+<QA ID="174" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     How to use boost any ?
+  </Question>
+  <Answer>
+     #include "boost\any.hpp"
+
+     void main(){
+        boost::any x,y,z;
+        x=string("hello");
+        x=2.3;
+        y='z';
+        z=vector&lt;int&gt;();
+        //all these uses heap, dynamic storage
+        //variant use stack storage, so more efficient;
+   
+        //to print any:
+        cout &lt;&lt; boost::any_cast&lt;char&gt;(y) &lt;&lt;endl;  //return a copy of y's data 'z'
+        cout &lt;&lt; boost::any_cast&lt;double&gt;(x) &lt;&lt;endl;  //return a copy of y's data 'z'
+        cout &lt;&lt; boost::any_cast&lt;int&gt;(x) &lt;&lt; endl;  //throws exception: bad_any_cast
+        cout &lt;&lt; boost::any_cast&lt;float&gt;(x) &lt;&lt; endl;  //throws exception: bad_any_cast: 
+                                                    //must match exact type !        
+        boost::any_cast&lt;vector&lt;int&gt;&gt;(z).push_back(23);   //this actually returns a copy 
+                                                   //of the vector stored in z. so, 
+                                                   //this line doesn't do anything meaningful
+        int i=boost::any_cast&lt;vector&lt;int&gt;&gt;(z).push_back();  //crash because z is still 
+                                                            // holding an empty vector!
+        //back() Returns a reference to the last element in the vector.
+   
+        //store pointers:
+        int i=5;
+        boost::any p=&i;
+        int * pInt=boost::any_cast&lt;int*&gt;(p);
+   
+        //as a class:
+        vector&lt;boost:any&gt; m;
+        m.push_back(2);
+        m.push_back('a');
+        m.push_back(p);
+        m.push_back(boost::any());    //a place holder
+   
+        //for store property settings
+        struct Property{
+           string name;
+           boost::any value;
+        };
+        vector&lt;Property&gt; properties;
+   
+        //any can be empty:
+        if(x.empty())
+           cout &lt;&lt; "x is empty " &lt;&lt; endl;
+	
+     	//type can be checked only at runtime:
+	if(x.type() == typeid(char))
+	   cout &lt;&lt; "x is a char" &lt;&lt; endl;
+   
+     }
+
+
+Note: boost::any's datatype can only be checked at runtime
+  </Answer>
+</QA>
+
+<QA ID="175" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     Boost Library ?
+  </Question>
+  <Answer>
+     Boost is a set of libraries for the C++ programming language that provide support for tasks 
+and structures such as linear algebra, pseudorandom number generation, multithreading, image processing, 
+regular expressions, and unit testing. It contains over eighty individual libraries.
+
+Most of the Boost libraries are licensed under the Boost Software License, designed to allow Boost to 
+be used with both free and proprietary software projects. Many of Boost's founders are on the C++ standards 
+committee, and several Boost libraries have been accepted for incorporation into both the C++ Technical 
+Report 1 and the C++11 standard.
+
+The libraries are aimed at a wide range of C++ users and application domains. They range from general-purpose 
+libraries like the smart pointer library, to operating system abstractions like Boost FileSystem, to libraries 
+primarily aimed at other library developers and advanced C++ users, like the template metaprogramming (MPL) 
+and domain-specific language (DSL) creation (Proto).
+
+In order to ensure efficiency and flexibility, Boost makes extensive use of templates. Boost has been a source 
+of extensive work and research into generic programming and metaprogramming in C++.
+
+Most Boost libraries are header based, consisting of inline functions and templates, and as such do not need 
+to be built in advance of their use. Some Boost libraries coexist as independent libraries.
+  </Answer>
+</QA>
+
+<QA ID="176" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     Boost smart pointer ?
+  </Question>
+  <Answer>
+    Smart pointers
+     1.Scoped pointer: scoped_ptr
+
+	#include &lt;boost/scoped_ptr.hpp&gt;
+
+        struct Object{
+           int value;
+        }
+        void main(){
+	   boost::scoped_ptr&lt;int&gt; int_ptr(new int);   //delete itself when go out scope
+           int_ptr.reset(new int);                    //
+	
+           boost::scoped_ptr&lt;Object&gt; ptr;
+	   if(ptr) {
+	    //do something here. but ptr is null now, so it won't come in here
+	   }
+	
+	   ptr.reset(new Object);
+	   if(ptr){
+	     Object object=*ptr;
+		ptr-&gt;value=5;
+	   }
+        }      
+        //scope pointers 
+        1)cannot copy
+        2)cannot use STL containers 
+        3)can swap with another scoped_ptr
+        4)can resest
+
+   2. shared pointer:
+
+        #include &lt;boost/shared_ptr.hpp&gt;
+        void main(){
+           boost::shared_ptr&lt;int&gt; int_ptr(new int);
+           Owner a(int_ptr);
+           Owner b(int_ptr);
+           Owner c(int_ptr);
+           //no need to delete here anymore
+           //you can copy it, can use with STL containers
+        }
+  </Answer>
+</QA>
+
+<QA ID="177" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     STL smart pointers
+  </Question>
+  <Answer>
+     They are all class tempate:
+
+	template&lt;class T&gt;
+	std:shared_ptr&lt;T&gt;
+	std:unique_ptr&lt;T&gt;
+	std:weak_ptr&lt;T&gt;
+
+	tempalte&lt;class T&gt;
+	class weak_ptr;
+
+	//less perfect way to create a shared pointer
+	shared_ptr&lt;Dog&gt; p(new Dog("Gunner"));
+
+	//prefered way to create a shared pointer:
+	shared_ptr&lt;Dog&gt; p=make_shared&lt;Dog&gt;("Tank");
+
+	shared poitner casting:
+	//function tempalte for casting
+	static_pointer_cast&lt;T&gt;
+	dynamic_pointer_cast&lt;T&gt;
+	const_poitner_cast&lt;T&gt;
+
+	example:
+	foo = std::dynamic_pointer_cast&lt;A&gt;(bar);
+
+	//unique_ptr functions
+
+	release()
+	reset()
+  </Answer>
+</QA>
+
+<QA ID="178" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     Which one is the default c language pre-precessor on most standard Unix systems?
+
+	a: gcc
+	b: g77
+	c: g++
+	d: cpp
+	e: php
+  </Question>
+  <Answer>
+     Answer: cpp, short for c pre-precessor
+  </Answer>
+</QA>
+
+<QA ID="179" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     In the X window system, which of the following is true about the windows manager?
+
+	A: It is a client application that maintains the "look and feel" 
+           of other client application's windows
+	B: It is the same as the X server
+	C: It must run on the same machine as the X server.
+  </Question>
+  <Answer>
+     Answer is A
+  </Answer>
+</QA>
+<QA ID="180" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     Why is fgets superior to gets?
+
+	A: fgets uses I/O buffering for improved efficiency
+	B: fgets takes a size parameter which is used to prevent buffer overflow
+	C: fgets does type conversion
+  </Question>
+  <Answer>
+     Answer is B
+  </Answer>
+</QA>
+<QA ID="181" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     What will happen when the following code is run ?
+        int x;
+	while (x &lt; 100) {
+		cout &lt;&lt; x++;
+	}
+
+        A: The computer will output like 0123...99
+        B: The computer will output 0123...100
+        C: The output is undefined
+        D: None of the above
+  </Question>
+  <Answer>
+     when compile, got error C4700: uninitialized local variable 'x' used
+     The error is compiler dependent. Correct answer should be undefined for 
+     uninitialized local variable x
+
+  </Answer>
+</QA>
+<QA ID="182" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     A relational operator is used to 
+     A: combine values
+     B: compare values
+     C: distinguish different types of variables
+     D: change variables to local values
+  </Question>
+  <Answer>
+     B
+  </Answer>
+</QA>
+<QA ID="183" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     What does 7/9*9 equal to (in C and C++) ?
+  </Question>
+  <Answer>
+     0
+  </Answer>
+</QA>
+<QA ID="184" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     Variables with names that describe the data stored at that particular memory location are called
+     
+     A: identifiers
+     B: constant variables
+     C: floating point variables
+     D: mnemonic variables
+  </Question>     
+  <Answer>
+     D
+  </Answer>
+</QA>
+<QA ID="185" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     pushdown list means: 
+     
+     A: Stack
+     B: Queue
+     C: Linked List
+     D: All of the ablove
+  </Question>
+  <Answer>
+     A.  Push-down list - a list in which the next item to be removed is the item most recently stored (LIFO)
+  </Answer>
+</QA>
+<QA ID="186" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     When must template functions have explicit template parameters ?
+
+     A: always
+     B: When the template types cannot be infered
+     C: Never. The template types can always be inferred.
+  </Question>
+  <Answer>
+     B
+  </Answer>
+</QA>
+<QA ID="187" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     When are templates usually instantiated ?
+     A: At runtime
+     B: At compile time
+     C: At link time
+  </Question>
+  <Answer>
+     B
+  </Answer>
+</QA>
+<QA ID="188" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     Are templates conceptually related to polymorphism ?
+     
+     A: Nope
+     B: Only when the template types are objects
+     C: Yes, but compile-time polymorphism
+  </Question>
+  <Answer>
+     C
+  </Answer>
+</QA>
+<QA ID="189" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     In general, is it possible to completely hide the source code of a library written using templates ?
+
+     A: Yes, but using export feature
+     B: No, pretty much never
+     C: Yes, all the time
+  </Question>
+  <Answer>
+     B
+  </Answer>
+</QA>
+<QA ID="190" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     Which of the following describes a potentially surprising result of using templates ?
+
+     A: Slower programs
+     B: Poor variable naming in the debugger
+     C: Increased executable size in comparison to the code base
+  </Question>
+  <Answer>
+     C
+  </Answer>
+</QA>
+<QA ID="191" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     Following declarations are the same ?
+       const char *s;
+       char const *s;
+
+  </Question>
+  <Answer>
+     True
+  </Answer>
+</QA>
+<QA ID="192" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     When will this line fail to compile: new myObj[100]; ?
+    
+     A: Never
+     B: when myObj is too large to fit into memory
+     C: When myObj has no default constructor
+  </Question>    
+  <Answer>
+     C
+
+      When you have alternate constructor, the compiler will not generate a default constructor for you.
+  </Answer>
+</QA>
+<QA ID="193" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     What is wrong with the following code ?
+
+      int *x=(int*)malloc(100*sizeof(int));
+      x=realloc(x,sizeof(int)*200);
+
+      A: If realloc fails, then the original memory is lost
+      B: Nothing, realloc is guaranteed to succeed (by returnning the original pointer)       
+      C: Nothing, realloc frees the original memory passed to it
+
+  </Question>
+  <Answer>
+      A
+  </Answer>
+</QA>
+<QA ID="194" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     What is one possible symptom of having called free on the same block of memory twice ?
+
+     A: Nothing, calling free twice on one block of memory always works fine
+     B: Malloc might always return the same block of memory
+     C: You cannot free any memory in the future
+  </Question>
+  <Answer>
+     B.  
+  </Answer>
+</QA>
+<QA ID="195" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     Assuming this code were being compiled using a standards-conforming C++, what is wrong with it ?
+
+     int *x = malloc(100*sizeof(int));
+     x = realloc(x,sizeof(int));
+
+     A: malloc is undefined in C++, you can only allocate memory using new
+     B: Invalid cast from a void * to an int*
+     C: Nothing is wrong with this code
+  </Question>
+  <Answer>
+     B
+  </Answer>
+</QA>
+<QA ID="196" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     What is a difficulty that arises with handling out of memory errors ?
+
+     A: Many cleanup operations require extra memory
+     B: Running out of memory rarely happens in systems that interact with users
+     C: Once you have run out of memory, your program cannot continue
+  </Question>
+  <Answer>
+     A
+  </Answer>
+</QA>
+<QA ID="197" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     What is wrong with this line of code ?
+
+     delete NULL;
+
+     A: It causes a segmentation fault when delete trires to access NULL;
+     B: Nothing
+     C: It is undefined behavior
+  </Question>
+  <Answer>
+     B
+  </Answer>
+</QA>
+<QA ID="198" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     Unions can contain most types in their member lists, except for 3 cases, which are what?
+  </Question>
+  <Answer>
+     1. Class types that have constructors or destructors
+     2. Class types that have user-defined assignment operators
+     3. Static data members
+  </Answer>
+</QA>
+<QA ID="199" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     Can the anonymouse unions have function members ?
+  </Question>
+  <Answer>
+     No
+  </Answer>
+</QA>
+<QA ID="200" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     Can you overload the constructor ?
+  </Question>
+  <Answer>
+     Yes
+  </Answer>
+</QA>
+<QA ID="201" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
   <Question>
      What is a generic class ?
   </Question>
@@ -2257,4 +3283,5 @@ const char * const p = "Hello";       // const pointer, const data
      asf
   </Answer>
 </QA>
+
 </QuestionsAndAnswers>
