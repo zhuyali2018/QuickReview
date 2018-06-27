@@ -6,7 +6,7 @@
 <QA ID="1" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
 
   <Question>
-        How can I handle a constructor that fails ?
+     How can I handle a constructor that fails ?
   </Question>
 
   <Answer>
@@ -3277,11 +3277,467 @@ to be built in advance of their use. Some Boost libraries coexist as independent
 </QA>
 <QA ID="201" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
   <Question>
+     Throw an exception or return an error code ?
+  </Question>
+  <Answer>
+     1. Exceptions leaves your code clean of all the checks necessary when testing 
+        status returns on every call,
+     2. Exceptions let you use the return value of functions for actual values,
+     3. Exceptions can carry more information than a status return can,
+     4. Exceptions can't be ignored through inaction, while status returns can.
+  </Answer>
+</QA>
+
+<QA ID="202" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     What is C++ Singleton design pattern?
+  </Question>
+  <Answer>
+     C++ Singleton class design pattern and methodology ensures that only one instance 
+     of the C++ class is instantiated. 
+     It usually implements a static method called instance() that returns a pointer to 
+     its instance if already created or create a new one.
+
+     2 advantages:
+     1: Ensure a class has only one instance, and provide a global point of access to it.
+     2: Encapsulated "just-in-time initialization" or "initialization on first use". 
+
+     Snippet:
+       Logger* Logger::Instance(){
+          if (!m_pInstance)   // Only allow one instance of class to be generated.
+             m_pInstance = new Logger;
+ 
+          return m_pInstance;
+       }
+
+  </Answer>
+</QA>
+<QA ID="203" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     If we orverride a virtual method in derived class, do we have to prefix with &quot;virtual&quot; ?
+  </Question>
+  <Answer>
+     No   
+  </Answer>
+</QA>
+
+
+
+<QA ID="204" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     What is factory method design pattern ? what is the advantage of it ?
+  </Question>
+  <Answer>
+      In Factory pattern, we create object without exposing the creation logic to client and 
+      the client use the same common interface to create new type of object.
+
+      Snippet example:
+
+      class Stooge
+      {
+        public:
+          // Factory Method
+          static Stooge *make_stooge(int choice);
+          virtual void slap_stick() = 0;
+      };
+
+      //hide how the object is created, just pick a choice:
+      Stooge *Stooge::make_stooge(int choice)
+      {
+        if (choice == 1)
+          return new Larry;
+        else if (choice == 2)
+          return new Moe;
+        else
+          return new Curly;
+      }
+
+      vector&lt;Stooge*&gt; roles;
+      roles.push_back(Stooge::make_stooge(choice));
+      
+  </Answer>
+</QA>
+<QA ID="205" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     What is the 7 Layers of the OSI Model ?
+  </Question>
+  <Answer>
+     The Open System Interconnection (OSI) model defines a networking framework to implement protocols 
+     in seven layers. They are:
+
+     Layer 7: Application Layer - supports application and end-user processes. Communication partners are identified.
+     Layer 6: Presentation - This layer provides independence from differences in data representation by translating 
+              from application to network format, and vice versa. 
+     Layer 5: Session - This layer establishes, manages and terminates connections between applications
+     Layer 4: Transport - provides transparent transfer of data between end systems, error recovery and flow control
+     Layer 3: Network -provides switching and routing technologies, creating logical paths, known as virtual circuits
+     Layer 2: Data Link - data packets are encoded and decoded into bits.
+     Layer 1: Physical- conveys the bit stream - electrical impulse, light or radio signal — through 
+              the network at the electrical and mechanical level
+  </Answer>
+</QA>
+<QA ID="206" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     What is differenct between VxWorks and Linux ?
+  </Question>
+  <Answer>
+     vxWorks is Real time OS, Linux is a General Purpose Operating System (GPOS). GPOS's task scheduling is throughput based.
+     RTOS is priority based. it uses pre-emptive task scheduling method and is light weight and small in size. The kernel 
+     of an RTOS is preemptible where as a GPOS kernel is not preemptible.
+
+     The primary features of the VxWorks OS include, but are not limited to, a multitasking kernel that includes pre-emptive 
+     and round robin scheduling as well as fast interrupt response; memory protection, in order to isolate user applications 
+     from the kernel; SMP support, an error handling framework; a file system; and local and distributed message queues.
+
+  </Answer>
+</QA>
+<QA ID="207" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     What is SMP ?
+  </Question>
+  <Answer>
+     Symmetric multiprocessing
+  </Answer>
+</QA>
+<QA ID="208" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     What is Plmpl ?
+  </Question>
+  <Answer>
+     It is the Pointer to implementation. It is a c++ programming technique that removes implementation details of a calss 
+     from its object representation by placing them in a separate class, accessed through an opaque pointer (unique pointer)
+
+     Users obtain a unique pointer to a lightweight or abstract base class, the implementation details are in the derived 
+     class that overrides its virtual member functions.
+  </Answer>
+</QA>
+<QA ID="209" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     how to prevent a class from being inherited  ?
+  </Question>
+  <Answer>
+     use the final keyword (c++11):
+     class myClass final{};
+  </Answer>
+</QA>
+<QA ID="210" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     how does Java achieve polymorphism ?
+  </Question>
+  <Answer>
+     Static Polymorphism: It is achieved through function overloading and operator overloading.
+     Dynamic Polymorphism : It is also called as run-time polymorphism. In this case java compiler does not know which 
+     method is invoked at compilation time. Just JVM decides which method is invoked at the run-time. Method overriding 
+     is example of run-time polymorphism. In this case overridden method is invoking through the super class reference 
+     variable.
+  
+  </Answer>
+</QA>
+<QA ID="211" type="OneAnswer" category="GIT" countdown="0" resetto="0" >
+  <Question>
+     How to start tracking files in a directory using git ?
+  </Question>
+  <Answer>
+     1. cd &lt;directory&gt;
+     2. git init
+     3. git add *.cpp *.h *.txt *.sln
+     4. git commit -am "comment"
+  </Answer>
+</QA>
+<QA ID="212" type="OneAnswer" category="GIT" countdown="0" resetto="0" >
+  <Question>
+     how to show difference between 2 commits ?
+  </Question>
+  <Answer>
+     git diff [file]
+     git diff &lt;hash1&gt; &lt;hash2&gt;
+  </Answer>
+</QA>
+<QA ID="213" type="OneAnswer" category="GIT" countdown="0" resetto="0" >
+  <Question>
+     How to show which files are tracked in git ?
+  </Question>
+  <Answer>
+     git ls-tree -r master --name-only
+  </Answer>
+</QA>
+<QA ID="214" type="OneAnswer" category="GIT" countdown="0" resetto="0" >
+  <Question>
+     How to discard changes in git ?
+  </Question>
+  <Answer>
+     git checkout -- filename       //discard chagnes in working directory
+  </Answer>
+</QA>
+<QA ID="215" type="OneAnswer" category="GIT" countdown="0" resetto="0" >
+  <Question>
+     How to create a new branch from a history point in git ?
+  </Question>
+  <Answer>
+     git branch &lt;new branch name&gt; &lt;hash of new branch root&gt;
+  </Answer>
+</QA>
+<QA ID="216" type="OneAnswer" category="GIT" countdown="0" resetto="0" >
+  <Question>
+     How to make a branch and switch to the new branch ?
+  </Question>
+  <Answer>
+     git checkout -b &lt;new branch name&gt;
+  </Answer>
+</QA>
+<QA ID="217" type="OneAnswer" category="GIT" countdown="0" resetto="0" >
+  <Question>
+     How to merge 2 branches in git ?
+  </Question>
+  <Answer>
+     1. swith to branch to be merged, like: git checkout branch1Name
+     2. git merge branche2Name
+  </Answer>
+</QA>
+<QA ID="218" type="OneAnswer" category="GIT" countdown="0" resetto="0" >
+  <Question>
+     How to cancel the merge ?
+  </Question>
+  <Answer>
+     git merge --abort        //Cancel themerge just did with conflict
+  </Answer>
+</QA>
+<QA ID="219" type="OneAnswer" category="GIT" countdown="0" resetto="0" >
+  <Question>
+     What is my githut.com account ?
+  </Question>
+  <Answer>
+     username: zhuyali2018
+     pwd: jmjm?2?
+     email:yali900@gmail.com
+  </Answer>
+</QA>
+<QA ID="220" type="OneAnswer" category="GIT" countdown="0" resetto="0" >
+  <Question>
+     How to push to github ?
+  </Question>
+  <Answer>
+     To push to github:
+        1. get github URL, for example: https://github.com/zhuyali2018/Test.git
+        2. add URL using command: git remote add origin &lt;URL&gt;
+           example: git remote add origin https://github.com/zhuyali2018/Test.git
+        3. verify the new remoet URL setting: git remote -v
+        4. push using command: git push origin &lt;branch name&gt;
+           example: git push origin master
+                    git push origin new-branch-name
+           Note, this last step needs to do in cmd.exe instread of cygwin: 
+           NOTE: Actually just use git push, it defaults to current branch with origin
+  </Answer>
+</QA>
+<QA ID="221" type="OneAnswer" category="GIT" countdown="0" resetto="0" >
+  <Question>
+     How to get from github repository first time ?
+  </Question>
+  <Answer>
+     1. mkdir localdir
+     2. cd localdir
+     3. git init
+     4. git remote add origin https://github.com/zhuyali2018/Test.git
+     5. git remote -v   //verify origin set properly
+        // for the first time, do fetch
+     6. git fetch origin master
+     7. git checkout master
+ 
+     //if not the first time, just update:
+     6. git pull origin master 
+  </Answer>
+</QA>
+<QA ID="222" type="OneAnswer" category="GIT" countdown="0" resetto="0" >
+  <Question>
+     How to switch to a different branch in git ?
+  </Question>
+  <Answer>
+     git checkout branchName
+  </Answer>
+</QA>
+<QA ID="223" type="OneAnswer" category="GIT" countdown="0" resetto="0" >
+  <Question>
+     How to show commit history ?
+  </Question>
+  <Answer>
+     git hist
+  </Answer>
+</QA>
+<QA ID="224" type="OneAnswer" category="GIT" countdown="0" resetto="0" >
+  <Question>
+     How to remove files from git tracking ?
+  </Question>
+  <Answer>
+     git rm --cached *.tlog
+  </Answer>
+</QA>
+<QA ID="225" type="OneAnswer" category="GIT" countdown="0" resetto="0" >
+  <Question>
+     How to list branch names ?
+  </Question>
+  <Answer>
+     git branch
+  </Answer>
+</QA>
+<QA ID="226" type="OneAnswer" category="GIT" countdown="0" resetto="0" >
+  <Question>
+     How to set user name and email ?
+  </Question>
+  <Answer>
+     git config --global user.name 'zhuyali2018'
+     git config --global user.email 'yali900d@gmail.com'
+     //used to track who did the commit
+  </Answer>
+</QA>
+<QA ID="227" type="OneAnswer" category="GIT" countdown="0" resetto="0" >
+  <Question>
+     How to set popular git alias ?
+  </Question>
+  <Answer>
+     //most popular configurations:
+     git config --global alias.co checkout
+     git config --global alias.ci commit
+     git config --global alias.st status
+     git config --global alias.br branch
+     git config --global alias.hist "log --pretty=format:'%h %ad | %s%d [%an]' --graph --date=short"
+     git config --global alias.type 'cat-file -t'
+     git config --global alias.dump 'cat-file -p'
+     git config --global alias.ls "ls-tree -r master --name-only"
+     git config --global alias.tracked "ls-tree -r master --name-only"
+
+     git config --global push.default simple
+  </Answer>
+</QA>
+<QA ID="228" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     What should be at the first line of a shell script ?
+  </Question>
+  <Answer>
+     #!/bin/bash
+  </Answer>
+</QA>
+<QA ID="229" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     How to remove empty line ?
+  </Question>
+  <Answer>
+     cat test.txt | sed '/^$/d'
+  </Answer>
+</QA>
+<QA ID="230" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     How to add 5 spaces in front of each line ?
+  </Question>
+  <Answer>
+     cat test.txt | sed -e 's/^/     /'
+  </Answer>
+</QA>
+<QA ID="231" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     how to wrap to width of 90 ?
+  </Question>
+  <Answer>
+     cat test.txt | fold -s -w90
+  </Answer>
+</QA>
+<QA ID="232" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     How to get the phone number line containing a phone number in 999-999-9999 format ?
+  </Question>
+  <Answer>
+     cat test.txt | egrep  "[[:digit:]]{3}-[[:digit:]]{3}-[[:digit:]]{4}"
+  </Answer>
+</QA>
+<QA ID="233" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     how to get the substring following &quot;Email:&quot; ?
+  </Question>
+  <Answer>
+     cat test.txt | awk -F'Email:' '{print $2}'
+  </Answer>
+</QA>
+<QA ID="234" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     How to just print phone number from the line containing it ?
+  </Question>
+  <Answer>
+     way 1:
+       ttt="asdf asdf 813-528-6246 asdf lkjasdf"
+       echo ${ttt//[!0-9-]/}
+     Way 2:
+       $ echo "asdf 234-123-4125 asdf" | grep -o -E '[0-9-]+'
+       234-123-4125
+     way 3:
+       $ echo "asdf 234-123-4125 asdf" | sed 's/[^0-9-]*//g'
+       234-123-4125
+     Way 4:
+       $ echo "asdf 234-123-4125 asdf" | tr -dc '0-9-'
+       234-123-4125
+
+  </Answer>
+</QA>
+<QA ID="235" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
      What is a generic class ?
   </Question>
   <Answer>
      asf
   </Answer>
 </QA>
-
+<QA ID="236" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     What is a generic class ?
+  </Question>
+  <Answer>
+     asf
+  </Answer>
+</QA>
+<QA ID="237" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     What is a generic class ?
+  </Question>
+  <Answer>
+     asf
+  </Answer>
+</QA>
+<QA ID="238" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     What is a generic class ?
+  </Question>
+  <Answer>
+     asf
+  </Answer>
+</QA>
+<QA ID="239" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     What is a generic class ?
+  </Question>
+  <Answer>
+     asf
+  </Answer>
+</QA>
+<QA ID="240" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     What is a generic class ?
+  </Question>
+  <Answer>
+     asf
+  </Answer>
+</QA>
+<QA ID="241" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     What is a generic class ?
+  </Question>
+  <Answer>
+     asf
+  </Answer>
+</QA>
+<QA ID="242" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     What is a generic class ?
+  </Question>
+  <Answer>
+     asf
+  </Answer>
+</QA>
 </QuestionsAndAnswers>

@@ -73,9 +73,20 @@ vector<Question> GetAllQuestions(XMLElement * parent, XMLElement * parent1) {
 			if (resetto > 0)
 			   firstTimeHide = true;
 		}
-		const string question = QA->FirstChildElement("Question")->GetText();
-		const string answer = QA->FirstChildElement("Answer")->GetText();
-
+		string question;
+		XMLElement * questionElement = QA->FirstChildElement("Question");
+		if (questionElement) {
+			if (questionElement->GetText() != NULL) {
+				question = questionElement->GetText();
+			}
+		}
+		XMLElement * answerElement = QA->FirstChildElement("Answer");
+		string answer;
+		if (answerElement) {
+			if (answerElement->GetText() != NULL) {
+				answer = answerElement->GetText();
+			}
+		}
 		Question q(id, qtype, category, countdown, resetto, question, answer);
 		q.Qc = QA;   //save pointer to QA in order to be able to set resetto
         //now q is properly constructed, ready to be inserted in tovector 
@@ -124,9 +135,20 @@ vector<Question> GetAllQuestions(XMLElement * parent) {
 			if (resetto > 0)
 				firstTimeHide = true;
 		}
-		const string question = QA->FirstChildElement("Question")->GetText();
-		const string answer = QA->FirstChildElement("Answer")->GetText();
-
+		string question;
+		XMLElement * questionElement = QA->FirstChildElement("Question");
+		if (questionElement) {
+			if (questionElement->GetText() != NULL) {
+				question = questionElement->GetText();
+			}
+		}
+		XMLElement * answerElement = QA->FirstChildElement("Answer");
+		string answer;
+		if (answerElement) {
+			if (answerElement->GetText() != NULL) {
+				answer = answerElement->GetText();
+			}
+		}
 		Question q(id, qtype, category, countdown, resetto, question, answer);
 		q.Qc = QA;   //save pointer to QA in order to be able to set resetto
 					 //now q is properly constructed, ready to be inserted in tovector 
@@ -162,7 +184,7 @@ int main(int argc, const char ** argv)
 {
 	bool applyConfigfile = false;
 	string newPath = "NewSavedXMLFile.xml";
-	cout << "\n Quick Reviewer version 3.3" << endl << endl;
+	cout << "\n Quick Reviewer version 3.4" << endl << endl;
 	
 	XMLDocument* doc = new XMLDocument();          //in tinyxml2 namespace
 	XMLDocument* docCfg = nullptr;       //For Doc Question Settings only
