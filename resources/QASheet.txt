@@ -1,4 +1,4 @@
-<?xml version="1.0"?>
+      <?xml version="1.0"?>
 <!DOCTYPE QR SYSTEM "QuickReview.dtd">
 
 <QuestionsAndAnswers>
@@ -29,10 +29,13 @@
 </QA>
 <QA ID="3" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
   <Question>
-      Difference between Lock and control variable ?
+      What exactly is the role of Triage Engineer ?
   </Question>
   <Answer>
-        ??
+      This title is someone that classifies bugs for someone else to fix.
+      When a bug report comes in, you mark it as duplicate if another one exists, ask for more 
+      details if reproduce steps aren't clear, close it if it is not a bug, assign it to the main 
+      engineer if it is a bug. Basically a issue tracker janitor.
   </Answer>
 </QA>
 <QA ID="4" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
@@ -401,7 +404,7 @@
 
 <QA ID="22" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
   <Question>
-      Why is pre increment (++i) is faster than post increment (i++) ?
+      Why is pre increment (++i) faster than post increment (i++) ?
   </Question>
   <Answer>
       pre increment is faster because post-increment i++ needs to keep old value before increasing its own value,
@@ -459,8 +462,8 @@
 
 <QA ID="24" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
   <Question>
-     What are all the implicit member functions of a class? 
-     Or what are all the functions which compiler implements for us if we don't define one?
+     What are all the 5 implicit member functions of a class? 
+     Or what are all 5 the functions which compiler implements for us if we don't define one?
   </Question>
   <Answer>
       1. default ctor
@@ -870,7 +873,7 @@
       D: None of the above
   </Question>
   <Answer>
-      Not A, It is B ! For example: A car is-a vehicle but A car has-a steering wheel
+      B. Not A, It is B ! For example: A car is-a vehicle but A car has-a steering wheel
   </Answer>
 </QA>
 <QA ID="51" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
@@ -927,7 +930,7 @@
 
   </Question>
   <Answer>
-      Not A, But C: Compile error. Because it is trying to access private member rno!
+      C. Not A, But C: Compile error. Because it is trying to access private member rno!
       class member is default to private. The test is testing for that knowledge !
   </Answer>
 </QA>
@@ -949,7 +952,7 @@
      D: 32767
   </Question>
   <Answer>
-      Not C, it is A ! Because i-- is post increment, it will return 0 before 
+      A. Not C, it is A ! Because i-- is post increment, it will return 0 before 
       decreases and becomes 65535 (All bit set, since it is unsigned, it is 65535)
   </Answer>
 </QA>
@@ -994,7 +997,7 @@
 
   </Question>
   <Answer>
-      Not A, it is B ! Because i in constructor is defined in constructor as int, which
+      B. Not A, it is B ! Because i in constructor is defined in constructor as int, which
       hides the class variable i, so the 2 i's in the constructor are all i as the argument
       and the class variable i never get a change to be initialized and left with garbage!
   </Answer>
@@ -1019,7 +1022,7 @@
 
   </Question>
   <Answer>
-      Not A, it is D ! Because y can't be float, it must be an integer to be meaningful.
+      D. Not A, it is D ! Because y can't be float, it must be an integer to be meaningful.
   </Answer>
 </QA>
 
@@ -1042,7 +1045,7 @@
 
 <QA ID="58" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
   <Question>
-     Identify the c++compiler of Linux:
+     Identify the c++ compiler of Linux:
 
      A: cpp
      B: g++
@@ -1567,6 +1570,11 @@
      systems. POSIX defines the application programming interface (API), along with command
      line shells and utility interfaces, for software compatibility with variants of Unix 
      and other operating systems.
+
+     It standarize the following area: 
+       1. API
+       2. command line shells
+       3. Utility interfaces
   </Answer>
 </QA>
 <QA ID="90" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
@@ -1852,7 +1860,7 @@
 </QA>
 <QA ID="112" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
   <Question>
-     Fill inthe blank:
+     Fill in the blank:
      Function sub() is part of ____.
 
      A: sed
@@ -2553,7 +2561,7 @@ const char * const p = "Hello";       // const pointer, const data
   <Answer>
      Finger may be used to look up users on a remote machine.
      It displays information about a user on a specified system running the
-     finger service. Output varies based on the remote system.
+     finger service.
   </Answer>
 </QA>
 
@@ -2621,10 +2629,38 @@ const char * const p = "Hello";       // const pointer, const data
 
 <QA ID="164" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
   <Question>
-     Who is going to interview me on June 25 ?
+     what will the following program print ?
+     
+        class A {
+        public:
+           A() {}
+           ~A() {
+		throw 42;
+	   }
+        };
+
+        void main() {
+	  try {
+		A a;
+		throw 32;
+	  }
+	  catch (int a) {
+		cout &lt;&lt; a;
+	  }
+	}
   </Question>
   <Answer>
-     Who to ask for: Chad Komer or Jason Walston
+     It wont print anything. The program will crash and throw an exception!
+     Because the destructor is throwing an exception 42 before the previous 
+     exception 32 is handled.
+
+     Yes, destructors are guaranteed to be called on stack unwinding, including 
+     unwinding due to exception being thrown. ... Destructor of the class is 
+     not called if exception is thrown in its constructor. Exception is 
+     automatically re-thrown if caught in construction initialization list 
+     catch block.
+
+     Never throw exception from destructors !
   </Answer>
 </QA>
 
@@ -2696,7 +2732,7 @@ const char * const p = "Hello";       // const pointer, const data
   </Question>
   <Answer>
      The source command can be used to load any functions file into the 
-     current shell script or a command prompt. It read and execute commands 
+     current shell script or a command prompt. It reads and executes commands 
      from given FILENAME and return.
     
      The source command can be abbreviated as just a dot (.) in Bash and 
@@ -2846,7 +2882,7 @@ const char * const p = "Hello";       // const pointer, const data
    
         //store pointers:
         int i=5;
-        boost::any p=&i;
+        boost::any p=&amp;i;
         int * pInt=boost::any_cast&lt;int*&gt;(p);
    
         //as a class:
@@ -2961,9 +2997,9 @@ to be built in advance of their use. Some Boost libraries coexist as independent
      They are all class tempate:
 
 	template&lt;class T&gt;
-	std:shared_ptr&lt;T&gt;
-	std:unique_ptr&lt;T&gt;
-	std:weak_ptr&lt;T&gt;
+	std::shared_ptr&lt;T&gt;
+	std::unique_ptr&lt;T&gt;
+	std::weak_ptr&lt;T&gt;
 
 	tempalte&lt;class T&gt;
 	class weak_ptr;
@@ -3001,7 +3037,7 @@ to be built in advance of their use. Some Boost libraries coexist as independent
 	e: php
   </Question>
   <Answer>
-     Answer: cpp, short for c pre-precessor
+     Answer: D, the cpp, short for c pre-precessor
   </Answer>
 </QA>
 
@@ -3416,7 +3452,7 @@ to be built in advance of their use. Some Boost libraries coexist as independent
      how to prevent a class from being inherited  ?
   </Question>
   <Answer>
-     use the final keyword (c++11):
+     Use the keyword "final" (c++11):
      class myClass final{};
   </Answer>
 </QA>
@@ -3504,7 +3540,7 @@ to be built in advance of their use. Some Boost libraries coexist as independent
 </QA>
 <QA ID="219" type="OneAnswer" category="GIT" countdown="0" resetto="0" >
   <Question>
-     What is my githut.com account ?
+     What is my github.com account ?
   </Question>
   <Answer>
      username: zhuyali2018
@@ -3676,68 +3712,546 @@ to be built in advance of their use. Some Boost libraries coexist as independent
 
   </Answer>
 </QA>
-<QA ID="235" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+<QA ID="235" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
   <Question>
-     What is a generic class ?
+     How to kill 1000 processes in one line ?
   </Question>
   <Answer>
-     asf
+     for pid in $(ps -ef|grep yali|awk '{print $2}'); do kill -9 $pid; done
   </Answer>
 </QA>
-<QA ID="236" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+<QA ID="236" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
   <Question>
-     What is a generic class ?
+     How to extract unique lines in shell scripting filter
   </Question>
   <Answer>
-     asf
+     sort file | uniq
+     cat input1.txt | sort | uniq
   </Answer>
 </QA>
-<QA ID="237" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+<QA ID="237" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
   <Question>
-     What is a generic class ?
+     How to filter for lines that just has 2 words ?
   </Question>
   <Answer>
-     asf
+     cat input1.txt | awk 'NF == 2'
   </Answer>
 </QA>
 <QA ID="238" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
   <Question>
-     What is a generic class ?
+     What is key word override used for ?
   </Question>
   <Answer>
-     asf
+     Used in the derived class function declaration to explicitly mark the function as 
+     override ones. Example:
+     void f() override{}
   </Answer>
 </QA>
 <QA ID="239" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
   <Question>
-     What is a generic class ?
+     What is difference between dynamic_pointer_cast and static_pointer_cast ?
   </Question>
   <Answer>
-     asf
+     static_pointer_cast to go up class hierarchy
+     dynamic_pointer_cast to go down/across class hierarchy
   </Answer>
 </QA>
 <QA ID="240" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
   <Question>
-     What is a generic class ?
+     About Anonymous Unions and Structures ?
   </Question>
   <Answer>
-     asf
+     Anonymous Unions and Structures are NOT part of C++ 11 standard, but most of the C++ 
+     compilers support them. Since this is a C only feature, the C++ implementations don't 
+     allow to anonymous struct/union to have private or protected members, static members, 
+     and functions.
+
+     Their definition looks like this:
+        union 
+        {
+           char alpha;
+           int num;
+        };
+
+        struct 
+        {
+           char alpha;
+           int num;
+        };
+
+      They seem to have to be inside a named structure, like this:
+      snippet:
+      // C Program to demonstrate working of anonymous struct
+      #include&lt;stdio.h&gt;
+      struct Scope
+      {
+          // Anonymous structure
+          struct
+          {
+              char alpha;
+              int num;
+          };
+      };
+ 
+      int main()
+      {
+          struct Scope x;
+          x.num = 65;
+          x.alpha = 'B';
+ 
+          // Note that members of structure are accessed directly
+          printf("x.alpha = %c, x.num = %d", x.alpha, x.num);
+ 
+          return 0;
+      }
+
   </Answer>
 </QA>
 <QA ID="241" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
   <Question>
-     What is a generic class ?
+     What are 4 types of members that an anonymous unions and structures cannot have ?
   </Question>
   <Answer>
-     asf
+     1. protected members
+     2. private members
+     3. static members
+     4. member functions
   </Answer>
 </QA>
+
 <QA ID="242" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
   <Question>
-     What is a generic class ?
+     What tool do you use for static analysis of your code ?
   </Question>
   <Answer>
-     asf
+     I usually uses what comes with the IDE to do quick static analysis, 
+     Such IDEs like Eclipse and Visual Studio, they all come with static
+     analysis tool.
+  </Answer>
+</QA>
+
+<QA ID="243" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     How to use Linux profiling Tool gprof ?
+  </Question>
+  <Answer>
+     Using the gprof tool is not at all complex. You just need to do the following 
+     on a high-level:
+
+     1: Have profiling enabled while compiling the code (use "-pg" option: gcc -Wall -pg test.c -o test)
+     2: Execute the program code to produce the profiling data (a new file "gmon.out" is generated)
+     3: Run the gprof tool on the profiling data file (generated in the step above):
+ 
+        gprof test gmon.out > analysis.txt
+
+         The file is broadly divided into two parts :
+
+         1. Flat profile
+         2. Call graph
+
+     The last step above produces an analysis file which is in human readable form. 
+     This file contains a couple of tables (flat profile and call graph) in addition 
+     to some other information. While flat profile gives an overview of the timing 
+     information of the functions like time consumption for the execution of a 
+     particular function, how many times it was called etc. On the other hand, 
+     call graph focuses on each function like the functions through which a particular 
+     function was called, what all functions were called from within this particular 
+     function etc So this way one can get idea of the execution time spent in the 
+     sub-routines too.
+
+  </Answer>
+</QA>
+
+<QA ID="244" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     How to print just the match of regular expression ?
+  </Question>
+  <Answer>
+     Use grep -oh &lt;regex&gt;:
+
+     $ cat input1.txt | egrep -oh "[[:alpha:]]+[.][[:alpha:]]+[@][[:alpha:]]+.com"
+     Rashmi.pal@idctechnologies.com
+     rashmi.pal@idctechnologies.com
+  </Answer>
+</QA>
+
+<QA ID="245" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     What happens when an exeption is thrown ?
+  </Question>
+  <Answer>
+     When an exception is thrown, the control passes from a try block to a handler, 
+     the C++ run time calls destructors for all automatic objects constructed since 
+     the beginning of the try block. This process is called stack unwinding. 
+     The automatic objects are destroyed in reverse order of their construction.
+  </Answer>
+</QA>
+
+<QA ID="246" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     What is wrong with following code ?
+
+     struct aaa {
+	int x;	
+     };
+     
+     void main() {
+	struct aaa * b;
+	b = new aaa;
+	memset(b, 0, sizeof(b));
+     }
+  </Question>
+  <Answer>
+     sizeof(b) is wrong. It is meant to reset memory block pointed by b
+     for the size of the block and sizeof(b) does not mean the size of the block
+     it returns size of the pointer, which is usually 4. Should use sizeof(aaa);
+  </Answer>
+</QA>
+
+<QA ID="247" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     How to filter for the length of line in shell script ?
+  </Question>
+  <Answer>
+     Using awk:
+     cat input.txt | awk 'length($0) &lt; 40'    #$0 referes to current line
+  </Answer>
+</QA>
+
+<QA ID="248" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     How to filter for the number of space delimited words in shell script ?
+  </Question>
+  <Answer>
+     cat input.txt | awk 'NF &lt;= 4'         #awk default to space delimiter
+  </Answer>
+</QA>
+
+<QA ID="249" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     How to just print the match of regular expression at line processing in shell script ?
+  </Question>
+  <Answer>
+     use grep -oh regex
+     it prints a line for each match in current line!
+  </Answer>
+</QA>
+
+<QA ID="250" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     In line processing, how to print just the part from postion 5 to the end of line ?
+  </Question>
+  <Answer>
+     use cut:
+     cat input.txt | cut -b 5-
+  </Answer>
+</QA>
+
+<QA ID="251" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     In line processing, how to remove leading spaces on each line ?
+  </Question>
+  <Answer>
+      cat input.txt | sed 's/^[ ]*//'
+  </Answer>
+</QA>
+
+<QA ID="252" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     In vi, how to search for a string case insensitive ?
+  </Question>
+  <Answer>
+     /\cYourSearchString
+  </Answer>
+</QA>
+
+<QA ID="253" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     How to display the first argument of last command in linux ?
+  </Question>
+  <Answer>
+    echo $_
+
+    Example:
+    $ cat /etc/passwd
+    $ echo $_
+    /etc/passwd 
+  </Answer>
+</QA>
+
+<QA ID="254" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     How to change command line console prompt ?
+  </Question>
+  <Answer>
+     By assigning value to PS1. Example:
+
+     PS1='($PWD)-> '      ==>     (/tms/pdswork/zhuyali/inf-us902/PDS)->
+  </Answer>
+</QA>
+
+<QA ID="255" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     How to test for file existance in shell script ?
+  </Question>
+  <Answer>
+   if [ -f /apps/cadapps/bin/promptstr ]; then
+      PS1='$(/apps/cadapps/bin/promptstr -m -s -p) '
+   else
+      PS1='$(hostname):$PWD '
+   fi
+
+   # another way:
+   if [ -e $1 ]; then
+     echo "$1 exists"
+   fi
+  </Answer>
+</QA>
+
+<QA ID="256" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+    What do following environment variables mean ?
+
+     1: HOME
+     2: SHELL 
+     3: PWD
+     4: SECONDS
+  </Question>
+  <Answer>
+     1: HOME - home directory, a default argument for CD command
+     2: SHELL- path name of the shell: /bin/bash
+     3: PWD  - current working directory
+     4: SECONDS - Number of seconds since the hell was invoked
+  </Answer>
+</QA>
+
+<QA ID="257" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     How to list directory names only under current directory ?
+  </Question>
+  <Answer>
+     ls */ -ld
+  </Answer>
+</QA>
+
+<QA ID="258" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     How to process command line arguments inside a shell script ?
+  </Question>
+  <Answer>
+    while [ $# -ne 0 ]  # while (( $# != 0 ))
+    do
+       if [ $1 = "-long" ]; then
+          FULLPATH="TRUE"
+      else
+          if [ "$FULLPATH" = "FALSE" ]; then
+             echo "FULLPATH is false"
+          else
+             echo "FULLPATH" is true"
+          fi
+      fi
+      shift 1
+    done   
+  </Answer>
+</QA>
+
+<QA ID="259" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     In line processing, how to grep lines start with fn or end with us ?
+  </Question>
+  <Answer>
+     cat f.txt | grep ^fn
+     cat f.txt | grep us$
+  </Answer>
+</QA>
+
+<QA ID="260" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     How to define a function for shell script ?
+  </Question>
+  <Answer>
+     function yalifun {
+        echo "I am in function"
+     }
+
+     yalifun       #call a function
+  </Answer>
+</QA>
+
+<QA ID="261" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     What is Metaprogramming ?
+  </Question>
+  <Answer>
+     Metaprogramming is a programming technique in which computer programs 
+     have the ability to treat programs as their data. It means that a 
+     program can be designed to read, generate, analyse or transform other 
+     programs, and even modify itself while running.
+  </Answer>
+</QA>
+
+<QA ID="262" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     Can inline function be recursive ?
+  </Question>
+  <Answer>
+    The compiler creates a call graph; when a cycle is detected calling 
+    itself, the function is no longer inlined after a certain depth 
+    (n=1, 10, 100, whatever the compiler is tuned to). Some recursive 
+    functions can be transformed into loops, which effectively 
+    infinitely inlines them.
+  </Answer>
+</QA>
+<QA ID="262" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     What is Metaprogramming ?
+  </Question>
+  <Answer>
+    template
+  </Answer>
+</QA>
+<QA ID="262" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     What is Metaprogramming ?
+  </Question>
+  <Answer>
+    template
+  </Answer>
+</QA>
+<QA ID="262" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     What is Metaprogramming ?
+  </Question>
+  <Answer>
+    template
+  </Answer>
+</QA>
+<QA ID="262" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     What is Metaprogramming ?
+  </Question>
+  <Answer>
+    template
+  </Answer>
+</QA>
+<QA ID="262" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     What is Metaprogramming ?
+  </Question>
+  <Answer>
+    template
+  </Answer>
+</QA>
+<QA ID="262" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     What is Metaprogramming ?
+  </Question>
+  <Answer>
+    template
+  </Answer>
+</QA>
+<QA ID="262" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     What is Metaprogramming ?
+  </Question>
+  <Answer>
+    template
+  </Answer>
+</QA>
+<QA ID="262" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     What is Metaprogramming ?
+  </Question>
+  <Answer>
+    template
+  </Answer>
+</QA>
+<QA ID="262" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     What is Metaprogramming ?
+  </Question>
+  <Answer>
+    template
+  </Answer>
+</QA>
+<QA ID="262" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     What is Metaprogramming ?
+  </Question>
+  <Answer>
+    template
+  </Answer>
+</QA>
+<QA ID="262" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     What is Metaprogramming ?
+  </Question>
+  <Answer>
+    template
+  </Answer>
+</QA>
+<QA ID="262" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     What is Metaprogramming ?
+  </Question>
+  <Answer>
+    template
+  </Answer>
+</QA>
+<QA ID="262" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     What is Metaprogramming ?
+  </Question>
+  <Answer>
+    template
+  </Answer>
+</QA>
+<QA ID="262" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     What is Metaprogramming ?
+  </Question>
+  <Answer>
+    template
+  </Answer>
+</QA>
+<QA ID="262" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     What is Metaprogramming ?
+  </Question>
+  <Answer>
+    template
+  </Answer>
+</QA>
+<QA ID="262" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     What is Metaprogramming ?
+  </Question>
+  <Answer>
+    template
+  </Answer>
+</QA>
+<QA ID="262" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     What is Metaprogramming ?
+  </Question>
+  <Answer>
+    template
+  </Answer>
+</QA>
+<QA ID="262" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     What is Metaprogramming ?
+  </Question>
+  <Answer>
+    template
+  </Answer>
+</QA>
+<QA ID="262" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     What is Metaprogramming ?
+  </Question>
+  <Answer>
+    template
   </Answer>
 </QA>
 </QuestionsAndAnswers>
