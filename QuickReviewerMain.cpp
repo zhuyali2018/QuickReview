@@ -184,7 +184,7 @@ int main(int argc, const char ** argv)
 {
 	bool applyConfigfile = false;
 	string newPath = "NewSavedXMLFile.xml";
-	cout << "\n Quick Reviewer version 3.4" << endl << endl;
+	cout << "\n Quick Reviewer version 3.5" << endl << endl;
 	
 	XMLDocument* doc = new XMLDocument();          //in tinyxml2 namespace
 	XMLDocument* docCfg = nullptr;       //For Doc Question Settings only
@@ -261,11 +261,10 @@ int main(int argc, const char ** argv)
 	int questionNo = 1;
 	int qno = 0;
 	int total = questions.size();
-	for (Question q : questions) {
-		if (qno > questionNo) {
-			questionNo++;
-			continue;
-		}
+	//for (Question q : questions) {
+	while(true){
+		if (qno > 0)questionNo = qno;
+		Question &q = questions[questionNo];
 		qno = 0;  //reset goto question No
 		system("CLS");   //clear the screen of command line window
 		printf("[Qid:%d]  Question %d/%d : \n%s\n", q.id,questionNo++,total, q.question.c_str());	

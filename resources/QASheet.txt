@@ -2,6 +2,17 @@
 <!DOCTYPE QR SYSTEM "QuickReview.dtd">
 
 <QuestionsAndAnswers>
+<QA ID="0" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+
+  <Question>
+     How can I handle a constructor that fails ?
+  </Question>
+
+  <Answer>
+     By throwing an exception. Constructors don't have a return type, so it's not possible to use
+     return codes. The best way to signal constructor failure is therefore to throw an exception.
+  </Answer>
+</QA>
 
 <QA ID="1" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
 
@@ -4102,7 +4113,17 @@ to be built in advance of their use. Some Boost libraries coexist as independent
     infinitely inlines them.
   </Answer>
 </QA>
-<QA ID="262" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+<QA ID="263" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     What is R programming language ?
+  </Question>
+  <Answer>
+    R is a programming language and free software environment for statistical 
+    computing and graphics that is supported by the R Foundation for Statistical 
+    Computing.
+  </Answer>
+</QA>
+<QA ID="264" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
   <Question>
      What is Metaprogramming ?
   </Question>
@@ -4110,7 +4131,7 @@ to be built in advance of their use. Some Boost libraries coexist as independent
     template
   </Answer>
 </QA>
-<QA ID="262" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+<QA ID="265" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
   <Question>
      What is Metaprogramming ?
   </Question>
@@ -4118,7 +4139,7 @@ to be built in advance of their use. Some Boost libraries coexist as independent
     template
   </Answer>
 </QA>
-<QA ID="262" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+<QA ID="266" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
   <Question>
      What is Metaprogramming ?
   </Question>
@@ -4126,7 +4147,7 @@ to be built in advance of their use. Some Boost libraries coexist as independent
     template
   </Answer>
 </QA>
-<QA ID="262" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+<QA ID="267" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
   <Question>
      What is Metaprogramming ?
   </Question>
@@ -4134,7 +4155,7 @@ to be built in advance of their use. Some Boost libraries coexist as independent
     template
   </Answer>
 </QA>
-<QA ID="262" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+<QA ID="268" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
   <Question>
      What is Metaprogramming ?
   </Question>
@@ -4142,7 +4163,7 @@ to be built in advance of their use. Some Boost libraries coexist as independent
     template
   </Answer>
 </QA>
-<QA ID="262" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+<QA ID="269" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
   <Question>
      What is Metaprogramming ?
   </Question>
@@ -4150,7 +4171,7 @@ to be built in advance of their use. Some Boost libraries coexist as independent
     template
   </Answer>
 </QA>
-<QA ID="262" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+<QA ID="270" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
   <Question>
      What is Metaprogramming ?
   </Question>
@@ -4158,7 +4179,7 @@ to be built in advance of their use. Some Boost libraries coexist as independent
     template
   </Answer>
 </QA>
-<QA ID="262" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+<QA ID="271" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
   <Question>
      What is Metaprogramming ?
   </Question>
@@ -4166,7 +4187,7 @@ to be built in advance of their use. Some Boost libraries coexist as independent
     template
   </Answer>
 </QA>
-<QA ID="262" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+<QA ID="272" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
   <Question>
      What is Metaprogramming ?
   </Question>
@@ -4174,7 +4195,7 @@ to be built in advance of their use. Some Boost libraries coexist as independent
     template
   </Answer>
 </QA>
-<QA ID="262" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+<QA ID="273" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
   <Question>
      What is Metaprogramming ?
   </Question>
@@ -4182,7 +4203,7 @@ to be built in advance of their use. Some Boost libraries coexist as independent
     template
   </Answer>
 </QA>
-<QA ID="262" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+<QA ID="274" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
   <Question>
      What is Metaprogramming ?
   </Question>
@@ -4190,7 +4211,7 @@ to be built in advance of their use. Some Boost libraries coexist as independent
     template
   </Answer>
 </QA>
-<QA ID="262" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+<QA ID="275" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
   <Question>
      What is Metaprogramming ?
   </Question>
@@ -4198,7 +4219,7 @@ to be built in advance of their use. Some Boost libraries coexist as independent
     template
   </Answer>
 </QA>
-<QA ID="262" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+<QA ID="276" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
   <Question>
      What is Metaprogramming ?
   </Question>
@@ -4206,7 +4227,7 @@ to be built in advance of their use. Some Boost libraries coexist as independent
     template
   </Answer>
 </QA>
-<QA ID="262" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+<QA ID="277" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
   <Question>
      What is Metaprogramming ?
   </Question>
@@ -4214,7 +4235,7 @@ to be built in advance of their use. Some Boost libraries coexist as independent
     template
   </Answer>
 </QA>
-<QA ID="262" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+<QA ID="278" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
   <Question>
      What is Metaprogramming ?
   </Question>
@@ -4222,7 +4243,7 @@ to be built in advance of their use. Some Boost libraries coexist as independent
     template
   </Answer>
 </QA>
-<QA ID="262" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+<QA ID="279" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
   <Question>
      What is Metaprogramming ?
   </Question>
@@ -4230,7 +4251,7 @@ to be built in advance of their use. Some Boost libraries coexist as independent
     template
   </Answer>
 </QA>
-<QA ID="262" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+<QA ID="280" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
   <Question>
      What is Metaprogramming ?
   </Question>
@@ -4238,15 +4259,7 @@ to be built in advance of their use. Some Boost libraries coexist as independent
     template
   </Answer>
 </QA>
-<QA ID="262" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
-  <Question>
-     What is Metaprogramming ?
-  </Question>
-  <Answer>
-    template
-  </Answer>
-</QA>
-<QA ID="262" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+<QA ID="281" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
   <Question>
      What is Metaprogramming ?
   </Question>
