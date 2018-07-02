@@ -263,7 +263,8 @@ int main(int argc, const char ** argv)
 	int total = questions.size();
 	//for (Question q : questions) {
 	while(true){
-		if (qno > 0)questionNo = qno;
+		if ((qno > 0)&&(qno<questions.size()))
+			questionNo = qno;
 		Question &q = questions[questionNo];
 		qno = 0;  //reset goto question No
 		system("CLS");   //clear the screen of command line window

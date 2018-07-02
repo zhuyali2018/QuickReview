@@ -3836,8 +3836,8 @@ to be built in advance of their use. Some Boost libraries coexist as independent
   </Question>
   <Answer>
      I usually uses what comes with the IDE to do quick static analysis, 
-     Such IDEs like Eclipse and Visual Studio, they all come with static
-     analysis tool.
+     Such IDEs like Eclipse and Visual Studio that comes with Diagnostic Tools, 
+     they all come with static analysis tool.
   </Answer>
 </QA>
 
@@ -4125,133 +4125,844 @@ to be built in advance of their use. Some Boost libraries coexist as independent
 </QA>
 <QA ID="264" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
   <Question>
-     What is Metaprogramming ?
+     how to use ssh ?
   </Question>
   <Answer>
-    template
+    ssh user@server[:port]
+    or ssh server  #if authrised with currently logged on user
   </Answer>
 </QA>
 <QA ID="265" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
   <Question>
-     What is Metaprogramming ?
+     how to check the last command status ?
   </Question>
   <Answer>
-    template
+    echo $?        #0 means successful
   </Answer>
 </QA>
 <QA ID="266" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
   <Question>
-     What is Metaprogramming ?
+     How to check local disk space ?
   </Question>
   <Answer>
-    template
+    dh -m       # -m means in megabyte -k means in kilobite
   </Answer>
 </QA>
 <QA ID="267" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
   <Question>
-     What is Metaprogramming ?
+     how to get the path without file name ?
   </Question>
   <Answer>
-    template
+    $dirname /aaa/bbb/ccc
+    /aaa/bbb
+    $basename /aaa/bbb/ccc
+    ccc
   </Answer>
 </QA>
 <QA ID="268" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
   <Question>
-     What is Metaprogramming ?
+     how to keep a process running after you have logged out?
   </Question>
   <Answer>
-    template
+    nohup command-with-options &amp;
+
+    When using the command shell, prefixing a command with nohup prevents 
+    the command from being aborted automatically when you log out or exit 
+    the shell.
+
+    nohup mycommand
+
+    Run the command mycommand. It will not receive input. All output, 
+    including any error messages, will be written to the file nohup.out 
+    in the working directory, or in your home directory. If mycommand is 
+    running when you log out or close the terminal, mycommand will not 
+    terminate.
+
+    nohup mycommand &amp;
+
+    Same as the previous command, but this form (when using the bash shell) 
+    returns immediately to the shell prompt. The "&amp;" symbol at the end of 
+    the command instructs bash to run nohup mycommand in the background. 
+    It can be brought back to the foreground with the fg bash builtin command.
+
+    When using &amp;, you'll see the bash job ID in brackets, and the process 
+    ID (PID) listed after. For example:
+
+    [1] 25132
+ 
+    You can use the PID to terminate the process prematurely. For instance, 
+    to send it the TERM (terminate) signal with the kill command:
+
+    kill -9 25132
+    
   </Answer>
 </QA>
 <QA ID="269" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
   <Question>
-     What is Metaprogramming ?
+     How to check folder spaces taken under current directory ?
   </Question>
   <Answer>
-    template
+    du -sh *
+   -s: summary, no recursive deep
+   -h: human readable
+
+   * this command can list all folders, including hidden ones recursively
   </Answer>
 </QA>
 <QA ID="270" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
   <Question>
-     What is Metaprogramming ?
+     How to check current shell pid ?
   </Question>
   <Answer>
-    template
+    echo $$
   </Answer>
 </QA>
 <QA ID="271" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
   <Question>
-     What is Metaprogramming ?
+     how to look for a file from current directory ?
   </Question>
   <Answer>
-    template
+    find -name filename
+    find -name filename1 -o -name filename2   #-o means or; without -o means AND
+    $ find -type d -name ou*      #look for folder, when using *, atleast 2 letters
+    ./YaliSources/tinyxml2/resources/out
+    ./YaliSources/xmltest/Project1/resources/out
+    $ find -type f -name ou*      #look for file, when using *, atleast 2 letters
+    ./work/output.txt
+    ./work/output1.txt
+    ./work/output2.txt
+
   </Answer>
 </QA>
 <QA ID="272" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
   <Question>
-     What is Metaprogramming ?
+     What about find command other usages ?
   </Question>
   <Answer>
-    template
+    1. Find hidden files
+        find -type f -name ".*"
+    2. find by permissions:
+        find . -type f -perm 0777
+        find . -type f ! -perm 0777
+    3. Find readonly files
+        find /etc -maxdepth 1 -perm /u=r
+    4. Find executable files
+        find /bin -maxdepth 2 -perm /a=x
+        find -type f -perm /a=x
+    5. Find files belonging to particular user
+        find -user zhuyali
+    6 Search files belonging to group
+        find -group cad
+    7 find files modified N days back:      find -mtime 50   (exactly 50 days ago)
+    8 find files accessed N days back:      find -mtime 50    (if +50, means more than 50 days ago)
+    9 find files changed in last N minutes: find -cmin -60    (within last 60 min)
+   10 find files modified in last hour:     find -mmin -60
+   11 Find Accessed Files in Last 1 Hour:   find -amin -60   
+   12 To find all the files which are greater than 50MB and less than 100MB:
+         find -size +50M -size -100M
+   13 actions on files and folders found: 
+          find ULOG.* -type f -exec rm -f {} \;
+             using -exec &lt;cmd&gt; {} \;
+
   </Answer>
 </QA>
 <QA ID="273" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
   <Question>
-     What is Metaprogramming ?
+     Script arguments manipulation list
   </Question>
   <Answer>
-    template
+    If a script receives two arguments, $@ is equivalent to $1 $2
+    wrappedProgram "$@"
+    wrappedProgram "$*"
+    wrappedProgram $*
+
+    Example: Calling
+    wrapper "1 2  3" 4 5 "6 7"
+
+    will result in:
+    "$@": wrappedProgram "1 2  3" 4 5 "6 7"
+    "$*": wrappedProgram "1 2  3 4 5 6 7"
+     $* : wrappedProgram 1 2 3 4 5 6 7
+
+    $# : number of parameters passed in
+    $! : pid of most recently executed
   </Answer>
 </QA>
 <QA ID="274" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
   <Question>
-     What is Metaprogramming ?
+     What is jobs command ?
   </Question>
   <Answer>
-    template
+    "jobs" list background processes
+
+    $ notepad input1.txt &
+    [1] 30672
+    $ jobs
+    [1]+  Running                
+
   </Answer>
 </QA>
 <QA ID="275" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
   <Question>
-     What is Metaprogramming ?
+     What is tty, pty, pts respectively ?
   </Question>
   <Answer>
-    template
+    A pty (pseudo terminal device) is a terminal device which is emulated by an 
+          other program (example: xterm, screen, or ssh are such programs).
+    A pts is the slave part of a pty
+    
+    A tty is a regular terminal device (the console on your server, for example).
+    A pts is a psuedo terminal slave (an xterm or an ssh connection).
   </Answer>
 </QA>
 <QA ID="276" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
   <Question>
-     What is Metaprogramming ?
+     What is command pwd with command -L and -P mean ?
   </Question>
   <Answer>
-    template
+    Print the name of the current working directory.
+    Options:
+      -L        print the value of $PWD if it names the current working
+                directory
+      -P        print the physical directory, without any symbolic links
+
+    By default, `pwd' behaves as if `-L' were specified.
+
   </Answer>
 </QA>
 <QA ID="277" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
   <Question>
-     What is Metaprogramming ?
+     how to send error to a file or hide them from showing up at stdout ?
   </Question>
   <Answer>
-    template
+    grep -r "asdf" * 2>/dev/null
+    grep -r "asdf" * 2>~/tmp/errfile.out
   </Answer>
 </QA>
 <QA ID="278" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
   <Question>
-     What is Metaprogramming ?
+     how to dump a command output to vi for editing ?
   </Question>
   <Answer>
-    template
+    command | vi -
   </Answer>
 </QA>
 <QA ID="279" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
   <Question>
-     What is Metaprogramming ?
+     In Wndows, how to list where I shared my folder ?
   </Question>
   <Answer>
-    template
+    use command:
+      net share
   </Answer>
 </QA>
 <QA ID="280" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     In Wndows, how to list mapped drive ?
+  </Question>
+  <Answer>
+    use command: net use
+  </Answer>
+</QA>
+<QA ID="281" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     For a function pointer n, which is the correct way to use it ?
+     A: (*n)(2);
+     B: n(2);
+  </Question>
+  <Answer>
+    Both are good. See the following snippet:
+
+     #include &lt;iostream&gt;
+     using namespace std;
+     void func(int x)
+     {
+        cout &lt;&lt; x;
+     }
+     void main()
+     {
+        void(*n)(int);
+        n = &amp;func;              // n = func; works the same !
+        (*n)(2);                //For function pointer n, both lines work the same
+        n(2);                   //For function pointer n, both lines work the same
+     }
+  </Answer>
+</QA>
+<QA ID="282" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     How to use namespace ?
+  </Question>
+  <Answer>
+     #include &lt;iostream&gt;
+
+     using namespace std;
+     namespace AAA
+     {
+       void doSomething() {
+       cout &lt;&lt; "in name space AAA" &lt;&lt; endl;
+     }
+
+     void main() {
+       using namespace AAA;
+       doSomething();
+     }
+
+  </Answer>
+</QA>
+<QA ID="283" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     does conversion from int to float lose data ?
+  </Question>
+  <Answer>
+    Yes, It does. Conversion from int to double is OK!
+  </Answer>
+</QA>
+<QA ID="284" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     Does following code lose data ?
+
+     int a=45; 
+     int b=10;
+     double c=a/b;
+
+     what is the value of c ?
+
+     A: 4.5
+     B: 4
+     C: 5
+  </Question>
+  <Answer>
+     B. value of c is 4!
+
+     it should be:
+
+     int a=45; 
+     int b=10;
+
+     double a2=a;
+     double c=a2/b;
+
+     then c is 4.5
+
+     if b is conveted to double, it is also OK. 
+     Note: a or b, at least of of them, has to be double to avoid lossing 
+     data in a/b calculation
+  </Answer>
+</QA>
+<QA ID="285" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     Does conversion from 'int' to 'float' lose data ?
+  </Question>
+  <Answer>
+    Yes. To avoid losing data, 'int' should be converted to 'double' !
+  </Answer>
+</QA>
+<QA ID="286" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     How to do any-number-of-arguments function ?
+  </Question>
+  <Answer>
+     #include &lt;iostream>
+     #include &lt;stdarg.h>
+     using namespace std;
+     double avg(int Count, ...)
+     {
+        va_list Numbers;          //Type to hold information about variable arguments (type)
+        va_start(Numbers, Count); //Initialize a variable argument list (macro)
+        int Sum = 0;
+        for (int i = 0; i &lt; Count; ++i){
+           Sum += va_arg(Numbers, int);
+        }
+        va_end(Numbers);          //End using variable argument list (macro)
+        double avge = (double)Sum / Count;
+        return avge;
+     }
+     void main()
+     {
+        double Average = avg(10, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9);
+        cout &lt;&lt; "Average of first 10 whole numbers : " &lt;&lt; Average;
+     }
+  </Answer>
+</QA>
+<QA ID="287" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     A lambda expression has the form:
+
+     [capture](parameters)->return-type {body}
+
+     The [] construct inside a function call's argument list indicates the beginning
+     of a lambda expression. Please give a lambda example.
+
+  </Question>
+  <Answer>
+     #include &lt;iostream>
+     #include &lt;algorithm> 
+     void main()
+     {
+        char s[]="Hello World!";
+        int Uppercase = 0; //modified by the lambda
+        for_each(s, s+sizeof(s), [&amp;Uppercase] (char c) {
+           if (isupper(c))
+           Uppercase++;
+        });
+        cout&lt;&lt; Uppercase&lt;&lt;" uppercase letters in: "&lt;&lt; s&lt;&lt;endl;
+     }
+
+     It's as if you defined a function whose body is placed inside another function call.
+     The ampersand in [&amp;Uppercase] means that the lambda body gets a reference to
+     Uppercase so it can modify it. Without the ampersand, Uppercase would be passed
+     by value. C++11 lambdas include constructs for member functions as well.
+  </Answer>
+</QA>
+<QA ID="288" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     What should you do to fix the compiling problem:
+
+     error C3861: 'for_each': identifier not found
+  </Question>
+  <Answer>
+    add this line: #include &lt;algorithm>
+  </Answer>
+</QA>
+<QA ID="289" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     C+11 has changed the keyword "auto" to a new meaning, what is the new meaning ?
+  </Question>
+  <Answer>
+     The keyword auto isn't new; it actually dates back the pre-ANSI C era. However,
+     C++11 has changed its meaning; auto no longer designates an object with automatic 
+     storage type. Rather, it declares an object whose type is deducible from its 
+     initializer. The old meaning of auto was removed from C++11 to avoid confusion.
+
+     Automatic Type Deduction:
+        auto c='a'; //char
+  </Answer>
+</QA>
+<QA ID="290" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     I've come across this term POD-type a few times. What does it mean?
+  </Question>
+  <Answer>
+     POD stands for Plain Old Data - A Plain Old Data Structure in C++ is an aggregate 
+     class that contains only PODs as members, has no user-defined destructor, no 
+     user-defined copy assignment operator, and no nonstatic members of pointer-to-member 
+     type.
+  </Answer>
+</QA>
+<QA ID="291" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     What is C++11's Deleted and Defaulted Functions ?
+  </Question>
+  <Answer>
+     struct A
+     {
+        A()=default; //C++11
+        virtual ~A()=default; //C++11
+
+     };
+     The =default; part instructs the compiler to generate the default implementation 
+     for the function
+
+     The opposite of a defaulted function is a deleted function:
+
+     int func()=delete;
+     Which tells the compiler not to generate default implemnetation for this function.
+
+  </Answer>
+</QA>
+<QA ID="292" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     How does c++11's nullptr fixed the NULL problem ?
+  </Question>
+  <Answer>
+     nullptr replaces the bug-prone NULL macro and the literal 0 that have been used
+     as null pointer substitutes for many years. nullptr is strongly-typed:
+
+     void f(int);     //#1
+     void f(char *);  //#2
+
+     //C++03
+
+     f(0);           //which f is called?
+
+     //C++11
+
+     f(nullptr)      //unambiguous, calls #2
+
+     nullptr is applicable to all pointer categories, including function pointers and
+      pointers to members:
+
+     const char *pc=str.c_str(); //data pointers
+     if (pc!=nullptr)
+       cout&lt;&lt;pc&lt;&lt;endl;
+
+     int (A::*pmf)()=nullptr; //pointer to member function
+
+     void (*pmf)()=nullptr; //pointer to function
+  </Answer>
+</QA>
+<QA ID="293" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     What is c++11's Delegating Constructors
+  </Question>
+  <Answer>
+     In C++11 a constructor may call another constructor of the same class:
+
+     class M //C++11 delegating constructors
+     {
+
+        int x, y;
+        char *p;
+
+     public:
+
+        M(int v) : x(v), y(0), p(new char [MAX]) {}            //#1 target
+        M(): M(0) {                                            //#2 delegating constructor
+          cout&lt;&lt;"delegating ctor"&lt;&lt;endl;
+        }     
+
+     };
+
+     Constructor #2, the delegating constructor, invokes the target constructor #1.
+  </Answer>
+</QA>
+<QA ID="294" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     Move semantics in C++11 is implemented for all STL containters, which means what ?
+  </Question>
+  <Answer>
+    It means it would be OK to do call by value and return by value, pass by value with
+    those STL container classes.
+  </Answer>
+</QA>
+<QA ID="295" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     What is lvalue and what is rvalue ?
+  </Question>
+  <Answer>
+    lvalue: An object that occupies some identifiable location in memory (not something in register)
+            for example: variable a: int a;
+    rvalue: Any object that is not a lvalue. for example: 5, a+5, sume(a+b), etc
+
+     int &amp; r= 5;       //compiler err
+     const int &amp; r=5;   //OK
+
+     int square(int &amp; x) { return x*x;}
+     square(i);    //OK
+     square(5);     //compiler error
+
+     int square(const int &amp; i){return x*x;}
+     square(5);    //ok
+
+  </Answer>
+</QA>
+<QA ID="296" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     What is rvalue reference ?
+  </Question>
+  <Answer>
+     rvalue reference is a reference to rvalue, syntax as &amp;&amp;:
+     int a = 5;   //a is a lvalue
+     int &amp; b = a; //b is a lvalue reference (formerlly called reference before c++11)
+
+     int &amp;&amp; c;    //c is a rvalue reference
+
+     in use:
+     void printInt( int&amp; i );    //#1
+     void printInt( int&amp;&amp; i );   //#2
+
+     void main(){
+        printInt(a);     //call #1
+        printInt(6);     //call #2
+     }
+    
+  </Answer>
+</QA>
+<QA ID="297" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     What have beed added to c++11 library ?
+  </Question>
+  <Answer>
+    C++11 added:
+     1. new container classes (unordered_set, unordered_map, unordered_multiset, and unordered_multimap)
+     2. and several new libraries for:
+        1) regular expressions, 
+        2) tuples, 
+        3) function object wrapper 
+        4) and more. 
+  </Answer>
+</QA>
+<QA ID="298" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     What is new in C++11 in terms of threading library ?
+  </Question>
+  <Answer>
+    c++11 new functions in STL Threading library :
+     1) thread class
+     2) promises and futures
+     3) async(), function template for launching concurrent tasks
+     4) tread_local storage type for declaring thread-unique data.
+  </Answer>
+</QA>
+<QA ID="299" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     What's new in c++11 in terms of smart pointer ?
+  </Question>
+  <Answer>
+         C++98 defined only one smart pointer class, auto_ptr, which is now deprecated. 
+     C++11 includes new smart pointer classes: shared_ptr and the recently-added unique_ptr. 
+     Both are compatible with other Standard Library components, so you can safely 
+     store these smart pointers in standard containers and manipulate them with
+     standard algorithms.
+  </Answer>
+</QA>
+<QA ID="300" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     What's new in c++11 support?
+  </Question>
+  <Answer>
+     c+11 now supports:
+     1. lambda expressions
+     2. automatic type deduction of objects
+     3. uniform initialization syntax: (), a uniform brace notation,
+        and {} for aggregate
+     4. delegating constructors
+     5. deleted and defaulted function declarations
+     6. nullptr
+     7. rvalue references
+  </Answer>
+</QA>
+<QA ID="301" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     C++11 Standard Library was also revamped with what new features?
+  </Question>
+  <Answer>
+     1. new algorithms,
+     2. new container classes,
+     3. atomic operations,
+     4. type traits,
+     5. regular expressions,
+     6. new smart pointers,
+     7. async() facility, and of course
+     8. a multithreading library.
+
+   c++11 lacks a GC but it does include a state-of–the-art threading library.
+  </Answer>
+</QA>
+<QA ID="302" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     Who is the creator of C++ ?
+  </Question>
+  <Answer>
+    Bjarne Stroustrup
+  </Answer>
+</QA>
+<QA ID="303" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     C++11 cleans up this mess with a uniform brace notation initialization, 
+     what does its syntax look like?
+  </Question>
+  <Answer>
+     C++11 supports in-class initialization of data members:
+     class X{
+        int a[4];
+        int b=7; //C++11 only  in-class initialization of data members
+     public:
+        X():a{1,2,3,4},b(7)  //C++11, member array initializer, member initializer(b)
+        {
+           ...
+        }
+     };
+  </Answer>
+</QA>
+<QA ID="304" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     With c++ move semantics, what member functions are introduced ?
+  </Question>
+  <Answer>
+     Introduced:
+     1. move contructor (Rvalue reference constructor ?)
+     2. move assignment operator
+  </Answer>
+</QA>
+<QA ID="305" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     What is the usage of rvalue reference ?
+  </Question>
+  <Answer>
+    1. Move semantics
+    2. Perfect forwarding (relay, universal reference thing)
+  </Answer>
+</QA>
+<QA ID="306" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+    In order to make a function defined in a C++ file callable from C, you need to
+     A. declare the function in an extern "C" block.
+     B. ensure the function isn't overloaded.
+     C. declare the function as static.
+     D. Both A and B.
+
+  </Question>
+  <Answer>
+     D
+     The extern "C" line tells the compiler that the external information sent to the
+      linker should use C calling conventions and name mangling (e.g., preceded by a
+     single underscore). Since name overloading isn't supported by C, you can't make
+     several overloaded functions simultaneously callable by a C program. 
+  </Answer>
+</QA>
+<QA ID="307" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     Python Sample code ?
+  </Question>
+  <Answer>
+     #!/usr/bin/python3
+     # Some calculations.  Note the lack of semicolons.  Statements end at the end
+     # of the line.  Also, variables need not start with a special symbol as in
+     # perl and some other Unix-bred languages.
+     fred = 18
+     barney = FRED = 44;                     # Case sensistive.
+     bill = (fred + barney * FRED - 10)
+     alice = 10 + bill / 100                 # Regular division does not truncate.
+     alice2 = 10 + bill // 100               # But the // operator provides int div.
+     frank = 10 + float(bill) / 100
+     print("fred =", fred)
+     print("FRED =", FRED)
+     print("bill =", bill)
+     print("alice =", alice)
+     print("alice2 =", alice2)
+     print("frank =", frank )
+     print()
+
+     # Each variable on the left is assigned the corresponding value on the right.
+     fred, alice, frank = 2*alice, fred - 1, bill + frank
+     print("fred =", fred)
+     print("alice =", alice)
+     print("frank =", frank )
+     print()
+
+     # Exchange w/o a temp.
+     fred, alice = alice, fred
+     print("fred =", fred)
+     print("alice =", alice)
+     print()
+
+     # Python allows lines to be continued by putting a backslash at the end of
+     # the first part.
+     fred = bill + alice + frank - \
+            barney
+     print("fred =", fred)
+     print()
+
+     # The compiler will also combine lines when the line break in contained
+     # in a grouping pair, such as parens.
+     joe = 3 * (fred +
+             bill - alice)
+     print ("joe =", fred)
+
+  </Answer>
+</QA>
+<QA ID="308" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     Where is Python Sample code on web ?
+  </Question>
+  <Answer>
+    http://sandbox.mc.edu/~bennet/python/code/index.html
+  </Answer>
+</QA>
+<QA ID="309" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     Perl Sample code ?
+  </Question>
+  <Answer>
+     # Various operations on scalar (string) variables.
+     $fred = "Fred here";
+     $barney = 56;
+     $sum = 10 + $barney;
+     print 'The variable $fred' . " contains $fred.\n";
+     print "Sum is $sum.\n";
+
+
+     more on: http://sandbox.mc.edu/~bennet/perl/leccode/index.html
+  </Answer>
+</QA>
+<QA ID="310" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     SQL Statement samples ?
+  </Question>
+  <Answer>
+     Update table:
+
+     UPDATE Customers
+     SET ContactName = 'Alfred Schmidt', City= 'Frankfurt'
+     WHERE CustomerID = 1;
+
+     INSERT INTO Customers (CustomerName, ContactName, Address, City, PostalCode, Cou
+     ntry)
+     VALUES ('Cardinal', 'Tom B. Erichsen', 'Skagen 21', 'Stavanger', '4006', 'Norway
+     ');
+
+
+     SELECT * FROM Customers ORDER BY Country DESC;
+     SELECT MIN(Price) AS SmallestPrice FROM Products;
+     SELECT MAX(Price) AS LargestPrice FROM Products;
+     SELECT COUNT(ProductID) FROM Products;
+     SELECT AVG(Price) FROM Products;
+     SELECT SUM(Quantity) FROM OrderDetails;
+
+     SELECT * FROM Customers WHERE CustomerName LIKE '%or%';
+
+
+     SELECT Orders.OrderID, Customers.CustomerName, Orders.OrderDate
+     FROM Orders
+     INNER JOIN Customers ON Orders.CustomerID=Customers.CustomerID;
+
+     SELECT Customers.CustomerName, Orders.OrderID
+     FROM Customers
+     LEFT JOIN Orders ON Customers.CustomerID = Orders.CustomerID
+     ORDER BY Customers.CustomerName;
+
+     SELECT Customers.CustomerName, Orders.OrderID
+     FROM Customers
+     LEFT JOIN Orders ON Customers.CustomerID = Orders.CustomerID
+     ORDER BY Customers.CustomerName;
+
+     https://www.w3schools.com/sql/sql_join_right.asp
+
+     SELECT COUNT(CustomerID), Country
+     FROM Customers
+     GROUP BY Country
+     ORDER BY COUNT(CustomerID) DESC;
+
+     SELECT COUNT(CustomerID), Country
+     FROM Customers
+     GROUP BY Country
+     HAVING COUNT(CustomerID) > 5;
+
+     CREATE DATABASE testDB
+
+     DROP DATABASE testDB;
+
+     CREATE TABLE Persons (
+         ID int NOT NULL,
+         LastName varchar(255) NOT NULL,
+         FirstName varchar(255),
+         Age int,
+         PRIMARY KEY (ID)
+     );
+
+     CREATE TABLE Orders (
+         OrderID int NOT NULL,
+         OrderNumber int NOT NULL,
+         PersonID int,
+         PRIMARY KEY (OrderID),
+         FOREIGN KEY (PersonID) REFERENCES Persons(PersonID)
+     );
+
+     SELECT * FROM Orders WHERE OrderDate='2008-11-11'
+  </Answer>
+</QA>
+<QA ID="311" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
   <Question>
      What is Metaprogramming ?
   </Question>
@@ -4259,7 +4970,79 @@ to be built in advance of their use. Some Boost libraries coexist as independent
     template
   </Answer>
 </QA>
-<QA ID="281" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+<QA ID="312" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     What is Metaprogramming ?
+  </Question>
+  <Answer>
+    template
+  </Answer>
+</QA>
+<QA ID="313" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     What is Metaprogramming ?
+  </Question>
+  <Answer>
+    template
+  </Answer>
+</QA>
+<QA ID="314" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     What is Metaprogramming ?
+  </Question>
+  <Answer>
+    template
+  </Answer>
+</QA>
+<QA ID="315" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     What is Metaprogramming ?
+  </Question>
+  <Answer>
+    template
+  </Answer>
+</QA>
+<QA ID="316" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     What is Metaprogramming ?
+  </Question>
+  <Answer>
+    template
+  </Answer>
+</QA>
+<QA ID="317" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     What is Metaprogramming ?
+  </Question>
+  <Answer>
+    template
+  </Answer>
+</QA>
+<QA ID="318" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     What is Metaprogramming ?
+  </Question>
+  <Answer>
+    template
+  </Answer>
+</QA>
+<QA ID="319" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     What is Metaprogramming ?
+  </Question>
+  <Answer>
+    template
+  </Answer>
+</QA>
+<QA ID="320" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     What is Metaprogramming ?
+  </Question>
+  <Answer>
+    template
+  </Answer>
+</QA>
+<QA ID="321" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
   <Question>
      What is Metaprogramming ?
   </Question>
