@@ -1652,7 +1652,7 @@
   </Question>
   <Answer>
      Race condition is the behavior of software where the output is dependent on the sequence or timing 
-     of the other threads in multi-threaded application. 
+     of the other threads in a multi-threaded application. 
   </Answer>
 </QA>
 <QA ID="96" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
@@ -1918,7 +1918,7 @@
      What software tool have you used for managing projects, tracking bugs ?
   </Question>
   <Answer>
-     I have used: Jenkins, Rally, Conflunce, MKS (Application lifecycle management, used in Airblue)
+     I have used: Jira, Rally, Conflunce, Bugzilla (Lexes) ,MKS (Application lifecycle management, used in Airblue) 
   </Answer>
 </QA>
 <QA ID="116" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
@@ -2049,10 +2049,13 @@
      When overloaded as a member function, a &lt;&lt; b is interpreted as a.operator&lt;&lt;(b), so it only takes 
      one explicit parameter (with this as a hidden parameter).
 
-     Since this requires that the overload be part of the class used as the left-hand operand, it's not useful 
-     with normal ostreams and such. It would require that your overload be part of the ostream class, not part 
-     of your class. Since you're not allowed to modify ostream, you can't do that. That leaves only the global 
-     overload as an alternative.
+     Since this requires that the overload be part of the class used as the left-hand operand a (in a &lt;&lt; b), 
+     it's not useful with normal ostreams and such. It would require that your overload be part of the ostream 
+     class, not part of your class. Since you're not allowed to modify ostream, you can't do that. That leaves 
+     only the global overload as an alternative.
+
+     if you try to make it as a member function, it (operator &lt;&lt;) can only take one argument, with second being 
+     self *this.
 
   </Answer>
 </QA>
@@ -2984,7 +2987,7 @@ to be built in advance of their use. Some Boost libraries coexist as independent
         1)cannot copy
         2)cannot use STL containers 
         3)can swap with another scoped_ptr
-        4)can resest
+        4)can reset
 
    2. shared pointer:
 
@@ -3425,7 +3428,7 @@ to be built in advance of their use. Some Boost libraries coexist as independent
 </QA>
 <QA ID="206" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
   <Question>
-     What is differenct between VxWorks and Linux ?
+     What is difference between VxWorks and Linux ?
   </Question>
   <Answer>
      vxWorks is Real time OS, Linux is a General Purpose Operating System (GPOS). GPOS's task scheduling is throughput based.
@@ -4680,7 +4683,7 @@ to be built in advance of their use. Some Boost libraries coexist as independent
 </QA>
 <QA ID="297" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
   <Question>
-     What have beed added to c++11 library ?
+     What have been added to c++11 library ?
   </Question>
   <Answer>
     C++11 added:
@@ -4718,7 +4721,7 @@ to be built in advance of their use. Some Boost libraries coexist as independent
 </QA>
 <QA ID="300" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
   <Question>
-     What's new in c++11 support?
+     What's 7 new features that c++11 supports?
   </Question>
   <Answer>
      c+11 now supports:
@@ -4734,7 +4737,7 @@ to be built in advance of their use. Some Boost libraries coexist as independent
 </QA>
 <QA ID="301" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
   <Question>
-     C++11 Standard Library was also revamped with what new features?
+     C++11 Standard Library was also revamped with what 8 new features?
   </Question>
   <Answer>
      1. new algorithms,
@@ -4821,7 +4824,7 @@ to be built in advance of their use. Some Boost libraries coexist as independent
      # of the line.  Also, variables need not start with a special symbol as in
      # perl and some other Unix-bred languages.
      fred = 18
-     barney = FRED = 44;                     # Case sensistive.
+     barney = FRED = 44                     # Case sensistive.
      bill = (fred + barney * FRED - 10)
      alice = 10 + bill / 100                 # Regular division does not truncate.
      alice2 = 10 + bill // 100               # But the // operator provides int div.
@@ -4962,65 +4965,159 @@ to be built in advance of their use. Some Boost libraries coexist as independent
      SELECT * FROM Orders WHERE OrderDate='2008-11-11'
   </Answer>
 </QA>
-<QA ID="311" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+<QA ID="311" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
   <Question>
-     What is Metaprogramming ?
+     What is dmesg ?
   </Question>
   <Answer>
-    template
+     dmesg (Display message or driver message) is a command which will show 
+     Kernel ring buffers. These messages contain valuable information about 
+     device drivers loaded into the kernel at the time of booting as well as 
+     when we connect a hardware to the system on the fly. In other words 
+     dmesg will give us details about hardware drivers connected to, 
+     disconnected from a machine and any errors when hardware driver is 
+     loaded into the kernel. These messages are helpful in diagnosing or 
+     debugging hardware and device driver issues. Already covered command 
+     in the series is.
+     Examples of dmesg usage:
+     dmesg |less
+     dmesg > boot_messages
+     dmesg | grep -i usb
+     dmesg | grep -i tty    //to show all serial ports
+     dmesg | grep -i memory
+     dmesg | grep -i dma    //to confirm that the HDD(s) is running in DMA 
+                              (direct memory access) mode
+
+     The output of dmesg is maintained in the log file /var/log/dmesg, and it 
+     can thus also be easily viewed by reading that file with a text editor, 
+     such as vi or gedit, or with a command such as cat, e.g.,
+
+     cat /var/log/dmesg | less     
   </Answer>
 </QA>
 <QA ID="312" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
   <Question>
-     What is Metaprogramming ?
+     What is kernel ring buffer ?
   </Question>
   <Answer>
-    template
+     The kernel ring buffer is a data structure that records messages related to the operation
+     of the kernel. A ring buffer is a special kind of buffer that is always a constant size,
+     removing the oldest messages when new messages come in.
   </Answer>
 </QA>
-<QA ID="313" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+<QA ID="313" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
   <Question>
-     What is Metaprogramming ?
+     What is /etc directory for ?
   </Question>
   <Answer>
-    template
+         This is the nerve center of your system, it contains all system related configuration
+     files in here or in its sub-directories. A "configuration file" is defined as a local
+     file used to control the operation of a program; it must be static and cannot be an
+     executable binary
   </Answer>
 </QA>
-<QA ID="314" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+<QA ID="314" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
   <Question>
-     What is Metaprogramming ?
+     What is /sys directory for ?
   </Question>
   <Answer>
-    template
+         Modern Linux distributions include a /sys directory as a virtual filesystem (sysfs,
+     comparable to /proc , which is a procfs), which stores and allows modification of the
+     devices connected to the system, whereas many traditional UNIX and Unix-like operating
+     systems use /sys as a symbolic link to the kernel source tree.
   </Answer>
 </QA>
 <QA ID="315" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
   <Question>
-     What is Metaprogramming ?
+     What is /bin for ?
   </Question>
   <Answer>
-    template
+    /bin contains commands that may be used by both the system administrator and by users, 
+    but which are required when no other filesystems are mounted (e.g. in single user mode). 
+    It may also contain commands which are used indirectly by scripts
+
+    There must be no subdirectories in /bin.
+    The following commands, or symbolic links to commands, are required in /bin:
+
+     Command    Description
+     cat        Utility to concatenate files to standard output
+     chgrp      Utility to change file group ownership
+     chmod      Utility to change file access permissions
+     chown      Utility to change file owner and group
+     cp         Utility to copy files and directories
+     date       Utility to print or set the system data and time
+     dd         Utility to convert and copy a file
+     df         Utility to report filesystem disk space usage
+     dmesg      Utility to print or control the kernel message buffer
+     echo       Utility to display a line of text
+     false      Utility to do nothing, unsuccessfully
+     hostname   Utility to show or set the system's host name
+     kill       Utility to send signals to processes
+     ln         Utility to make links between files
+     login      Utility to begin a session on the system
+     ls         Utility to list directory contents
+     mkdir      Utility to make directories
+     mknod      Utility to make block or character special files
+     more       Utility to page through text
+     mount      Utility to mount a filesystem
+     mv         Utility to move/rename files
+     ps         Utility to report process status
+     pwd        Utility to print name of current working directory
+     rm         Utility to remove files or directories
+     rmdir      Utility to remove empty directories
+     sed        The `sed' stream editor
+     sh         POSIX compatible command shell
+     stty       Utility to change and print terminal line settings
+     su         Utility to change user ID
+     sync       Utility to flush filesystem buffers
+     true       Utility to do nothing, successfully
+     umount     Utility to unmount file systems
+     uname      Utility to print system information
+
+
+
   </Answer>
 </QA>
-<QA ID="316" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+<QA ID="316" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
   <Question>
-     What is Metaprogramming ?
+     What is /proc directory in linux ?
   </Question>
   <Answer>
-    template
+     The proc filesystem (procfs) is a special filesystem in Unix-like operating systems that
+     presents information about processes and other system information in a hierarchical
+     file-like structure, providing a more convenient and standardized method for dynamically
+     accessing process data held in the kernel than traditional tracing methods or direct
+     access to kernel memory. Typically, it is mapped to a mount point named /proc at boot
+     time. The proc file system acts as an interface to internal data structures in the
+     kernel. It can be used to obtain information about the system and to change certain
+     kernel parameters at runtime (sysctl).
+
+     The Linux kernel extends it to non-process-related data.
+
+     The proc filesystem provides a method of communication between kernel space and user
+     space. For example, the GNU version of the process reporting utility ps uses the proc
+     file system to obtain its data, without using any specialized system calls.
+
+     Linux implementation includes a directory for each running process, including kernel
+     processes, in directories named /proc/PID, where PID is the process number. Each
+     directory contains information about one process, including:
+
+     /proc/PID/cmdline, the command that originally started the process.
+     /proc/PID/cwd, a symlink to the current working directory of the process.
+     ...
   </Answer>
 </QA>
 <QA ID="317" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
   <Question>
-     What is Metaprogramming ?
+     How do display 10 lines after the line that contains MARKER, but not the one containing MARKER ?
   </Question>
   <Answer>
-    template
+    cat file.txt | grep -A10 MARKER | grep -v MARKER
   </Answer>
 </QA>
 <QA ID="318" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
   <Question>
-     What is Metaprogramming ?
+     What is strace ?
   </Question>
   <Answer>
     template
@@ -5028,7 +5125,7 @@ to be built in advance of their use. Some Boost libraries coexist as independent
 </QA>
 <QA ID="319" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
   <Question>
-     What is Metaprogramming ?
+     What is ptrace ?
   </Question>
   <Answer>
     template
@@ -5036,7 +5133,7 @@ to be built in advance of their use. Some Boost libraries coexist as independent
 </QA>
 <QA ID="320" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
   <Question>
-     What is Metaprogramming ?
+     What is command id?
   </Question>
   <Answer>
     template
@@ -5044,7 +5141,168 @@ to be built in advance of their use. Some Boost libraries coexist as independent
 </QA>
 <QA ID="321" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
   <Question>
-     What is Metaprogramming ?
+     if A and B are linux commands, what is difference between the following 2 ?
+     A &amp; B
+     A &amp;&amp; B
+  </Question>
+  <Answer>
+    template
+  </Answer>
+</QA>
+<QA ID="322" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     if A and B are linux commands, what is difference between the following 2 ?
+     A | B
+     A || B
+  </Question>
+  <Answer>
+    template
+  </Answer>
+</QA>
+<QA ID="323" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     What is /dev/kmsg ?
+  </Question>
+  <Answer>
+    template
+  </Answer>
+</QA>
+<QA ID="324" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     How to perform a process trace using tusc ?
+  </Question>
+  <Answer>
+    template
+  </Answer>
+</QA>
+<QA ID="325" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     how to set cout to print fixed width ?
+  </Question>
+  <Answer>
+    1. #include &lt;iomanip>
+    2. cout &lt;&lt; right &lt;&lt; setw(18) &lt;&lt; name.substr(0,18) &lt;&lt; ...;
+  </Answer>
+</QA>
+<QA ID="326" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     if I want to use std::find_if(), which header file should I include ?    
+  </Question>
+  <Answer>
+    #include &lt;algorithm>    
+  </Answer>
+</QA>
+<QA ID="327" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     how to test for empty string variable ?     
+  </Question>
+  <Answer>
+    if [ -z $name2 ]; then
+     echo "name2 is null"
+    else
+     echo "name2 is not null"
+    fi
+  </Answer>
+</QA>
+<QA ID="328" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     wwwwwwwww ?     
+  </Question>
+  <Answer>
+    template
+  </Answer>
+</QA>
+<QA ID="329" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     wwwwwwwww ?     
+  </Question>
+  <Answer>
+    template
+  </Answer>
+</QA>
+<QA ID="330" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     wwwwwwwww ?     
+  </Question>
+  <Answer>
+    template
+  </Answer>
+</QA>
+<QA ID="331" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     wwwwwwwww ?     
+  </Question>
+  <Answer>
+    template
+  </Answer>
+</QA>
+<QA ID="332" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     wwwwwwwww ?     
+  </Question>
+  <Answer>
+    template
+  </Answer>
+</QA>
+<QA ID="333" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     wwwwwwwww ?     
+  </Question>
+  <Answer>
+    template
+  </Answer>
+</QA>
+<QA ID="334" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     wwwwwwwww ?     
+  </Question>
+  <Answer>
+    template
+  </Answer>
+</QA>
+<QA ID="335" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     wwwwwwwww ?     
+  </Question>
+  <Answer>
+    template
+  </Answer>
+</QA>
+<QA ID="336" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     wwwwwwwww ?     
+  </Question>
+  <Answer>
+    template
+  </Answer>
+</QA>
+<QA ID="337" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     wwwwwwwww ?     
+  </Question>
+  <Answer>
+    template
+  </Answer>
+</QA>
+<QA ID="338" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     wwwwwwwww ?     
+  </Question>
+  <Answer>
+    template
+  </Answer>
+</QA>
+<QA ID="339" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     wwwwwwwww ?     
+  </Question>
+  <Answer>
+    template
+  </Answer>
+</QA>
+<QA ID="340" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     wwwwwwwww ?     
   </Question>
   <Answer>
     template
