@@ -1781,7 +1781,7 @@
 </QA>
 <QA ID="105" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
   <Question>
-     The mv commaind in UNIX will chagne:
+     The mv commaind in UNIX will change:
  
      A: The i-node number
      B: only the directory entry
@@ -3724,6 +3724,9 @@ to be built in advance of their use. Some Boost libraries coexist as independent
        $ echo "asdf 234-123-4125 asdf" | tr -dc '0-9-'
        234-123-4125
 
+       Note: -d: delete
+             -c: complement: use the complement of SET1
+
   </Answer>
 </QA>
 <QA ID="235" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
@@ -3830,6 +3833,8 @@ to be built in advance of their use. Some Boost libraries coexist as independent
      2. private members
      3. static members
      4. member functions
+
+     Note: In one word: Only public data members are allowed to have
   </Answer>
 </QA>
 
@@ -4035,7 +4040,7 @@ to be built in advance of their use. Some Boost libraries coexist as independent
      1: HOME - home directory, a default argument for CD command
      2: SHELL- path name of the shell: /bin/bash
      3: PWD  - current working directory
-     4: SECONDS - Number of seconds since the hell was invoked
+     4: SECONDS - Number of seconds since the shell was invoked
   </Answer>
 </QA>
 
@@ -4448,7 +4453,7 @@ to be built in advance of their use. Some Boost libraries coexist as independent
      then c is 4.5
 
      if b is conveted to double, it is also OK. 
-     Note: a or b, at least of of them, has to be double to avoid lossing 
+     Note: a or b, at least one of them, has to be double to avoid lossing 
      data in a/b calculation
   </Answer>
 </QA>
@@ -4465,6 +4470,13 @@ to be built in advance of their use. Some Boost libraries coexist as independent
      How to do any-number-of-arguments function ?
   </Question>
   <Answer>
+     Summery: 
+     va_list N;
+     va_start(N,C);
+        va_arg(N,int)
+     va_end(N);
+
+     Snippet:
      #include &lt;iostream>
      #include &lt;stdarg.h>
      using namespace std;
@@ -5204,73 +5216,123 @@ to be built in advance of their use. Some Boost libraries coexist as independent
     fi
   </Answer>
 </QA>
-<QA ID="328" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+<QA ID="328" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
   <Question>
-     wwwwwwwww ?     
+     What is !$ in shell script?     
   </Question>
   <Answer>
-    template
+    !$ just repeats the last word from previous command.
+    Example:
+
+	$ echo Unix and Linux
+	Unix and Linux
+	$ echo !$
+	echo Linux      #repeating "Linux"
+        Linux
+
+        $ cat dir1
+        cat: dir1: Is a directory
+        $ cd !$
+        cd dir1
+
+        $ls
+        ....
+        $ !$      # execute the last command, which is "ls"
+        ....
+        $ls -l
+        ....
+        $ !$      # execute the last argument as a command, which is "-l"
+        -l
+        -bash: -l: command not found
+
+    
+    Note:
+        !  Start a history substitution
+        $  means the last word. This is usually the last argument.
+
   </Answer>
 </QA>
-<QA ID="329" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+<QA ID="329" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
   <Question>
-     wwwwwwwww ?     
+     what does the following line do in linux shell ?
+     cmd1 ; cmd2
   </Question>
   <Answer>
-    template
+    executing cmd1 first, then executing cmd2 without waiting.
   </Answer>
 </QA>
-<QA ID="330" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+<QA ID="330" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
   <Question>
-     wwwwwwwww ?     
+     what does the following line do in linux shell ?
+     cmd1 &amp;&amp; cmd2    
   </Question>
   <Answer>
-    template
+    it means:
+    if(cmd1); then
+        cmd2
+    fi
   </Answer>
 </QA>
-<QA ID="331" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+<QA ID="331" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
   <Question>
-     wwwwwwwww ?     
+     what does the following line do in linux shell ?
+     cmd1 || cmd2   
   </Question>
   <Answer>
-    template
+    it means:
+    if( ! cmd1 ); then
+        cmd2
+    fi
   </Answer>
 </QA>
-<QA ID="332" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+<QA ID="332" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
   <Question>
-     wwwwwwwww ?     
+     how to simplify the following expression ?     
+     x || x &amp;&amp; y
   </Question>
   <Answer>
-    template
+      x || x &amp;&amp; y
+    = x || (1 &amp;&amp; y)
+    = x || 1
+    = x
   </Answer>
 </QA>
 <QA ID="333" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
   <Question>
-     wwwwwwwww ?     
+     What is Microsoft Azure?     
   </Question>
   <Answer>
-    template
+     Microsoft Azure is a cloud computing service created by Microsoft for building, 
+     testing, deploying, and managing applications and services through a global 
+     network of Microsoft-managed data centers.
   </Answer>
 </QA>
 <QA ID="334" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
   <Question>
-     wwwwwwwww ?     
+     how to find public ip of my linux machine ?     
   </Question>
   <Answer>
-    template
+    use dig command:
+
+    /home/zhuyali>dig +short myip.opendns.com @resolver1.opendns.com
+    40.76.74.83
   </Answer>
 </QA>
 <QA ID="335" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
   <Question>
-     wwwwwwwww ?     
+     how to install a web sever on ubuntu linux?     
   </Question>
   <Answer>
-    template
+     Apache is the most commonly used Web server on Linux systems. Web servers are used to 
+     serve Web pages requested by client computers?   
+
+     To install one:
+     1: sudo apt install apache2
   </Answer>
 </QA>
 <QA ID="336" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
   <Question>
-     wwwwwwwww ?     
+     wwwwwwwww ?      
   </Question>
   <Answer>
     template
@@ -5302,7 +5364,15 @@ to be built in advance of their use. Some Boost libraries coexist as independent
 </QA>
 <QA ID="340" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
   <Question>
-     wwwwwwwww ?     
+     wwwwwwwww4 ?     1
+  </Question>
+  <Answer>
+    template
+  </Answer>
+</QA>
+<QA ID="340" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     wwwwwwwww4 ?     
   </Question>
   <Answer>
     template
