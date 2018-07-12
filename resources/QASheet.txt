@@ -4457,12 +4457,15 @@ to be built in advance of their use. Some Boost libraries coexist as independent
      data in a/b calculation
   </Answer>
 </QA>
-<QA ID="285" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+<QA ID="285" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
   <Question>
-     Does conversion from 'int' to 'float' lose data ?
+     if $phones prints "813-528-6246 407-347-8404", how to assign them to 
+     $cell and $home respectively in shell script?
   </Question>
   <Answer>
-    Yes. To avoid losing data, 'int' should be converted to 'double' !
+    phoneArray=($phones)
+    cell=${phoneArray[0]}
+    home=${phoneArray[1]}
   </Answer>
 </QA>
 <QA ID="286" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
@@ -5111,15 +5114,15 @@ to be built in advance of their use. Some Boost libraries coexist as independent
      file system to obtain its data, without using any specialized system calls.
 
      Linux implementation includes a directory for each running process, including kernel
-     processes, in directories named /proc/PID, where PID is the process number. Each
+     processes, in directories named /proc/&lt;PID>, where PID is the process number. Each
      directory contains information about one process, including:
 
-     /proc/PID/cmdline, the command that originally started the process.
-     /proc/PID/cwd, a symlink to the current working directory of the process.
+     /proc/&lt;PID>/cmdline, the command that originally started the process.
+     /proc/&lt;PID>/cwd, a symlink to the current working directory of the process.
      ...
   </Answer>
 </QA>
-<QA ID="317" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+<QA ID="317" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
   <Question>
      How do display 10 lines after the line that contains MARKER, but not the one containing MARKER ?
   </Question>
@@ -5127,28 +5130,99 @@ to be built in advance of their use. Some Boost libraries coexist as independent
     cat file.txt | grep -A10 MARKER | grep -v MARKER
   </Answer>
 </QA>
-<QA ID="318" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+<QA ID="318" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
   <Question>
      What is strace ?
   </Question>
   <Answer>
-    template
+    strace is a diagnostic, debugging and instructional userspace utility for Linux. 
+    It is used to monitor and tamper with interactions between processes and the Linux 
+    kernel, which include system calls, signal deliveries, and changes of process state. 
+    The operation of strace is made possible by the kernel feature known as ptrace.
+
+    Some Unix-like systems provide other diagnostic tools similar to strace, such as truss.
+
+    Simple Example: Trace Linux Command (ls) System calls:
+
+    $ strace ls
+    execve("/bin/ls", ["ls"], [/* 19 vars */]) = 0
+    brk(NULL)                               = 0x1f31000
+    access("/etc/ld.so.nohwcap", F_OK)      = -1 ENOENT (No such file or directory)
+    access("/etc/ld.so.preload", R_OK)      = -1 ENOENT (No such file or directory)
+    open("/etc/ld.so.cache", O_RDONLY|O_CLOEXEC) = 3
+    fstat(3, {st_mode=S_IFREG|0644, st_size=25337, ...}) = 0
+    ...
+    getdents(3, /* 10 entries */, 32768)    = 320
+    getdents(3, /* 0 entries */, 32768)     = 0
+    close(3)                                = 0
+    close(1)                                = 0
+    close(2)                                = 0
+    exit_group(0)                           = ?
+    +++ exited with 0 +++
+    $
+
+    from above, you can see various types of system calls made by ls command, for example:
+    
+    open("/etc/ld.so.cache", O_RDONLY|O_CLOEXEC) = 3
+
+    Where:
+
+       - open - is the type of system call
+       - ("/etc/ld.so.cache", O_RDONLY|O_CLOEXEC) - system call argument
+       - 3 - system call return value
   </Answer>
 </QA>
-<QA ID="319" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+<QA ID="319" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
   <Question>
      What is ptrace ?
   </Question>
   <Answer>
-    template
+     ptrace is a system call found in Unix and several Unix-like operating systems. By using 
+     ptrace (the name is an abbreviation of "process trace") one process can control another, 
+     enabling the controller to inspect and manipulate the internal state of its target. 
+
+     ptrace is used by debuggers and other code-analysis tools, mostly as aids to software 
+     development.
+
+     ptrace is used by debuggers (such as gdb and dbx), by tracing tools like strace and
+     ltrace, and by code coverage tools. ptrace is also used by specialized programs to patch
+     running programs, to avoid unfixed bugs or to overcome security features. It can further
+     be used as a sandbox and as a run-time environment simulator (like emulating root
+     access for non-root software).
+
+     By attaching to another process using the ptrace call, a tool has extensive control over
+     the operation of its target. This includes manipulation of its file descriptors, memory,
+     and registers. It can single-step through the target's code, can observe and intercept
+     system calls and their results, and can manipulate the target's signal handlers and both
+     receive and send signals on its behalf. The ability to write into the target's memory
+     allows not only its data store to be changed, but also the application's own code
+     segment, allowing the controller to install breakpoints and patch the running code of the
+     target.
+
+     As the ability to inspect and alter another process is very powerful, ptrace can attach
+     only to processes that the owner can send signals to (typically only their own
+     processes); the superuser account can ptrace almost any process (except init on kernels
+     before 2.6.26). In Linux systems that feature capabilities-based security, the ability to
+     ptrace is further limited by the CAP_SYS_PTRACE capability[5] or by the YAMA Linux
+     Security Module. In FreeBSD, it's limited by FreeBSD jails and Mandatory Access
+     Control policies.
   </Answer>
 </QA>
-<QA ID="320" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+<QA ID="320" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
   <Question>
      What is command id?
   </Question>
   <Answer>
-    template
+    id command is command which can print real and effective User ID (UID) and Group ID (GID).
+    An UID is a single identity for a user.
+
+    Example:
+
+    $ id -un
+    yali.zhu
+    $ id -gn
+    yaligrp
+
   </Answer>
 </QA>
 <QA ID="321" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
@@ -5168,7 +5242,12 @@ to be built in advance of their use. Some Boost libraries coexist as independent
      A || B
   </Question>
   <Answer>
-    template
+    A | B : pipe operation: A's output goes to B's input
+    A || B : logic, if A failed, execute B
+
+    Try this example:
+    ls  || ls -l     # ls -l wont run
+    lsa || ls -l     # lsa command does not exist and thus failed, ls -l got a chance to run
   </Answer>
 </QA>
 <QA ID="323" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
@@ -5292,8 +5371,8 @@ to be built in advance of their use. Some Boost libraries coexist as independent
   </Question>
   <Answer>
       x || x &amp;&amp; y
-    = x || (1 &amp;&amp; y)
-    = x || 1
+    = x &amp;&amp; (1 || y)
+    = x &amp;&amp; 1
     = x
   </Answer>
 </QA>
@@ -5307,7 +5386,7 @@ to be built in advance of their use. Some Boost libraries coexist as independent
      network of Microsoft-managed data centers.
   </Answer>
 </QA>
-<QA ID="334" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+<QA ID="334" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
   <Question>
      how to find public ip of my linux machine ?     
   </Question>
@@ -5318,7 +5397,7 @@ to be built in advance of their use. Some Boost libraries coexist as independent
     40.76.74.83
   </Answer>
 </QA>
-<QA ID="335" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+<QA ID="335" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
   <Question>
      how to install a web sever on ubuntu linux?     
   </Question>
@@ -5330,52 +5409,413 @@ to be built in advance of their use. Some Boost libraries coexist as independent
      1: sudo apt install apache2
   </Answer>
 </QA>
-<QA ID="336" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+<QA ID="336" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
   <Question>
-     wwwwwwwww ?      
+     How to install strace on different linux distribution?      
   </Question>
   <Answer>
-    template
+    $ sudo apt install strace    #Debian/Ubuntu
+    $ yum install strace         #RHEL/CentOS
+    $ dnf install strace         #Fedora 22+
   </Answer>
 </QA>
-<QA ID="337" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+<QA ID="337" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
   <Question>
-     wwwwwwwww ?     
+     What is the top 10 usage of strace?     
   </Question>
   <Answer>
-    template
+    1: Trace System Calls: strace df -h
+    2: Trace Process PID: sudo strace -p 1234
+    3: Get Summary of a Process: Using the -c flag, you can generate a report of total time, 
+       calls, and errors for each system call:              sudo strace -c -p 1234
+    4: Print instruction Pointer for each system call (-i): sudo strace -i df -h
+    5: Show time stamp for each trace line(-t):             sudo strace -t df -h
+    6: Show time used for each system call (-T):            sudo strace -T df -h
+    7: Trace Only Specific System Calls(-e):    sudo strace -e trace=write df -h
+    8: Trace System calls on certain condition: sudo strace -q -e trace=process df -h
+                                                sudo strace -q -e trace=file    df -h
+                                                sudo strace -q -e trace=memory  df -h 
+                                                sudo strace -e trace=network df -h
+                                                sudo strace -e trace=signal  df -h
+    9: Redirect trace output to file(-o):       sudo strace -o df_debug.txt df -h
+   10: Show some debugging output (-d):         strace -d df -h
   </Answer>
 </QA>
 <QA ID="338" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
   <Question>
-     wwwwwwwww ?     
+     What is Tag Dispatching?     
   </Question>
   <Answer>
-    template
+    Tag dispatching is a way of using function overloading to dispatch based on properties of a type.
   </Answer>
 </QA>
-<QA ID="339" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+<QA ID="339" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
   <Question>
-     wwwwwwwww ?     
+     what is the /var Directory for ?     
   </Question>
   <Answer>
-    template
+    /var is a standard subdirectory of the root directory that contains files to which the system writes 
+    data during the course of its operation.
+ 
+    /var is specific for each computer; that is, it is not shared over a network with other computers.
+
+    /var/cache (contains cached data from application programs), 
+    /var/games (contains variable data relating to games in /usr), 
+    /var/lib   (contains dynamic data libraries and files), 
+    /var/lock  (contains lock files created by programs to indicate that they are using a particular file or device), 
+    /var/log   (contains log files), 
+    /var/run   (contains PIDs and other system information that is valid until the system is booted again)
+    /var/spool (contains mail, news and printer queues).
+    /var/www/html contains the web server dir ?
+   
   </Answer>
 </QA>
 <QA ID="340" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
   <Question>
-     wwwwwwwww4 ?     1
+     What is SOAP?     
   </Question>
   <Answer>
-    template
+    SOAP (Simple Object Access Protocol) is a messaging protocol specification for exchanging structured information 
+    in the implementation of web services in computer networks. Its purpose is to induce extensibility, neutrality 
+    and independence. It uses XML Information Set for its message format, and relies on application layer protocols, 
+    most often Hypertext Transfer Protocol (HTTP) or Simple Mail Transfer Protocol (SMTP), for message negotiation 
+    and transmission.
+
+    SOAP allows processes running on disparate operating systems (such as Windows and Linux) to communicate using 
+    Extensible Markup Language (XML). Since Web protocols like HTTP are installed and running on all operating systems, 
+    SOAP allows clients to invoke web services and receive responses independent of language and platforms.
+
+    - SOAP is a communication protocol designed to communicate via Internet.
+    - SOAP can extend HTTP for XML messaging.
+    - SOAP provides data transport for Web services.
+    - SOAP can exchange complete documents or call a remote procedure.
+    - SOAP can be used for broadcasting a message.
+    - SOAP is platform- and language-independent.
+    - SOAP is the XML way of defining what information is sent and how.
+    - SOAP enables client applications to easily connect to remote services and invoke remote methods.
   </Answer>
 </QA>
-<QA ID="340" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+<QA ID="341" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
   <Question>
-     wwwwwwwww4 ?     
+     When you are trying to delete empty lines using sed '/^$/d' and it doesn't work, how to proceed ?     
   </Question>
   <Answer>
-    template
+    Use tool dos2unix to change to unix format before using the sed '/^$/d' !
+    you can use tool XXD &lt;file&gt; to exam the file in binary format.
   </Answer>
 </QA>
+<QA ID="342" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     What are the stages of the waterfall model?
+  </Question>
+  <Answer>
+     It is also referred to as a linear-sequential life cycle model. 
+     It is very simple to understand and use. In a waterfall model, 
+     each phase must be completed before the next phase can begin 
+     and there is no overlapping in the phases. The Waterfall model 
+     is the earliest SDLC approach that was used for software development.
+  </Answer>
+</QA>
+<QA ID="343" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     What are 5 most popular memory debuggers for Linux ?
+  </Question>
+  <Answer>
+     1: Dmalloc
+     2: Electric Fence
+     3: Memorycheck
+     4: Memwatch
+     5: Mtrace
+  </Answer>
+</QA>
+<QA ID="344" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     Agile Methodology
+  </Question>
+  <Answer>
+     The Agile Method is a particular approach to project management that is utilized in
+     software development. This method assists teams in responding to the unpredictability of
+     constructing software. It uses incremental, iterative work sequences that are commonly
+     known as sprints.
+     
+     A sprint is a period of time allocated for a particular phase of a project. Sprints are
+     considered to be complete when the time period expires. There may be disagreements among
+     the members of the team as to whether or not the development is satisfactory; however,
+     there will be no more work on that particular phase of the project. The remaining phases
+     of the project will continue to develop within their respective time frames.
+     
+     The general principles of the Agile Method
+     - Satisfy the client and continually develop software.
+     - Changing requirements are embraced for the client's competitive advantage.
+     - Concentrate on delivering working software frequently. Delivery preference will be
+       placed on the shortest possible time span.
+     - Developers and business people must work together throughout the entire project.
+     - Projects must be based on people who are motivated. Give them the proper environment
+       and the support that they need. They should be trusted to get their jobs done.
+     - Face-to-face communication is the best way to transfer information to and from a team.
+     - Working software is the primary measurement of progress.
+     - Agile processes will promote development that is sustainable. Sponsors, developers, and
+       users should be able to maintain an indefinite, constant pace.
+     - Constant attention to technical excellence and good design will enhance agility.
+     - Simplicity is considered to be the art of maximizing the work that is not done, and it
+       is essential.
+     - Self-organized teams usually create the best designs.
+     - At regular intervals, the team will reflect on how to become more effective, and they
+       will tune and adjust their behavior accordingly
+  </Answer>
+</QA>
+<QA ID="345" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     What the command git bisect can do ?
+  </Question>
+  <Answer>
+     git bisect - Use binary search to find the commit that introduced a bug.
+
+        This command uses a binary search algorithm to find which commit in your project's
+     history introduced a bug. You use it by first telling it a "bad" commit that is known to
+     contain the bug, and a "good" commit that is known to be before the bug was introduced.
+     Then git bisect picks a commit between those two endpoints and asks you whether the
+     selected commit is "good" or "bad". It continues narrowing down the range until it finds
+     the exact commit that introduced the change.
+
+     Example: 
+     $ git bisect start
+     $ git bisect bad                 # Current version is bad
+     $ git bisect good v2.6.13-rc2
+  </Answer>
+</QA>
+<QA ID="346" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     What is NFS ?
+  </Question>
+  <Answer>
+     NSF stands for Network File System, it is a distributed file system protocol originally 
+     developed by Sun Microsystems in 1984, allowing a user on a client computer to access 
+     files over a computer network much like local storage is accessed.
+
+       The Network File System (NFS) is a client/server application that lets a computer user
+     view and optionally store and update files on a remote computer as though they were on
+     the user's own computer. The NFS protocol is one of several distributed file system
+     standards for network-attached storage (NAS).
+          
+       NFS allows the user or system administrator to mount (designate as accessible) all or a
+     portion of a file system on a server. The portion of the file system that is mounted can
+     be accessed by clients with whatever privileges are assigned to each file (read-only or
+     read-write). NFS uses Remote Procedure Calls (RPC) to route requests between clients and
+     servers.
+  </Answer>
+</QA>
+<QA ID="347" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     what does this line do ?  grep yali /etc/passwd   | cut -f 1 -d :
+  </Question>
+  <Answer>
+     print user name zhuyali
+
+     example:
+     $(/home/zhuyali) grep yali /etc/passwd
+     zhuyali:x:1000:1000:Ubuntu:/home/zhuyali:/bin/bash
+
+     $(/home/zhuyali) grep yali /etc/passwd   | cut -f 2  -d :
+     x
+     $(/home/zhuyali) grep yali /etc/passwd   | cut -f 1  -d :
+     zhuyali
+     
+     cut --help:
+          -f: select only these fileds, also print any lines that contains no delimiter 
+               character, unless the -s option is  specified
+          -d: use specified delimiter instead of TAB for field delimiter
+          -s: do not print lines not containing delimiters
+  </Answer>
+</QA>
+<QA ID="348" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     what does the first character mean in directory listing using ls -l "
+  </Question>
+  <Answer>
+     (/dev) ls k* -al
+     crw-r--r-- 1 root root 1, 11 Jul 10 00:12 kmsg
+
+     what does the leading c mean above ?
+
+     Answer: The first character can be any of these:
+
+     d = directory
+     - = regular file
+     l = symbolic link
+     s = Unix domain socket
+     p = named pipe
+     c = character device file
+     b = block device file
+  </Answer>
+</QA>
+<QA ID="349" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     What is dmesg and what is /proc/kmsg ?
+  </Question>
+  <Answer>
+     Output of /proc/kmsg can be directed to a file when collecting large amount of logs so
+     that no logs are lost
+
+     dmesg is circular buffer and previous logs get overwritten once buffer is full
+  </Answer>
+</QA>
+<QA ID="350" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     What is printk ?
+  </Question>
+  <Answer>
+     printk is a function that prints messages and is used in the C Programming Language
+     exclusively for the Linux Kernel. It accepts a string parameter called the format string,
+     which specifies a method for rendering an arbitrary number of varied data type
+     parameter(s) into a string. The string is then printed to the kernel log.
+
+     It provides a printf-like abstraction and its parsing of the format string and arguments
+     behave exactly the same way. It acts as a debugging tool for kernel programmers who need
+     this function for logging messages from the kernel.
+
+     printk has an optional prefix string: Loglevel.
+
+     Loglevel specifies the type of message being sent to the kernel message log. The syntax
+     with loglevel is:
+     printk(KERN_DEBUG "Debug message shown!\n");
+     Different Loglevels, along with their numerical values, are shown here:
+
+     0  KERN_EMERG      Emergency condition, system is probably dead
+     1  KERN_ALERT      Some problem has occurred, immediate attention is needed
+     2  KERN_CRIT       A critical condition
+     3  KERN_ERR        An error has occurred
+     4  KERN_WARNING    A warning   &lt;================ default level
+     5  KERN_NOTICE     Normal message to take note of
+     6  KERN_INFO       Some information
+     7  KERN_DEBUG      Debug information related to the program
+     When a log level is not specified, the default log level is KERN_WARNING, unless a
+     different default has been set in the kernel itself.
+
+     Loglevels are defined in &lt;linux/kern_levels.h>. Which log levels are printed is
+     configured in the /proc/sys/kernel/printk sysctl file (format: console level, default
+     message level, minimum console level, default console level)
+  </Answer>
+</QA>
+<QA ID="351" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     what is /dev/kmsg ?
+  </Question>
+  <Answer>
+     (/dev) ls k* -al
+     crw-r--r-- 1 root root 1, 11 Jul 10 00:12 kmsg
+
+     kmsg here is a char device
+
+     The /dev/kmsg character device node provides userspace access
+     to the kernel's printk buffer.
+
+     Every write() to the opened device node places a log entry in
+     the kernel's printk buffer.
+
+  </Answer>
+</QA>
+<QA ID="352" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     How to see kernel messages ?
+  </Question>
+  <Answer>
+     dmesg
+     dmesg | grep -i memory
+     dmesg | grep -i file
+  </Answer>
+</QA>
+<QA ID="353" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     Why do I still get "permission denied" using sudo as following ? 
+    
+     sudo echo "Writing critical printk messages from userspace" > /dev/kmsg
+  </Question>
+  <Answer>
+     sudo doesn't work because echo is not a command, it's a shell builtin. 
+     The right way to do that is:
+
+       echo "blah" | sudo tee /dev/kmsg
+
+     tee is a command that copies stdin to a file and stdout. It's called tee 
+     because it's like a T-shaped pipe in a pipeline.
+
+     Example:
+
+     $ (/home/zhuyali) echo "Yali test" > /dev/kmsg
+     -bash: /dev/kmsg: Permission denied
+     $ (/home/zhuyali) sudo echo "Yali test" > /dev/kmsg
+     -bash: /dev/kmsg: Permission denied
+     $ (/home/zhuyali)  echo "Yali test" | sudo tee /dev/kmsg
+      Yali test
+     $ (/home/zhuyali) dmesg | grep Yali
+     [192063.406398] Yali test
+     $ (/home/zhuyali)
+  </Answer>
+</QA>
+<QA ID="354" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     mmmmmmmmmmmmmmmmmmmmmm?     
+  </Question>
+  <Answer>
+     xxxxxxxxxxxxxxxxx
+  </Answer>
+</QA>
+<QA ID="355" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     mmmmmmmmmmmmmmmmmmmmmm?     
+  </Question>
+  <Answer>
+     xxxxxxxxxxxxxxxxx
+  </Answer>
+</QA>
+<QA ID="356" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     mmmmmmmmmmmmmmmmmmmmmm?     
+  </Question>
+  <Answer>
+     xxxxxxxxxxxxxxxxx
+  </Answer>
+</QA>
+<QA ID="357" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     mmmmmmmmmmmmmmmmmmmmmm?     
+  </Question>
+  <Answer>
+     xxxxxxxxxxxxxxxxx
+  </Answer>
+</QA>
+<QA ID="358" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     mmmmmmmmmmmmmmmmmmmmmm?     
+  </Question>
+  <Answer>
+     xxxxxxxxxxxxxxxxx
+  </Answer>
+</QA>
+<QA ID="359" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     mmmmmmmmmmmmmmmmmmmmmm?     
+  </Question>
+  <Answer>
+     xxxxxxxxxxxxxxxxx
+  </Answer>
+</QA>
+<QA ID="360" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     mmmmmmmmmmmmmmmmmmmmmm?     
+  </Question>
+  <Answer>
+     xxxxxxxxxxxxxxxxx
+  </Answer>
+</QA>
+<QA ID="361" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     mmmmmmmmmmmmmmmmmmmmmm?     
+  </Question>
+  <Answer>
+     xxxxxxxxxxxxxxxxx
+  </Answer>
+</QA>
+
 </QuestionsAndAnswers>

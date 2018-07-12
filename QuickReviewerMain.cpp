@@ -18,6 +18,9 @@
 using namespace tinyxml2;
 using namespace std;
 
+void searchAndDisplayByQuestions(char * word, vector<Question> questions);
+void searchAndDisplayByAnswers(char * word, vector<Question> questions);
+void searchAndDisplayByQAs(char * word, vector<Question> questions);
 unsigned pagesize = 5;
 static inline void trim(std::string &s);
 // trim from start (in place)
@@ -202,8 +205,11 @@ void promptAtQuestion() {
 	printf("\n\n\n\n --------------------------------------------\n");
 	printf("           Number: jump to question numbered \n");
 	printf("            Enter: Next \n");
-	printf("        r<number>: skip this question for the next <number> round (default to 3 if number omitted)\n");
+	printf("        r<number>: skip this question for the next <number> rounds (default to 3 if number omitted)\n");
 	printf("                R: reload data \n");
+	printf("          s<word>: search questions \n");
+	printf("          a<word>: search Answers \n");
+	printf("          b<word>: search both questions and answers \n");
 	printf("                l: list questions \n");
 	printf("        p<number>: Specify the nubmer of questions per page \n");
 	printf("           q or x: Exit \n");
@@ -214,7 +220,7 @@ int main(int argc, const char ** argv)
 {
 	bool applyConfigfile = false;
 	string newPath = "NewSavedXMLFile.xml";
-	cout << "\n Quick Reviewer version 3.6" << endl << endl;
+	cout << "\n Quick Reviewer version 3.7" << endl << endl;
 	bool reload = true;
 	XMLDocument* doc = nullptr;
 	while (reload) {
@@ -334,6 +340,15 @@ int main(int argc, const char ** argv)
 				if (pagesize < 5)
 					pagesize = 5;
 			}
+			else if (k[0] == 's') {   //search questions	
+				searchAndDisplayByQuestions(k + 1, questions);				
+			}
+			else if (k[0] == 'a') {   //search Answers
+				searchAndDisplayByAnswers(k + 1, questions);
+			}
+			else if (k[0] == 'b') {   //search questions and answers	
+				searchAndDisplayByQAs(k + 1, questions);
+			}
 		}
 		if (!reload)
 			break;
@@ -348,11 +363,44 @@ int main(int argc, const char ** argv)
 	printf("\nXML file '%s' Saved successfully: ErrorID=%d\n", newPath.c_str(), errorID);
 	return 0;
 }
+
 void display(vector<Question>::iterator it) {
 	string question = it->question;
 	trim(question);
 	cout << right << setw(4) << it->id << " " << question.c_str() ;
 	cout << endl;
+}
+void searchAndDisplayByQuestions(char * word, vector<Question> questions) {
+	//search using phone number and list the matched records
+	for (vector<Question>::iterator it = questions.begin(); it != questions.end(); ++it) {		
+		std::size_t found = it->question.find(word);
+		if (found != std::string::npos) {
+			display(it);
+		}
+	}
+	cin.get();
+}
+void searchAndDisplayByAnswers(char * word, vector<Question> questions) {
+	//search using phone number and list the matched records
+	for (vector<Question>::iterator it = questions.begin(); it != questions.end(); ++it) {		
+		std::size_t found = it->answer.find(word);
+		if (found != std::string::npos) {
+			display(it);
+		}
+	}
+	cin.get();
+}
+void searchAndDisplayByQAs(char * word, vector<Question> questions) {
+	//search using phone number and list the matched records
+	for (vector<Question>::iterator it = questions.begin(); it != questions.end(); ++it) {
+		std::size_t found1 = it->question.find(word);
+		std::size_t found2 = it->answer.find(word);
+		
+		if ((found1 != std::string::npos)|| (found1 != std::string::npos)) {
+			display(it);
+		}
+	}
+	cin.get();
 }
 void browse(vector<Question> questions) {
 	//search using phone number and list the matched records
