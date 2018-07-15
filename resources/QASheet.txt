@@ -2030,7 +2030,7 @@
 </QA>
 <QA ID="122" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
   <Question>
-     What are the cases where you should make a function a member function ?
+     What are the cases where you should not make a function a member function ?
   </Question>
   <Answer>
      3 cases:
@@ -2154,8 +2154,8 @@ const char * const p = "Hello";       // const pointer, const data
   </Question>
   <Answer>
      When you try to delete a derived class object through a base class pointer and the base class
-     has a non virtual destructor, the results are undefined. What often happens at runtime is that 
-     the derived class's destructor is never called.
+     has a non virtual destructor, the derived class's destructor is never called, causing memory 
+     leak!
   </Answer>
 </QA>
 <QA ID="134" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
@@ -5232,7 +5232,9 @@ to be built in advance of their use. Some Boost libraries coexist as independent
      A &amp;&amp; B
   </Question>
   <Answer>
-    template
+    A &amp; B means execute A in background and then execute B
+    A &amp;&amp; B means if A execution was successful, execute B: if A; then B !
+    it also means, if A fails, do not bother to execute B!
   </Answer>
 </QA>
 <QA ID="322" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
@@ -5252,10 +5254,17 @@ to be built in advance of their use. Some Boost libraries coexist as independent
 </QA>
 <QA ID="323" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
   <Question>
-     What is /dev/kmsg ?
+     With a given file, how to find all its hardlinks ?
   </Question>
   <Answer>
-    template
+    1. find the inode number of the file by using: ls -il aaa
+        $ ls -il aaa
+        56013520365968768 -rwxr-xr-x 2 yali.zhu None 748 Jun 20 14:55 aaa*
+    2. do a search with the inode number 56013520365968768: 
+       $ find -inum 56013520365968768
+       ./aaa
+       ./opennote
+    
   </Answer>
 </QA>
 <QA ID="324" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
@@ -5697,7 +5706,7 @@ to be built in advance of their use. Some Boost libraries coexist as independent
      message level, minimum console level, default console level)
   </Answer>
 </QA>
-<QA ID="351" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+<QA ID="351" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
   <Question>
      what is /dev/kmsg ?
   </Question>
@@ -5715,7 +5724,7 @@ to be built in advance of their use. Some Boost libraries coexist as independent
 
   </Answer>
 </QA>
-<QA ID="352" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+<QA ID="352" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
   <Question>
      How to see kernel messages ?
   </Question>
@@ -5725,7 +5734,7 @@ to be built in advance of their use. Some Boost libraries coexist as independent
      dmesg | grep -i file
   </Answer>
 </QA>
-<QA ID="353" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+<QA ID="353" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
   <Question>
      Why do I still get "permission denied" using sudo as following ? 
     
@@ -5753,63 +5762,173 @@ to be built in advance of their use. Some Boost libraries coexist as independent
      $ (/home/zhuyali)
   </Answer>
 </QA>
-<QA ID="354" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+<QA ID="354" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
   <Question>
-     mmmmmmmmmmmmmmmmmmmmmm?     
+     how to make a deep path at once ? like aaa/bbb/ccc, some of which may
+     or may not exist ?     
   </Question>
   <Answer>
-     xxxxxxxxxxxxxxxxx
+     use mkdir -p &lt;deep path>
+     for example:
+
+     mkdir -p aaa/bbb/ccc
   </Answer>
 </QA>
-<QA ID="355" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+<QA ID="355" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
   <Question>
-     mmmmmmmmmmmmmmmmmmmmmm?     
+     How to programmatically create a file in a specified path ?     
   </Question>
   <Answer>
-     xxxxxxxxxxxxxxxxx
+     file bbb:
+     ----------------------
+     #!/bin/bash
+
+     PDSBASEKEY=300
+     mkdir -p zzz/bbb
+
+     cat &lt;&lt;EOT > zzz/bbb/test.txt
+     pds.multicast.port1=$(( PDSBASEKEY + 81))
+     EOT
+     ----------------------
+     $> bbb
+     $> cat zzz/bbb/test.txt
+     pds.multicast.port1=381
+     $>
+
   </Answer>
 </QA>
-<QA ID="356" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+<QA ID="356" type="OneAnswer" category="LiNUX" countdown="0" resetto="0" >
   <Question>
-     mmmmmmmmmmmmmmmmmmmmmm?     
+     how to get a substring from a string starting from a keyword ?
   </Question>
   <Answer>
-     xxxxxxxxxxxxxxxxx
+     use "##*":
+
+     $> echo ${CLEARCASE_ROOT}
+     /view/zhuyali_cad_inf-us57495
+
+     $> echo ${CLEARCASE_ROOT##*"_cad_"}
+     inf-us57495
   </Answer>
 </QA>
-<QA ID="357" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+<QA ID="357" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
   <Question>
-     mmmmmmmmmmmmmmmmmmmmmm?     
+     How to list currently defined functions ?
   </Question>
   <Answer>
-     xxxxxxxxxxxxxxxxx
+     typeset -f  #list function defs
+     typeset +f  #list function names
   </Answer>
 </QA>
-<QA ID="358" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+<QA ID="358" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
   <Question>
-     mmmmmmmmmmmmmmmmmmmmmm?     
+     Meta characters of grep are:
   </Question>
   <Answer>
-     xxxxxxxxxxxxxxxxx
+     + - Equivalent to one or more occurrences of previous character.
+     ? - This denotes almost 1 repetition of previous character. Like: a? Would match 'a' or 'aa'.
+     ( - Start of alternation expression.
+     ) - End of alternation expression.
+     | - Matching either of the expression separated by '|'. Like: "(a|b)cde" would match
+         either 'abcde' or 'bbcde'.
+     { - This meta-character indicates start of range specifier. Like: "a{2}" matches "aa" in
+         file i.e. a 2 times.
+     } - This meta-character indicates end of range specifier.
+
+     Egrep Command
+
+     Egrep or grep -E is another version of grep or the Extended grep. This version of grep is
+     efficient and fast when it comes to searching for a regular expression pattern as it
+     treats meta-characters as is and doesn't substitute them as strings like in grep, and
+     hence you are freed from the burden of escaping them as in grep. It uses ERE or the
+     Extended Regular Expression set.
   </Answer>
 </QA>
-<QA ID="359" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+<QA ID="359" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
   <Question>
-     mmmmmmmmmmmmmmmmmmmmmm?     
+     What is ipcs command ?
   </Question>
   <Answer>
-     xxxxxxxxxxxxxxxxx
+     ipcs shows information on the inter-process communication facilities for which the 
+     calling process has read access. 
+     By default it shows information about all three resources: 
+     1: shared memory segments, 
+     2: message queues, 
+     3: semaphore arrays. 
+
+     Example:
+
+     $ ipcs
+
+     ------ Message Queues --------
+     key        msqid      owner      perms      used-bytes   messages
+
+     ------ Shared Memory Segments --------
+     key        shmid      owner      perms      bytes      nattch     status
+     0x00000000 0          root       644        80         2
+     0x00000000 32769      root       644        16384      2
+     0x00000000 65538      root       644        280        2
+
+     ------ Semaphore Arrays --------
+     key        semid      owner      perms      nsems
+     0x000000a7 0          root       600        1
+
+     the command ipcs -m only shows shared memory
+
+     $ ipcs -m   (others are -q, -s)
+
+     ------ Shared Memory Segments --------
+     key        shmid      owner      perms      bytes      nattch     status
+     0x00000000 0          root       644        80         2
+     0x00000000 32769      root       644        16384      2
+     0x00000000 65538      root       644        280        2
+
   </Answer>
 </QA>
 <QA ID="360" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
   <Question>
-     mmmmmmmmmmmmmmmmmmmmmm?     
+     What is the output of the following program ?
+     ...
+     void main(){
+        char c[]={'a','b','c','d'};
+        char d[]="abcd";
+        printf("%d - %d",strlen(c),strlen(d));
+     }
+
+     A: 4 - 4
+     B: 4 - 5
+     C: * - 5 
+     D: * - 4
   </Question>
   <Answer>
-     xxxxxxxxxxxxxxxxx
+     D. strlen() will keep counting until it sees 0, which is NOT included!
+     please notece the difference between strlen() and sizeof(), which counts ending 0
+     Another difference is strlen takes (char *) and sizeof takes char array as an arg.
   </Answer>
 </QA>
-<QA ID="361" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+<QA ID="361" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     alias command
+  </Question>
+  <Answer>
+     alais command displays alias defs or define alias
+  </Answer>
+</QA>
+<QA ID="362" type="OneAnswer" category="WINDOWS" countdown="0" resetto="0" >
+  <Question>
+     How to disable task manager in windows 10 ?
+  </Question>
+  <Answer>
+     1. run gpedit.msc
+     2. go to User Configuration, 
+              Administrative Templates, 
+              System, 
+              Logon/Logoff, 
+              Remove TaskManager, 
+              enable
+  </Answer>
+</QA>
+<QA ID="363" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
   <Question>
      mmmmmmmmmmmmmmmmmmmmmm?     
   </Question>
@@ -5817,5 +5936,148 @@ to be built in advance of their use. Some Boost libraries coexist as independent
      xxxxxxxxxxxxxxxxx
   </Answer>
 </QA>
-
+<QA ID="364" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     mmmmmmmmmmmmmmmmmmmmmm?     
+  </Question>
+  <Answer>
+     xxxxxxxxxxxxxxxxx
+  </Answer>
+</QA>
+<QA ID="365" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     mmmmmmmmmmmmmmmmmmmmmm?     
+  </Question>
+  <Answer>
+     xxxxxxxxxxxxxxxxx
+  </Answer>
+</QA>
+<QA ID="366" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     mmmmmmmmmmmmmmmmmmmmmm?     
+  </Question>
+  <Answer>
+     xxxxxxxxxxxxxxxxx
+  </Answer>
+</QA>
+<QA ID="367" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     mmmmmmmmmmmmmmmmmmmmmm?     
+  </Question>
+  <Answer>
+     xxxxxxxxxxxxxxxxx
+  </Answer>
+</QA>
+<QA ID="368" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     mmmmmmmmmmmmmmmmmmmmmm?     
+  </Question>
+  <Answer>
+     xxxxxxxxxxxxxxxxx
+  </Answer>
+</QA>
+<QA ID="369" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     mmmmmmmmmmmmmmmmmmmmmm?     
+  </Question>
+  <Answer>
+     xxxxxxxxxxxxxxxxx
+  </Answer>
+</QA>
+<QA ID="370" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     mmmmmmmmmmmmmmmmmmmmmm?     
+  </Question>
+  <Answer>
+     xxxxxxxxxxxxxxxxx
+  </Answer>
+</QA>
+<QA ID="371" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     mmmmmmmmmmmmmmmmmmmmmm?     
+  </Question>
+  <Answer>
+     xxxxxxxxxxxxxxxxx
+  </Answer>
+</QA>
+<QA ID="372" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     mmmmmmmmmmmmmmmmmmmmmm?     
+  </Question>
+  <Answer>
+     xxxxxxxxxxxxxxxxx
+  </Answer>
+</QA>
+<QA ID="373" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     mmmmmmmmmmmmmmmmmmmmmm?     
+  </Question>
+  <Answer>
+     xxxxxxxxxxxxxxxxx
+  </Answer>
+</QA>
+<QA ID="374" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     mmmmmmmmmmmmmmmmmmmmmm?     
+  </Question>
+  <Answer>
+     xxxxxxxxxxxxxxxxx
+  </Answer>
+</QA>
+<QA ID="375" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     mmmmmmmmmmmmmmmmmmmmmm?     
+  </Question>
+  <Answer>
+     xxxxxxxxxxxxxxxxx
+  </Answer>
+</QA>
+<QA ID="376" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     mmmmmmmmmmmmmmmmmmmmmm?     
+  </Question>
+  <Answer>
+     xxxxxxxxxxxxxxxxx
+  </Answer>
+</QA>
+<QA ID="377" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     mmmmmmmmmmmmmmmmmmmmmm?     
+  </Question>
+  <Answer>
+     xxxxxxxxxxxxxxxxx
+  </Answer>
+</QA>
+<QA ID="378" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     mmmmmmmmmmmmmmmmmmmmmm?     
+  </Question>
+  <Answer>
+     xxxxxxxxxxxxxxxxx
+  </Answer>
+</QA>
+<QA ID="379" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     mmmmmmmmmmmmmmmmmmmmmm?     
+  </Question>
+  <Answer>
+     xxxxxxxxxxxxxxxxx
+  </Answer>
+</QA>
+<QA ID="380" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     mmmmmmmmmmmmmmmmmmmmmm?     
+  </Question>
+  <Answer>
+     xxxxxxxxxxxxxxxxx
+  </Answer>
+</QA>
+<QA ID="381" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     mmmmmmmmmmmmmmmmmmmmmm?     
+  </Question>
+  <Answer>
+     xxxxxxxxxxxxxxxxx
+  </Answer>
+</QA>
 </QuestionsAndAnswers>
