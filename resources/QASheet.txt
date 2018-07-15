@@ -1,4 +1,4 @@
-      <?xml version="1.0"?>
+<?xml version="1.0"?>
 <!DOCTYPE QR SYSTEM "QuickReview.dtd">
 
 <QuestionsAndAnswers>
@@ -1078,7 +1078,7 @@
      void main(){
         float t=2;
         switch(t){
-        case 2: cout &lt;&lt "Hi";
+        case 2: cout &lt;&lt; "Hi";
         default:cout &lt;&lt; "Hello";
         }
      }
@@ -2797,7 +2797,7 @@ const char * const p = "Hello";       // const pointer, const data
 
        try {
           s=lexical_cast&lt;int&gt;("56.78");
-       }catch(bad_lexical_cast &e}{
+       }catch(bad_lexical_cast &amp;e}{
           cout &lt;&lt; e.what() &lt;&lt; endl;
        }
 
@@ -2834,10 +2834,10 @@ const char * const p = "Hello";       // const pointer, const data
 
         class DoubleVisitor : public boost::static_visitor&lt;&gt;{
         public:
-           void operator()(int &1) cont{
+           void operator()(int &amp;i) cont{
                i+=i;
            }
-           void operator()(string & str){
+           void operator()(string &amp; str){
                str+=str;
            }
         };
@@ -3422,7 +3422,7 @@ to be built in advance of their use. Some Boost libraries coexist as independent
      Layer 4: Transport - provides transparent transfer of data between end systems, error recovery and flow control
      Layer 3: Network -provides switching and routing technologies, creating logical paths, known as virtual circuits
      Layer 2: Data Link - data packets are encoded and decoded into bits.
-     Layer 1: Physical- conveys the bit stream - electrical impulse, light or radio signal — through 
+     Layer 1: Physical- conveys the bit stream - electrical impulse, light or radio signal - through 
               the network at the electrical and mechanical level
   </Answer>
 </QA>
@@ -4303,7 +4303,7 @@ to be built in advance of their use. Some Boost libraries coexist as independent
   <Answer>
     "jobs" list background processes
 
-    $ notepad input1.txt &
+    $ notepad input1.txt &amp;
     [1] 30672
     $ jobs
     [1]+  Running                
@@ -4826,7 +4826,15 @@ to be built in advance of their use. Some Boost libraries coexist as independent
      The extern "C" line tells the compiler that the external information sent to the
       linker should use C calling conventions and name mangling (e.g., preceded by a
      single underscore). Since name overloading isn't supported by C, you can't make
-     several overloaded functions simultaneously callable by a C program. 
+     several overloaded functions simultaneously callable by a C program.
+
+     The extern "C" block looks like this:
+
+     extern "C" {
+
+       #include "apache_gsoap.h"
+
+     } 
   </Answer>
 </QA>
 <QA ID="307" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
@@ -5930,34 +5938,46 @@ to be built in advance of their use. Some Boost libraries coexist as independent
 </QA>
 <QA ID="363" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
   <Question>
-     mmmmmmmmmmmmmmmmmmmmmm?     
+     What is an atomic operation ?
   </Question>
   <Answer>
-     xxxxxxxxxxxxxxxxx
+     In concurrent programming, an operation (or set of operations) is atomic, linearizable,
+     indivisible or uninterruptible if it appears to the rest of the system to occur at once
+     without being interrupted. Atomicity is a guarantee of isolation from interrupts,
+     signals, concurrent processes and threads.
   </Answer>
 </QA>
 <QA ID="364" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
   <Question>
-     mmmmmmmmmmmmmmmmmmmmmm?     
+     What is an atomic variable in C++?
   </Question>
   <Answer>
-     xxxxxxxxxxxxxxxxx
+          Atomic types are types that encapsulate a value whose access is guaranteed to not cause
+     data races and can be used to synchronize memory accesses among different threads. This
+     header declares two C++ classes, atomic and atomic_flag , that implement all the features
+     of atomic types in self-contained classes.
   </Answer>
 </QA>
 <QA ID="365" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
   <Question>
-     mmmmmmmmmmmmmmmmmmmmmm?     
+     what is a character device in linux ?
   </Question>
   <Answer>
-     xxxxxxxxxxxxxxxxx
+     In Unix-like operating systems, a device file or special file is an interface to a device
+     driver that appears in a file system as if it were an ordinary file. ... There are two
+     general kinds of device files in Unix-like operating systems, known as character special
+     files and block special files.
   </Answer>
 </QA>
 <QA ID="366" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
   <Question>
-     mmmmmmmmmmmmmmmmmmmmmm?     
+     What is character device and block device in Linux?
   </Question>
   <Answer>
-     xxxxxxxxxxxxxxxxx
+     A Character ('c') Device is one with which the Driver communicates by sending and
+     receiving single characters (bytes, octets). A Block ('b') Device is one with which the
+     Driver communicates by sending entire blocks of data. Examples for Character Devices:
+     serial ports, parallel ports, sounds cards.
   </Answer>
 </QA>
 <QA ID="367" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
