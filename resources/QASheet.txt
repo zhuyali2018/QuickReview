@@ -1545,8 +1545,11 @@
      appropriate backend (usually piobe) on the remote server. The /etc/locks/lpd file 
      contains the process ID of the currently running instance of the lpd daemon.
 
+     lpd ---file for print  manage the queue&lt;-----qdaemon
+                       |     | 
+                       V     V
      Key words: /var/spool/lpd       //print request queue
-                /etc/locks/lpd       //process ID
+                /etc/locks/lpd       //process ID of lpd running
   </Answer>
 </QA>
 
@@ -1768,7 +1771,7 @@
 </QA>
 <QA ID="104" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
   <Question>
-     Which of the following UNX commands is used to resursive listing of files ?
+     Which of the following UNIX commands is used to resursive listing of files ?
      
      A: ls -r
      B: ls -R
@@ -2759,11 +2762,10 @@ const char * const p = "Hello";       // const pointer, const data
      tar command ?
   </Question>
   <Answer>
-     The Linux &quot;tar&quot; stands for tape archive, which is used by large number 
-     of Linux/Unix system administrators to deal with tape drives backup. 
-     The tar command used to rip a collection of files and directories into 
-     highly compressed archive file commonly called tarball or tar, gzip 
-     and bzip in Linux
+     The Linux &quot;tar&quot; stands for tape archive, which is used for 
+     tape drives backup. The tar command used to rip a collection of files 
+     and directories into highly compressed archive file commonly called 
+     tarball or tar, gzip and bzip in Linux
   </Answer>
 </QA>
 
@@ -2772,10 +2774,9 @@ const char * const p = "Hello";       // const pointer, const data
      ifconfig command ?
   </Question>
   <Answer>
-     ifconfig is a system administration utility in Unix-like operating 
-     systems for network interface configuration. The utility is a command 
-     line interface tool and is also used in the system startup scripts of 
-     many operating systems.
+     ifconfig is a system administration utility for network interface 
+     configuration. 
+     
   </Answer>
 </QA>
 
@@ -3255,7 +3256,10 @@ to be built in advance of their use. Some Boost libraries coexist as independent
      C: You cannot free any memory in the future
   </Question>
   <Answer>
-     B.  
+     B.  (hightly suspect it should be C, did a test for it. Test result shows program crashed):
+        void * p = malloc(100);
+	free(p);
+	free(p);    //crashed here
   </Answer>
 </QA>
 <QA ID="195" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
@@ -3270,7 +3274,7 @@ to be built in advance of their use. Some Boost libraries coexist as independent
      C: Nothing is wrong with this code
   </Question>
   <Answer>
-     B
+     B  
   </Answer>
 </QA>
 <QA ID="196" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
@@ -3541,7 +3545,7 @@ to be built in advance of their use. Some Boost libraries coexist as independent
   </Question>
   <Answer>
      1. swith to branch to be merged, like: git checkout branch1Name
-     2. git merge branche2Name
+     2. git merge branchName
   </Answer>
 </QA>
 <QA ID="218" type="OneAnswer" category="GIT" countdown="0" resetto="0" >
@@ -3834,7 +3838,7 @@ to be built in advance of their use. Some Boost libraries coexist as independent
      3. static members
      4. member functions
 
-     Note: In one word: Only public data members are allowed to have
+     Note: In one word: Only public non-static data members are allowed to have
   </Answer>
 </QA>
 
@@ -4126,9 +4130,8 @@ to be built in advance of their use. Some Boost libraries coexist as independent
      What is R programming language ?
   </Question>
   <Answer>
-    R is a programming language and free software environment for statistical 
-    computing and graphics that is supported by the R Foundation for Statistical 
-    Computing.
+    R is a programming language for statistical computing and graphics. 
+
   </Answer>
 </QA>
 <QA ID="264" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
@@ -4262,7 +4265,7 @@ to be built in advance of their use. Some Boost libraries coexist as independent
     6 Search files belonging to group
         find -group cad
     7 find files modified N days back:      find -mtime 50   (exactly 50 days ago)
-    8 find files accessed N days back:      find -mtime 50    (if +50, means more than 50 days ago)
+    8 find files accessed N days back:      find -mtime +50    (if +50, means more than 50 days ago)
     9 find files changed in last N minutes: find -cmin -60    (within last 60 min)
    10 find files modified in last hour:     find -mmin -60
    11 Find Accessed Files in Last 1 Hour:   find -amin -60   
@@ -4650,7 +4653,7 @@ to be built in advance of their use. Some Boost libraries coexist as independent
   </Question>
   <Answer>
     It means it would be OK to do call by value and return by value, pass by value with
-    those STL container classes.
+    those STL container classe objects.
   </Answer>
 </QA>
 <QA ID="295" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
@@ -5044,9 +5047,9 @@ to be built in advance of their use. Some Boost libraries coexist as independent
      What is /sys directory for ?
   </Question>
   <Answer>
-         Modern Linux distributions include a /sys directory as a virtual filesystem (sysfs,
-     comparable to /proc , which is a procfs), which stores and allows modification of the
-     devices connected to the system, whereas many traditional UNIX and Unix-like operating
+         Modern Linux distributions include a /sys directory as a virtual filesystem, 
+     which stores and allows modification of the devices connected to the system, 
+     whereas many traditional UNIX and Unix-like operating
      systems use /sys as a symbolic link to the kernel source tree.
   </Answer>
 </QA>
@@ -5106,6 +5109,9 @@ to be built in advance of their use. Some Boost libraries coexist as independent
      What is /proc directory in linux ?
   </Question>
   <Answer>
+           Modern Linux distributions include a /proc directory as a virtual filesystem, 
+     which stores and allows modification of the processes running in the system, 
+
      The proc filesystem (procfs) is a special filesystem in Unix-like operating systems that
      presents information about processes and other system information in a hierarchical
      file-like structure, providing a more convenient and standardized method for dynamically
@@ -5132,7 +5138,7 @@ to be built in advance of their use. Some Boost libraries coexist as independent
 </QA>
 <QA ID="317" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
   <Question>
-     How do display 10 lines after the line that contains MARKER, but not the one containing MARKER ?
+     How to display 10 lines after the line that contains MARKER, but not the one containing MARKER ?
   </Question>
   <Answer>
     cat file.txt | grep -A10 MARKER | grep -v MARKER
@@ -5637,6 +5643,9 @@ to be built in advance of their use. Some Boost libraries coexist as independent
      x
      $(/home/zhuyali) grep yali /etc/passwd   | cut -f 1  -d :
      zhuyali
+
+     $(/home/zhuyali) grep yali /etc/passwd   | cut -f 1,3  -d :
+     zhuyali:1000
      
      cut --help:
           -f: select only these fileds, also print any lines that contains no delimiter 
@@ -5670,11 +5679,12 @@ to be built in advance of their use. Some Boost libraries coexist as independent
   <Question>
      What is dmesg and what is /proc/kmsg ?
   </Question>
-  <Answer>
+  <Answer>     
+     dmesg is a tool that displays what's in the /proc/kmsg, which is a ring buffer for 
+     holding kernel printed messages temporarily.
+
      Output of /proc/kmsg can be directed to a file when collecting large amount of logs so
      that no logs are lost
-
-     dmesg is circular buffer and previous logs get overwritten once buffer is full
   </Answer>
 </QA>
 <QA ID="350" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
@@ -5936,7 +5946,7 @@ to be built in advance of their use. Some Boost libraries coexist as independent
               enable
   </Answer>
 </QA>
-<QA ID="363" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+<QA ID="363" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
   <Question>
      What is an atomic operation ?
   </Question>
@@ -5958,7 +5968,7 @@ to be built in advance of their use. Some Boost libraries coexist as independent
      of atomic types in self-contained classes.
   </Answer>
 </QA>
-<QA ID="365" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+<QA ID="365" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
   <Question>
      what is a character device in linux ?
   </Question>
@@ -5969,7 +5979,7 @@ to be built in advance of their use. Some Boost libraries coexist as independent
      files and block special files.
   </Answer>
 </QA>
-<QA ID="366" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+<QA ID="366" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
   <Question>
      What is character device and block device in Linux?
   </Question>
@@ -5980,87 +5990,699 @@ to be built in advance of their use. Some Boost libraries coexist as independent
      serial ports, parallel ports, sounds cards.
   </Answer>
 </QA>
-<QA ID="367" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+<QA ID="367" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
   <Question>
-     mmmmmmmmmmmmmmmmmmmmmm?     
+     How to grep for multiple patterns ?
   </Question>
   <Answer>
-     xxxxxxxxxxxxxxxxx
+     grep -E 'typeset -f | component'
+  or
+     grep "typeset -f \|component"
   </Answer>
 </QA>
-<QA ID="368" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+<QA ID="368" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
   <Question>
-     mmmmmmmmmmmmmmmmmmmmmm?     
+     how to echo multiple lines ?
   </Question>
   <Answer>
-     xxxxxxxxxxxxxxxxx
+     :> echo 'aaaa\nbbbb\ncccc\n'
+     aaaa\nbbbb\ncccc\n
+     :> echo -e 'aaaa\nbbbb\ncccc\n'
+     aaaa
+     bbbb
+     cccc
   </Answer>
 </QA>
-<QA ID="369" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+<QA ID="369" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
   <Question>
-     mmmmmmmmmmmmmmmmmmmmmm?     
+     How to put each word in an array element ?
   </Question>
   <Answer>
-     xxxxxxxxxxxxxxxxx
+     yali.zhu@MacMini3Win7:~> echo "aaa bbb  ccc"
+     aaa bbb  ccc
+     yali.zhu@MacMini3Win7:~> array=($(echo "aaa bbb  ccc"))
+     yali.zhu@MacMini3Win7:~> echo ${array[0]}
+     aaa
+     yali.zhu@MacMini3Win7:~> echo ${array[1]}
+     bbb
+     yali.zhu@MacMini3Win7:~> echo ${array[2]}
+     ccc
+
+     yali.zhu@MacMini3Win7:work> ar=(aaa bbb ccc)
+     yali.zhu@MacMini3Win7:work> echo ${ar[0]}
+     aaa
+     yali.zhu@MacMini3Win7:work> echo ${ar[1]}
+     bbb
+     yali.zhu@MacMini3Win7:work> echo ${ar[2]}
+     ccc
+
   </Answer>
 </QA>
-<QA ID="370" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+<QA ID="370" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
   <Question>
-     mmmmmmmmmmmmmmmmmmmmmm?     
+     How to put each line in an array element ?
   </Question>
   <Answer>
-     xxxxxxxxxxxxxxxxx
+     IFS=$'\n' array=($(cat JobSearch2018.txt))
+     echo ${array[0]}     #line 1
+     echo ${array[1]}     #line 2
+     ...
   </Answer>
 </QA>
-<QA ID="371" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+<QA ID="371" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
   <Question>
-     mmmmmmmmmmmmmmmmmmmmmm?     
+     How to insert a space between every charactor in a string ?
   </Question>
   <Answer>
-     xxxxxxxxxxxxxxxxx
+     $ echo US1234
+     US1234
+     $ echo US1234 | sed 's/./&amp; /g'
+     U S 1 2 3 4
   </Answer>
 </QA>
-<QA ID="372" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+<QA ID="372" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
   <Question>
-     mmmmmmmmmmmmmmmmmmmmmm?     
+     How to put all function defs in one file and avoid loading them more than once ?
   </Question>
   <Answer>
-     xxxxxxxxxxxxxxxxx
+     example frame:
+
+     #!/bin/ksh
+     if [[ -z ${__LOADED_SERVICEPACKREADER} ]]; then
+        typeset -r __LOADED_SERVICEPACKREADER=1
+
+     . $TOOLDIR/functions/evalparm.sh
+
+     function servicePackDataFile {
+        echo "${SPDATADIR:-${CPARM_DIR}}/servicePack.dat"
+     }
+
+     function componentNameRegex {
+       print "[UuDd0-9][SsEe0-9][0-9][0-9]*"
+     }
+     
+     fi
   </Answer>
 </QA>
-<QA ID="373" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+<QA ID="373" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
   <Question>
-     mmmmmmmmmmmmmmmmmmmmmm?     
+     how to add "begin_" and "_end" around a string line ?
   </Question>
   <Answer>
-     xxxxxxxxxxxxxxxxx
+     $ echo "XXXmyLineyyy" | sed -e 's/^/begin_/' -e 's/$/_end/'
+     begin_XXXmyLineyyy_end
   </Answer>
 </QA>
-<QA ID="374" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+<QA ID="374" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
   <Question>
-     mmmmmmmmmmmmmmmmmmmmmm?     
+     How to remove a char from the end of a string ?
   </Question>
   <Answer>
-     xxxxxxxxxxxxxxxxx
+     -> echo abc
+     abc
+     ->  echo abc | rev
+     cba
+     ->  echo abc | rev | cut -c 2-
+     ba
+     -> echo abc | rev | cut -c 2- | rev
+     ab
+
   </Answer>
 </QA>
-<QA ID="375" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+<QA ID="375" type="OneAnswer" category="WIN" countdown="0" resetto="0" >
   <Question>
-     mmmmmmmmmmmmmmmmmmmmmm?     
+     How to launch an app using system() and return immedately on Windows ?
   </Question>
   <Answer>
-     xxxxxxxxxxxxxxxxx
+     using API call system("appname") to launch an app and the system() will
+     block until the appname finished running and returns.
+     TO launch and forget and return immediately, using the following format:
+     system("start appname &amp;");
   </Answer>
 </QA>
 <QA ID="376" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
   <Question>
-     mmmmmmmmmmmmmmmmmmmmmm?     
+     When I want to use CString from MFC, which header should I include ?
+  </Question>
+  <Answer>
+     #include &lt;atlstr.h>
+  </Answer>
+</QA>
+<QA ID="377" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     how to use wget to download a page ?
+  </Question>
+  <Answer>
+     Example:
+     To downlaod with image files
+     wget -E -H -k -p  http://news.creaders.net/china/2018/03/27/1937442.html
+
+     To just download html file:
+     wget -p  http://news.creaders.net/china/2018/03/27/1937442.html
+
+     Note: wget is available here:
+     https://www.gnu.org/software/wget/
+  </Answer>
+</QA>
+<QA ID="378" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     How to redirect output to a file and stdout at the same time ?
+  </Question>
+  <Answer>
+     foo | tee output.file
+  </Answer>
+</QA>
+<QA ID="379" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     In cygwin or cygwin64 on windows, how to access C drive ?
+  </Question>
+  <Answer>
+     cd /cygdrive/c
+  </Answer>
+</QA>
+<QA ID="380" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     how to print the self script name in a script?
+  </Question>
+  <Answer>
+     echo $0
+  </Answer>
+</QA>
+<QA ID="381" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     How to print messages to stderr ?
+  </Question>
+  <Answer>
+     printf "ERROR: $(getToolName):toolMain():${LINENO} \n" >&amp;2
+  </Answer>
+</QA>
+<QA ID="382" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     How to test string for emptyness and nonemptyness ?
+  </Question>
+  <Answer>
+     Example:
+     if [ -z "${branch}" ]; then ...
+     [[ -z ${branch} ]] &amp;&amp; return       # if empty, return
+     if [ "${branch}" = "" ]; then ...   #should use == instead ?
+  </Answer>
+</QA>
+<QA ID="383" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     How to do math in shell script ?
+  </Question>
+  <Answer>
+     Example:
+     n=2
+     b=5
+     time=`expr $n + $b`
+     echo $time
+
+     7
+     
+  </Answer>
+</QA>
+<QA ID="384" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     how to test if 2 numbers in 2 vars are equal ?
+  </Question>
+  <Answer>
+     Example:
+     if [ $n -eq $m ]; then
+         ...
+     fi
+  </Answer>
+</QA>
+<QA ID="385" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     How to use shell logical operator of and/or/not ?
+  </Question>
+  <Answer>
+     "-a"  is AND operator
+     "-o"  is OR operator
+     "!"   is NOT operator  
+
+     Usage example:
+ 
+     if [ $num -gt 0 -a $num -lt 10 ]; then
+        ...
+     fi
+  </Answer>
+</QA>
+<QA ID="386" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     What does it mean if you put a command in bracket like (ls -l) ?
+  </Question>
+  <Answer>
+     it means executing the command in a subshell
+     example: 
+      $ xx=$(ls -l)
+      $ echo $xx
+
+  </Answer>
+</QA>
+<QA ID="387" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     What is subshell ?
+  </Question>
+  <Answer>
+     A subshell is a child process launched by a shell (or shell script). 
+     A subshell is a separate instance of the command processor
+  </Answer>
+</QA>
+<QA ID="388" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     How to execute a script in current shell instead of subshell ?
+  </Question>
+  <Answer>
+     $ aaa             # execute script aaa in subshell
+     $ source aaa      #execute script aaa in current shell
+     or simply:
+     $ . aaa           #execute script aaa in current shell
+  </Answer>
+</QA>
+<QA ID="389" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     How to create a property file programmatically using shell script ?
+  </Question>
+  <Answer>
+     Example:
+     script:
+
+     #!/bin/bash
+     mkdir -p zhuyali/tmp1/tmp2
+     cat &lt;&lt;EOT > zhuyali/tmp1/tmp2/Yali.properties
+     asf=fasdf
+     adsfxx=wwww
+     pds.multicast.port1=$(( PDSBASEKEY + 81))
+     pds.multicast.port2=$(( PDSBASEKEY + 85))    &lt;===can use var PDSBASEKEY with $
+     pds.multicast.port3=$(( PDSBASEKEY + 87))
+     yali=there
+     EOT                           #EOT should start the line with no leading space 
+   
+     After run the sript:
+     mlbint55:inf-us57495:/home/zhuyali/tmp/zhuyali/tmp1/tmp2:> cat Yali.properties
+     asf=fasdf
+     adsfxx=wwww
+     pds.multicast.port1=81
+     pds.multicast.port2=85
+     pds.multicast.port3=87
+     yali=there
+
+
+  </Answer>
+</QA>
+<QA ID="390" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     how to copy a directory tree ?
+  </Question>
+  <Answer>
+     cp -r &lt;src> &lt;des>
+  </Answer>
+</QA>
+<QA ID="391" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     How to get a substring from a string variable in script ?
+  </Question>
+  <Answer>
+     Using ##* :
+
+     $ echo $aaa
+     asdfkeyzxcv
+     echo ${aaa##*key}
+     zxcv
+  </Answer>
+</QA>
+<QA ID="392" type="OneAnswer" category="PERSON" countdown="0" resetto="0" >
+  <Question>
+     What are Magic Leap guys names ?
+  </Question>
+  <Answer>
+     Clark Padilla, The Software Recruiter,            954-296-2486
+     Kim Synder,    Contracted Recruiting Coordinator, 954-482-2684, Scheduled Interviews
+                    
+     Leonid    ,   1st interviewer, lmoiseichuk@magicleap.com
+     Carlos    ,   2nd interviewer,   cgonzalez@magicleap.com 
+     Chris     ,   3rd interviewer,    cmedrano@magicleap.com
+
+     Stuart Taylor, Recruiter from CEI, staylor@ceiamerica.com
+     
+  </Answer>
+</QA>
+<QA ID="393" type="OneAnswer" category="WIN" countdown="0" resetto="0" >
+  <Question>
+     What is WSL ?
+  </Question>
+  <Answer>
+     It is the Windows Subsystem for Linux, it runs an Ubuntu on windows.
+  </Answer>
+</QA>
+<QA ID="394" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     What does the typeset -r mean in ksh shell script variable declaration ?
+  </Question>
+  <Answer>
+     It means readonly:
+
+     $ typeset -r year=2000
+     $ echo $year
+     $ year=2001
+     ksh: year: is readonly
+  </Answer>
+</QA>
+<QA ID="395" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     How to grep for a line containing "BASH" or "1000" ?
+     A: grep -e 'BASH|1000'
+     B: grep -E 'BASH|1000'
+     C: grep -E "BASH|1000"
+     D: grep -e "BASH" -e "1000"
+  </Question>
+  <Answer>
+     Only A is wrong, all the rest are correct!
+  </Answer>
+</QA>
+<QA ID="396" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     What is the size of generic pointer in c++ in 32-bit platform ?
+  </Question>
+  <Answer>
+     Size of any type of pointer is 4 bytes in 32-bit platforms
+     Size of any type of pointer is 8 bytes in 64-bit platforms
+  </Answer>
+</QA>
+<QA ID="397" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+      Is the size of character literals different in C and C++?
+  </Question>
+  <Answer>
+      Yes, they are different.
+      In C++: sizeof('a') == sizeof(char) == 1. 
+      In C:   sizeof('a') == sizeof(int)  ==likely== 4
+  </Answer>
+</QA>
+<QA ID="398" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     Suppose in a machine, the size of char is 32 bits. What would sizeof(char) return?
+  </Question>
+  <Answer>
+     The standard does NOT require a char to be 8-bits, but does require that sizeof(char) return 1.
+  </Answer>
+</QA>
+<QA ID="399" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     What does the following code print ?
+
+    #include &lt;iostream>
+    using namespace std;
+    void main()
+    {
+        float num1 = 1.1;
+        double num2 = 1.1;
+        if (num1 == num2)
+           cout &lt;&lt; "stanford";
+        else
+           cout &lt;&lt; "harvard";
+
+    }
+
+    A: harvard
+    B: stanford
+    C: Compile time error
+    D: runtime error
+  </Question>
+  <Answer>
+     A. Float store floating point numbers with 8 place accuracy and requires 4 bytes of Memory. 
+        Double has 16 place accuracy having the size of 8 bytes.
+     All the other data types comparisions do not have the problem.
+  </Answer>
+</QA>
+<QA ID="400" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     What is the syntax of friend function?
+
+     a) friend class1 class2;
+     b) friend class;
+     c) friend class
+     d) none of the mentioned
+  </Question>
+  <Answer>
+     A. class2 is a friend of class1 and it can access all the private and protected members of class1.
+  </Answer>
+</QA>
+<QA ID="401" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     What will happen when the exception is not caught in the program?
+
+     a) error
+     b) program will execute
+     c) block of that code will not execute
+     d) none of the mentioned
+  </Question>
+  <Answer>
+     a. error!
+  </Answer>
+</QA>
+<QA ID="402" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     What will happen when the handler is not found for an exception?
+
+     a) calls the standard library function terminate()
+     b) raise an error
+     c) executes the remaining block
+     d) none of the mentioned
+  </Question>
+  <Answer>
+     a
+  </Answer>
+</QA>
+<QA ID="403" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     It is guaranteed that a ____ has at least 8 bits and a ____ has at least 16 bits.
+
+     a) int, float
+     b) char, int
+     c) bool, char
+     d) char, short
+
+  </Question>
+  <Answer>
+      d
+  </Answer>
+</QA>
+<QA ID="404" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     Implementation dependent aspects about an implementation can be found in
+
+     a) &lt;implementation>
+     b) &lt;limits>
+     c) &lt;limit>
+     d) &lt;numeric>
+  </Question>
+  <Answer>
+     b. The limits header holds the details of the machine dependent details.
+  </Answer>
+</QA>
+<QA ID="405" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     Size of C++ objects are expressed in terms of multiples of the size of a char 
+     and the size of a char is how many ?
+  </Question>
+  <Answer>
+     1
+  </Answer>
+</QA>
+<QA ID="406" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     How the global and local variables are initialized respectively ?
+  </Question>
+  <Answer>
+     Global variables are implicitly initialised to 0, but local variables
+     have to be initialised by the system.
+  </Answer>
+</QA>
+<QA ID="407" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+      How to declare a wide character in the string literal?
+
+      a) L prefix
+      b) l prefix
+      c) W prefix
+      d) none of the mentioned
+  </Question>
+  <Answer>
+     a
+  </Answer>
+</QA>
+<QA ID="408" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     Identify the correct sentence regarding inequality between reference and pointer.
+
+     a) we can not create the array of reference
+     b) we can create the Array of reference
+     c) we can use reference to reference
+     d) none of the mentioned
+  </Question>
+  <Answer>
+     a
+  </Answer>
+</QA>
+<QA ID="409" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+      When can the void pointer be dereferenced?
+      a) when it doesn't point to any value
+      b) when it cast to another type of object
+      c) using delete keyword
+      d) none of the mentioned     
+  </Question>
+  <Answer>
+      b     
+  </Answer>
+</QA>
+<QA ID="410" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+    What is the output of this program?
+    #include &lt;iostream>
+    using namespace std;
+    int func(void *Ptr);
+    int main()
+    {
+        char *Str = "abcdefghij";
+        func(Str);
+        return 0;
+    }
+    int func(void *Ptr)
+    {
+        cout &lt;&lt; Ptr;
+        return 0;
+    }
+
+    a) abcdefghij
+    b) address of string “abcdefghij”
+    c) compile time error
+    d) runtime error
+    
+  </Question>
+  <Answer>
+     b. Even though it is a void pointer, we gets the address.
+  </Answer>
+</QA>
+<QA ID="411" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+    Which operator is having the highest precedence?
+
+    a) postfix
+    b) unary
+    c) shift
+    d) equality
+  </Question>
+  <Answer>
+     a
+  </Answer>
+</QA>
+<QA ID="412" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     What is the operator "?:" called ?
+  </Question>
+  <Answer>
+     conditional operator
+  </Answer>
+</QA>
+<QA ID="413" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+       What is the output of the program ?
+
+     	int a = 5, b = 6, c;
+	c = a, b;
+	int d = (a, b);
+	cout &lt;&lt; c &lt;&lt; ' ' &lt;&lt; d;
+
+       a) 5 6
+       b) 6 5
+       c) 6 7
+       d) none of the mentioned
+       
+  </Question>
+  <Answer>
+     a. It is a separator here. In C, the value a is stored in c and 
+        the value b is stored in d because of the bracket.
+  </Answer>
+</QA>
+<QA ID="414" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     What is kernel programming ?
+  </Question> 
+  <Answer>
+     User space or application programming relies on the design that there is an operating 
+     system that provides a layer abstraction over hardware.
+     Kernel programming is nothing but providing functionality in kernel to make use of the 
+     hardware resources and provide seamless execution environment for application programs.
+
+     In other words, Kernel programming is hardware driver programming !
+  </Answer>
+</QA>
+<QA ID="415" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     How are many sequences of statements present in c++? and what are they ?
+  </Question>
+  <Answer>
+     There are 5 sequences of statements:
+     1: Preprocessor directives
+     2: Comments
+     3: Declarations
+     4: Function Declarations
+     5: Executable statements
+  </Answer>
+</QA>
+<QA ID="416" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     How many can max number of arguments present in function in the c99 compiler?
+  </Question>
+  <Answer>
+     127
+  </Answer>
+</QA>
+<QA ID="417" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+  <Question>
+     what is the output of this program ?
+
+     double &amp; WeeklyHours()
+     {
+     	double h = 46.50;
+     	double &amp;hours = h;
+     	return hours;
+     }
+     void main() {
+	double hours = WeeklyHours();
+	cout &lt;&lt; "Weekly Hours: " &lt;&lt; hours;
+     }
+
+     a) 46.5
+     b) 6.50
+     c) compile time error
+     d) none of the mentioned
+  </Question>
+  <Answer>
+     a, 46.5
+  </Answer>
+</QA>
+<QA ID="418" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     awk usage
   </Question>
   <Answer>
      xxxxxxxxxxxxxxxxx
   </Answer>
 </QA>
-<QA ID="377" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+<QA ID="419" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     how to change back to previous directory ?
+  </Question>
+  <Answer>
+     cd -
+  </Answer>
+</QA>
+<QA ID="420" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
   <Question>
      mmmmmmmmmmmmmmmmmmmmmm?     
   </Question>
@@ -6068,31 +6690,7 @@ to be built in advance of their use. Some Boost libraries coexist as independent
      xxxxxxxxxxxxxxxxx
   </Answer>
 </QA>
-<QA ID="378" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
-  <Question>
-     mmmmmmmmmmmmmmmmmmmmmm?     
-  </Question>
-  <Answer>
-     xxxxxxxxxxxxxxxxx
-  </Answer>
-</QA>
-<QA ID="379" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
-  <Question>
-     mmmmmmmmmmmmmmmmmmmmmm?     
-  </Question>
-  <Answer>
-     xxxxxxxxxxxxxxxxx
-  </Answer>
-</QA>
-<QA ID="380" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
-  <Question>
-     mmmmmmmmmmmmmmmmmmmmmm?     
-  </Question>
-  <Answer>
-     xxxxxxxxxxxxxxxxx
-  </Answer>
-</QA>
-<QA ID="381" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+<QA ID="421" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
   <Question>
      mmmmmmmmmmmmmmmmmmmmmm?     
   </Question>
