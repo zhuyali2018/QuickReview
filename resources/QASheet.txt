@@ -6200,6 +6200,12 @@ to be built in advance of their use. Some Boost libraries coexist as independent
 
      7
      
+     Or:
+
+     ((time=n + b))
+     echo $time
+     
+     7
   </Answer>
 </QA>
 <QA ID="384" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
@@ -6324,6 +6330,8 @@ to be built in advance of their use. Some Boost libraries coexist as independent
      Leonid    ,   1st interviewer, lmoiseichuk@magicleap.com
      Carlos    ,   2nd interviewer,   cgonzalez@magicleap.com 
      Chris     ,   3rd interviewer,    cmedrano@magicleap.com
+
+     Daisy Viteri-Liboy. : to meet me at ML loby 10:00 am on Monday
 
      Stuart Taylor, Recruiter from CEI, staylor@ceiamerica.com
      
@@ -6682,7 +6690,20 @@ to be built in advance of their use. Some Boost libraries coexist as independent
      cd -
   </Answer>
 </QA>
-<QA ID="420" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+<QA ID="420" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     How to debug shell script
+  </Question>
+  <Answer>
+     To launch:
+       bash -x forAll 86
+     Inside Code:
+       set -x
+       ....
+       set +x
+  </Answer>
+</QA>
+<QA ID="421" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
   <Question>
      mmmmmmmmmmmmmmmmmmmmmm?     
   </Question>
@@ -6690,7 +6711,159 @@ to be built in advance of their use. Some Boost libraries coexist as independent
      xxxxxxxxxxxxxxxxx
   </Answer>
 </QA>
-<QA ID="421" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+<QA ID="422" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     mmmmmmmmmmmmmmmmmmmmmm?     
+  </Question>
+  <Answer>
+     xxxxxxxxxxxxxxxxx
+  </Answer>
+</QA>
+<QA ID="423" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     mmmmmmmmmmmmmmmmmmmmmm?     
+  </Question>
+  <Answer>
+     xxxxxxxxxxxxxxxxx
+  </Answer>
+</QA>
+<QA ID="424" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     mmmmmmmmmmmmmmmmmmmmmm?     
+  </Question>
+  <Answer>
+     xxxxxxxxxxxxxxxxx
+  </Answer>
+</QA>
+<QA ID="425" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     mmmmmmmmmmmmmmmmmmmmmm?     
+  </Question>
+  <Answer>
+     xxxxxxxxxxxxxxxxx
+  </Answer>
+</QA>
+<QA ID="426" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     mmmmmmmmmmmmmmmmmmmmmm?     
+  </Question>
+  <Answer>
+     xxxxxxxxxxxxxxxxx
+  </Answer>
+</QA>
+<QA ID="427" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     mmmmmmmmmmmmmmmmmmmmmm?     
+  </Question>
+  <Answer>
+     xxxxxxxxxxxxxxxxx
+  </Answer>
+</QA>
+<QA ID="428" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     mmmmmmmmmmmmmmmmmmmmmm?     
+  </Question>
+  <Answer>
+     xxxxxxxxxxxxxxxxx
+  </Answer>
+</QA>
+<QA ID="429" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     mmmmmmmmmmmmmmmmmmmmmm?     
+  </Question>
+  <Answer>
+     xxxxxxxxxxxxxxxxx
+  </Answer>
+</QA>
+<QA ID="430" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     mmmmmmmmmmmmmmmmmmmmmm?     
+  </Question>
+  <Answer>
+     xxxxxxxxxxxxxxxxx
+  </Answer>
+</QA>
+<QA ID="431" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     mmmmmmmmmmmmmmmmmmmmmm?     
+  </Question>
+  <Answer>
+     xxxxxxxxxxxxxxxxx
+  </Answer>
+</QA>
+<QA ID="432" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     mmmmmmmmmmmmmmmmmmmmmm?     
+  </Question>
+  <Answer>
+     xxxxxxxxxxxxxxxxx
+  </Answer>
+</QA>
+<QA ID="433" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     mmmmmmmmmmmmmmmmmmmmmm?     
+  </Question>
+  <Answer>
+     xxxxxxxxxxxxxxxxx
+  </Answer>
+</QA>
+<QA ID="434" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     mmmmmmmmmmmmmmmmmmmmmm?     
+  </Question>
+  <Answer>
+     xxxxxxxxxxxxxxxxx
+  </Answer>
+</QA>
+<QA ID="435" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     mmmmmmmmmmmmmmmmmmmmmm?     
+  </Question>
+  <Answer>
+     xxxxxxxxxxxxxxxxx
+  </Answer>
+</QA>
+<QA ID="436" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     mmmmmmmmmmmmmmmmmmmmmm?     
+  </Question>
+  <Answer>
+     xxxxxxxxxxxxxxxxx
+  </Answer>
+</QA>
+<QA ID="437" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     mmmmmmmmmmmmmmmmmmmmmm?     
+  </Question>
+  <Answer>
+     xxxxxxxxxxxxxxxxx
+  </Answer>
+</QA>
+<QA ID="438" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     mmmmmmmmmmmmmmmmmmmmmm?     
+  </Question>
+  <Answer>
+     xxxxxxxxxxxxxxxxx
+  </Answer>
+</QA>
+<QA ID="439" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     mmmmmmmmmmmmmmmmmmmmmm?     
+  </Question>
+  <Answer>
+     xxxxxxxxxxxxxxxxx
+  </Answer>
+</QA>
+<QA ID="440" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     mmmmmmmmmmmmmmmmmmmmmm?     
+  </Question>
+  <Answer>
+     xxxxxxxxxxxxxxxxx
+  </Answer>
+</QA>
+<QA ID="441" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
   <Question>
      mmmmmmmmmmmmmmmmmmmmmm?     
   </Question>
