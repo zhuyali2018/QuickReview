@@ -13,7 +13,7 @@
 #include <array>
 
 #include "Question.h"
-#include "Qusetting.h"
+#include "QuSetting.h"
 
 using namespace tinyxml2;
 using namespace std;
@@ -68,7 +68,7 @@ vector<Question> GetAllQuestions(XMLElement * parent, XMLElement * parent1) {
 		throw NoDataException();
 	}
 	map<int,QuSetting> Qc=GetAllQuestionConfigs(parent1);
-	printf("config file nodes: %d\n",Qc.size());
+	printf("config file nodes: %d\n",(int)Qc.size());
 	vector<Question> Qs;
 	XMLElement* QA = parent->FirstChildElement("QA");;
 	while (true) {
@@ -306,7 +306,7 @@ int main(int argc, const char ** argv)
 				questionNo = qno;
 			Question &q = questions[questionNo];
 			qno = 0;  //reset goto question No
-			system("CLS");   //clear the screen of command line window
+			system("clear");   //clear the screen of command line window
 			printf("[Qid:%d]  Question %d/%d : \n%s\n", q.id, questionNo++, total, q.question.c_str());
 			cin.getline(k, 30);       //wait before show answer
 
