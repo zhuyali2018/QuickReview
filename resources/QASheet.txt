@@ -9351,10 +9351,26 @@ int main()
 </QA>
 <QA ID="635" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
   <Question>
-     xxxxxxxxxxxxxxxxxxxxx
+     How to set tab to spaces in vi ?
   </Question>
   <Answer>
-     mmmmmmmmmmmmmmmmmmmmmmmmm
+     1. Use expand tab to convert new tabs to spaces
+         The expandtab property will ensure that when you hit tab it will actually use spaces. 
+      So first set the number of spaces a tab should be, then set expandtab (in file ~/.vimrc ).
+
+         set tabstop=2 shiftwidth=2 expandtab
+ 
+      Tabstop determines how many columns a tab counts for. Shiftwidth determines how many 
+      columns text is indented when using reindent operations. Expandtab is what actually uses spaces instead of tabs.
+     2. Convert existing tabs to spaces
+         If you've got a file already full of tabs, converting to spaces is super easy. Make sure 
+      to follow step one first, then use retab.
+
+      Open the file and type:
+
+         :retab
+
+      This will fix all existing tabs.
   </Answer>
 </QA>
 <QA ID="636" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >

@@ -18,6 +18,7 @@
 using namespace tinyxml2;
 using namespace std;
 
+void searchAndDisplayByQ2Words(char * word, vector<Question> questions);
 void searchAndDisplayByQuestions(char * word, vector<Question> questions);
 void searchAndDisplayByAnswers(char * word, vector<Question> questions);
 void searchAndDisplayByQAs(char * word, vector<Question> questions);
@@ -211,22 +212,25 @@ void promptAtQuestion() {
 	printf("          a<word>: search Answers \n");
 	printf("          b<word>: search both questions and answers \n");
 	printf("                l: list questions \n");
+	printf("          2<word words>: search questions with 2 separate words \n");
+	printf("                example: 2replace in vi \n");
 	printf("        p<number>: Specify the nubmer of questions per page \n");
 	printf("           q or x: Exit \n");
 	printf("       Your Input: ");
 }
 void browse(vector<Question> questions);
+
 int main(int argc, const char ** argv) 
 {
 	bool applyConfigfile = false;
 	string newPath = "NewSavedXMLFile.xml";
-	cout << "\n Quick Reviewer version 3.7" << endl << endl;
+	cout << "\n Quick Reviewer version 3.8" << endl << endl;
 	bool reload = true;
 	XMLDocument* doc = nullptr;
 	while (reload) {
 		reload = false;
-	    doc = new XMLDocument();          //in tinyxml2 namespace
-	    XMLDocument* docCfg = nullptr;       //For Doc Question Settings only
+	   doc = new XMLDocument();          //in tinyxml2 namespace
+	   XMLDocument* docCfg = nullptr;    //For Doc Question Settings only
 
 		if (argc == 1) {
 			cout << "\n Usage: " << argv[0] << " <questionDataFile> [oldQuestionDataFile]" << endl;
@@ -258,9 +262,9 @@ int main(int argc, const char ** argv)
 					int errorID = docCfg->ErrorID();
 					if (errorID) {
 						printf("XML file %s loading or parsing failed: \n"
-							"                 ErrorID: %d\n"
-							"               Error Msg: %s\n"
-							"              Error Line: %d", argv[3], errorID, doc->ErrorName() + 4, doc->ErrorLineNum());
+							"              Error   ID: %d\n"
+							"              Error  Msg: %s\n"
+							"              Error Line: %d\n", argv[3], errorID, doc->ErrorName() + 4, doc->ErrorLineNum());
 					}
 					else {
 						printf("Question config file '%s' loaded and parsed succesfully\n\n", argv[2]);
@@ -273,9 +277,9 @@ int main(int argc, const char ** argv)
 		int errorID = doc->ErrorID();
 		if (errorID) {
 			printf("XML file loaded and parsed failed: \n"
-				"                 ErrorID: %d\n"
-				"               Error Msg: %s\n"
-				"              Error Line: %d", errorID, doc->ErrorName() + 4, doc->ErrorLineNum());
+				"              Error   ID: %d\n"
+				"              Error  MSg: %s\n"
+				"              Error Line: %d\n", errorID, doc->ErrorName() + 4, doc->ErrorLineNum());
 			//cin.get();
 			exit(0);
 		}
@@ -315,19 +319,19 @@ int main(int argc, const char ** argv)
 
 			cin.getline(k, 30);
 			qno = atoi(k);
-			if ((k[0] == 'x') || (k[0] == 'q'))
+			if ((k[0] == 'x') || (k[0] == 'q'))   //out of loop to exit
 				break;
-			else if (k[0] == 'r') {
+			else if (k[0] == 'r') {               //skip specified number of rounds, rarely used feature
 				if (k[1] == 0)
 					q.Qc->SetAttribute("resetto", 3);
 				else {
 					char *p = &k[1];
 					int n = atoi(p);
-					if (n > 0 && n < 999)
+					if (n > 0 && n < 999)           //range is up to 999
 						q.Qc->SetAttribute("resetto", n);
 				}
 			}
-			else if (k[0] == 'R') {
+			else if (k[0] == 'R') {   //reload 
 				delete doc;
 				reload = true;
 				break;
@@ -335,7 +339,7 @@ int main(int argc, const char ** argv)
 			else if (k[0] == 'l') {   //list all questions				
 				browse(questions);				
 			}
-			else if (k[0] == 'p') {   //list all questions				
+			else if (k[0] == 'p') {   //list all questions by page, size is set here
 				pagesize = atoi(k + 1);
 				if (pagesize < 5)
 					pagesize = 5;
@@ -348,6 +352,9 @@ int main(int argc, const char ** argv)
 			}
 			else if (k[0] == 'b') {   //search questions and answers	
 				searchAndDisplayByQAs(k + 1, questions);
+			}
+			else if (k[0] == '2') {   //search questions with 2 key words	
+				searchAndDisplayByQ2Words(k + 1, questions);
 			}
 		}
 		if (!reload)
@@ -377,6 +384,36 @@ void searchAndDisplayByQuestions(char * word, vector<Question> questions) {
 		if (found != std::string::npos) {
 			display(it);
 		}
+	}
+	cin.get();
+}
+void searchAndDisplayByQ2Words(char * word, vector<Question> questions) {
+	//search for 2 words 
+   char * p = word;  //moving pointer to scan the words line
+   char * rd=NULL;   //for second word
+   while (*p!=0){
+      if ( *p == ' '){
+          *p=0;
+          rd=p+1;
+          break;
+      }
+      p++;
+   }
+   if (rd != NULL && *rd !=0)
+      cout << endl << right << setw(4) << "       2 words used :" << word << " 2rd: " << rd << endl;
+   else{
+      cout << endl << "   Error: did not find second word" << endl;
+      cin.get();
+      return;
+   }
+   cout << endl;
+
+	for (vector<Question>::iterator it = questions.begin(); it != questions.end(); ++it) {		
+		std::size_t found1 = it->question.find(word);
+		std::size_t found2 = it->question.find(rd);
+      if ((found1 != std::string::npos)&&(found2 != std::string::npos)) {
+         display(it);
+      }
 	}
 	cin.get();
 }
