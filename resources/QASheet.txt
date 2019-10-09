@@ -79,6 +79,53 @@
   </Question>
   <Answer>
       Weak pointer is a kind of pointer that does not own the object, does not affect the pointer count!
+      in c++11, weak pointer example:
+
+      std::weak_ptr&lt;Prism> parentAppPrism_;
+
+      auto parentAppPrism = parentAppPrism_.lock();
+      if (parentAppPrism == nullptr) {
+        ML_LOG_ERROR("Must have non-null parent app prism");
+        return;
+      }
+
+      Another example:
+      #include &lt;iostream>
+      #include &lt;memory>
+ 
+     void observe(std::weak_ptr&lt;int> weak) 
+     {
+         if (auto observe = weak.lock()) {
+             std::cout &lt;&lt; "\tobserve() able to lock weak_ptr&lt;>, value=" &lt;&lt; *observe &lt;&lt; "\n";
+         } else {
+             std::cout &lt;&lt; "\tobserve() unable to lock weak_ptr&lt;>\n";
+         }
+     }
+ 
+     int main()
+     {
+         std::weak_ptr&lt;int> weak;
+         std::cout &lt;&lt; "weak_ptr&lt;> not yet initialized\n";
+         observe(weak);
+ 
+         {
+             auto shared = std::make_shared&lt;int>(42);
+             weak = shared;
+             std::cout &lt;&lt; "weak_ptr&lt;> initialized with shared_ptr.\n";
+             observe(weak);
+         }
+ 
+         std::cout &lt;&lt; "shared_ptr&lt;> has been destructed due to scope exit.\n";
+         observe(weak);
+     }
+     --------------------------------------- 
+     Output:
+     weak_ptr&lt;> not yet initialized
+        observe() unable to lock weak_ptr&lt;>
+     weak_ptr&lt;> initialized with shared_ptr.
+        observe() able to lock weak_ptr&lt;>, value=42
+     shared_ptr&lt;> has been destructed due to scope exit.
+        observe() unable to lock weak_ptr&lt;>
   </Answer>
 </QA>
 <QA ID="7" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
@@ -129,7 +176,9 @@
       What is array and what is its pros and cons ?
   </Question>
   <Answer>
-      array is fixed in size! and different size makes them different types.
+      An array is a collection of elements of the same type placed in contiguous memory locations 
+    that can be individually referenced by using an index to a unique identifier.
+      Array is fixed in size! and different size makes them different types.
   </Answer>
 </QA>
 <QA ID="10" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
@@ -390,7 +439,7 @@
       vector&lt;int&gt; vec2 = {13,14,16,18};
       vector&lt;int&gt;::iterator it = find(vec2.begin(),vec2.end(),16);
       insert_iterator&lt;vector&lt;int&gt;&gt; i_itr(vec2,it);
-      copy(vec1.begin(),vec1,end(),i_itr);   //vec2: {12,14,4,5,16,18}
+      copy(vec1.begin(),vec1.end(),i_itr);   //vec2: {12,14,4,5,16,18}
       // Other insert iterators: back-insert_iterator, front_insert_iterator
 
       2. Stream iterator: iterat through the data to and from a string:
@@ -503,6 +552,9 @@
   </Question>
   <Answer>
       No !
+      delete NULL; is OK
+      but delete a non-NULL twice is not OK
+      So, it is better to set to NULL right after deleted it successfully
   </Answer>
 </QA>
 
@@ -533,13 +585,11 @@
 
 <QA ID="29" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
   <Question>
-      What are the debugging methods or steps you use ?
+      What's the name of the company that desigins graphics processing units 
+    for the gaming and professional markets ?
   </Question>
   <Answer>
-      1. GDB, DBG, Forte, Visual Studio.     (Forte for java ?)
-      2. Analyzing the Core dump.
-      3. Using tusc to trace the last system call before crash. (HP ?)
-      4. Putting Debug statements in the program source code.
+    nvidia
   </Answer>
 </QA>
 
@@ -1116,7 +1166,7 @@
 </QA>
 <QA ID="61" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
   <Question>
-     That is the full form of RTTI ?
+     What is the full form of RTTI ?
 
      A: Runtime type identification
      B: Runtime template identification
@@ -1201,6 +1251,9 @@
   </Question>
   <Answer>
      C !, but why ? do some research on this when you have time !!!
+     Researched result:
+     it is ok for p to be null to be deleted multiple times, 
+     but not for p to point to some object and be deleted more than once !
   </Answer>
 </QA>
 
@@ -1452,7 +1505,7 @@
      };
      void main(){
        string s="main org msg";     //notice how to pass a param to thread the line below, use 2nd parm to thread
-       std::thread t1((fnctor())), std:ref(s));  //extra pair of () is needed here to make t1 not a def of fn
+       std::thread t1((fnctor()), std:ref(s));  //extra pair of () is needed here to make t1 not a def of fn
        t1.join();                   //if not use ref() here, it will auto use pass by value even though callee is &#38;msg 
        cout &lt;&lt; "From main: " &lt;&lt; s &lt;&lt; endl;
      }
@@ -1465,7 +1518,7 @@
       using move is both safe and efficient:
       std::thread t1((Fnctor()),std::move(s));
 
-      * thead can not be copied, only be moved:
+      * thread can not be copied, only be moved:
       std::thread t2 = std::move(t1);
       t2.join();
 
@@ -1559,7 +1612,7 @@
   </Question>
   <Answer>
      Spurious wakeup describes a complication in the use of condition variables as provided 
-     by certain multithreading APIs such as POSIX Threads and the Windows API.
+     by certain multithreading APIs such as POSIX Threads and the WINDOWS API.
      It is a wait-signal setup for multi-thread synchronizing machinism: 
 
      /* In any waiting thread: */
@@ -1568,8 +1621,8 @@
 
      /* In any other thread: */
      if(buf->n >= buf->size){
-	buf->full = 1;
-	signal(&#38;buf->cond);
+        buf->full = 1;
+        signal(&#38;buf->cond);
      }
      
   </Answer>
@@ -1686,7 +1739,7 @@
 </QA>
 <QA ID="98" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
   <Question>
-     What is data race, now to avoid it ?
+     What is data race, how to avoid it ?
   </Question>
   <Answer>
      A data race occurs when 2 instructions from different threads in a single process access the same memory 
@@ -1784,7 +1837,7 @@
 </QA>
 <QA ID="105" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
   <Question>
-     The mv commaind in UNIX will change:
+     The mv command in UNIX will change:
  
      A: The i-node number
      B: only the directory entry
@@ -2399,7 +2452,7 @@ const char * const p = "Hello";       // const pointer, const data
   <Answer>
      A symbolic link, also termed a soft link, is a special kind 
      of file that points to another file, much like a shortcut in 
-     Windows or a Macintosh alias. Unlike a hard link, a symbolic 
+     WINDOWS or a Macintosh alias. Unlike a hard link, a symbolic 
      link does not contain the data in the target file. It simply 
      points to another file(entry) somewhere in the file system.
      And it can cross filesystem boundaries
@@ -2819,7 +2872,7 @@ const char * const p = "Hello";       // const pointer, const data
      usage:
      1: #include "boot\variant.hpp"
      2: declaration: 
-         boost::variant&lt;int,string&gt; u1,u1;    //boost's way of union
+         boost::variant&lt;int,string&gt; u1,u2;    //boost's way of union
          u1=2;
          u2="hello";
          u1=boost::get&lt;int&gt;(u1)*2;      //has to use get to change u1 to a number ?
@@ -3458,7 +3511,7 @@ to be built in advance of their use. Some Boost libraries coexist as independent
      What is Plmpl ?
   </Question>
   <Answer>
-     It is the Pointer to implementation. It is a c++ programming technique that removes implementation details of a calss 
+     It is the Pointer to implementation. It is a c++ programming technique that removes implementation details of a class 
      from its object representation by placing them in a separate class, accessed through an opaque pointer (unique pointer)
 
      Users obtain a unique pointer to a lightweight or abstract base class, the implementation details are in the derived 
@@ -3520,7 +3573,7 @@ to be built in advance of their use. Some Boost libraries coexist as independent
      How to discard changes in git ?
   </Question>
   <Answer>
-     git checkout -- filename       //discard chagnes in working directory
+     git checkout -- filename       //discard changes in working directory
   </Answer>
 </QA>
 <QA ID="215" type="OneAnswer" category="GIT" countdown="0" resetto="0" >
@@ -3572,15 +3625,26 @@ to be built in advance of their use. Some Boost libraries coexist as independent
   </Question>
   <Answer>
      To push to github:
+        0. create a new repository on github without README.md
         1. get github URL, for example: https://github.com/zhuyali2018/Test.git
         2. add URL using command: git remote add origin &lt;URL&gt;
            example: git remote add origin https://github.com/zhuyali2018/Test.git
-        3. verify the new remoet URL setting: git remote -v
+        3. verify the new remote URL setting: git remote -v
         4. push using command: git push origin &lt;branch name&gt;
            example: git push origin master
                     git push origin new-branch-name
            Note, this last step needs to do in cmd.exe instread of cygwin: 
            NOTE: Actually just use git push, it defaults to current branch with origin
+           NOTE2: actully, before you can push to github, you have to pull first or do
+                 a git clone, like:
+
+                     git clone https://github.magicleap.com/yzhu/bugreportprocessor.git
+
+                 it will create a directory named bugreportprocessor under current dir
+                 you have to move all the files to the folder and commit those files 
+                 before you can push those files to github:
+                     git push origin master
+           NOTE3: if you do not clone first, then, create a new repository without README.md
   </Answer>
 </QA>
 <QA ID="221" type="OneAnswer" category="GIT" countdown="0" resetto="0" >
@@ -3676,6 +3740,8 @@ to be built in advance of their use. Some Boost libraries coexist as independent
   </Question>
   <Answer>
      cat test.txt | sed '/^$/d'
+     To remove lines containing abc:
+     cat test.txt | sed '/abc/d'
   </Answer>
 </QA>
 <QA ID="230" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
@@ -3718,6 +3784,8 @@ to be built in advance of their use. Some Boost libraries coexist as independent
      way 1:
        ttt="asdf asdf 813-528-6246 asdf lkjasdf"
        echo ${ttt//[!0-9-]/}
+       echo ${ttt//[!0-9-]}
+       echo ${ttt//[^0-9-]}
      Way 2:
        $ echo "asdf 234-123-4125 asdf" | grep -o -E '[0-9-]+'
        234-123-4125
@@ -4025,8 +4093,13 @@ to be built in advance of their use. Some Boost libraries coexist as independent
    fi
 
    # another way:
-   if [ -e $1 ]; then
+   if [ -e "$1" ]; then
      echo "$1 exists"
+   fi
+ 
+   To test for non-existence of file or folder:
+   if [ ! "$1" ]; then
+     echo "$1 not exists"
    fi
   </Answer>
 </QA>
@@ -4075,6 +4148,25 @@ to be built in advance of their use. Some Boost libraries coexist as independent
       fi
       shift 1
     done   
+  
+    -----------------------------------Example:
+
+    29Tue-18:56:02 ~/bugs/MMF-1758/videos >testargs a1 a2 a3 a4 a5
+
+    a1
+    a2
+    a3
+    a4
+    a5
+
+    29Tue-18:56:13 ~/bugs/MMF-1758/videos >cat testargs
+
+    while [ $# -ne 0 ]
+    do
+       echo $1
+       shift 1
+    done
+
   </Answer>
 </QA>
 
@@ -4156,7 +4248,7 @@ to be built in advance of their use. Some Boost libraries coexist as independent
      How to check local disk space ?
   </Question>
   <Answer>
-    dh -m       # -m means in megabyte -k means in kilobite
+    df -m       # -m means in megabyte -k means in kilobite -h means auto: kb,mb,gb
   </Answer>
 </QA>
 <QA ID="267" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
@@ -4164,9 +4256,9 @@ to be built in advance of their use. Some Boost libraries coexist as independent
      how to get the path without file name ?
   </Question>
   <Answer>
-    $dirname /aaa/bbb/ccc
+    $> dirname /aaa/bbb/ccc
     /aaa/bbb
-    $basename /aaa/bbb/ccc
+    $> basename /aaa/bbb/ccc
     ccc
   </Answer>
 </QA>
@@ -4213,7 +4305,9 @@ to be built in advance of their use. Some Boost libraries coexist as independent
      How to check folder spaces taken under current directory ?
   </Question>
   <Answer>
-    du -sh *
+    du -sh                    #show current folder spaces taken
+    du -sh */                 #show a list of subfolder spaces taken
+
    -s: summary, no recursive deep
    -h: human readable
 
@@ -4226,6 +4320,8 @@ to be built in advance of their use. Some Boost libraries coexist as independent
   </Question>
   <Answer>
     echo $$
+ 
+    (last command's pid is $?)
   </Answer>
 </QA>
 <QA ID="271" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
@@ -4235,10 +4331,10 @@ to be built in advance of their use. Some Boost libraries coexist as independent
   <Answer>
     find -name filename
     find -name filename1 -o -name filename2   #-o means or; without -o means AND
-    $ find -type d -name ou*      #look for folder, when using *, atleast 2 letters
+    $ find -type d -name ou*      #look for folder, when using *, at least 2 leading letters 
     ./YaliSources/tinyxml2/resources/out
     ./YaliSources/xmltest/Project1/resources/out
-    $ find -type f -name ou*      #look for file, when using *, atleast 2 letters
+    $ find -type f -name ou*      #look for file, when using *, at least 2 leading letters
     ./work/output.txt
     ./work/output1.txt
     ./work/output2.txt
@@ -4296,7 +4392,7 @@ to be built in advance of their use. Some Boost libraries coexist as independent
      $* : wrappedProgram 1 2 3 4 5 6 7
 
     $# : number of parameters passed in
-    $! : pid of most recently executed
+    $! : pid of most recently executed (maybe should be $$ ?)
   </Answer>
 </QA>
 <QA ID="274" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
@@ -4360,7 +4456,7 @@ to be built in advance of their use. Some Boost libraries coexist as independent
 </QA>
 <QA ID="279" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
   <Question>
-     In Wndows, how to list where I shared my folder ?
+     In WINDOWS, how to list where I shared my folder ?
   </Question>
   <Answer>
     use command:
@@ -4369,7 +4465,7 @@ to be built in advance of their use. Some Boost libraries coexist as independent
 </QA>
 <QA ID="280" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
   <Question>
-     In Wndows, how to list mapped drive ?
+     In WINDOWS, how to list mapped drive ?
   </Question>
   <Answer>
     use command: net use
@@ -4649,7 +4745,7 @@ to be built in advance of their use. Some Boost libraries coexist as independent
 </QA>
 <QA ID="294" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
   <Question>
-     Move semantics in C++11 is implemented for all STL containters, which means what ?
+     Move semantics in C++11 is implemented for all STL containers, which means what ?
   </Question>
   <Answer>
     It means it would be OK to do call by value and return by value, pass by value with
@@ -4715,14 +4811,16 @@ to be built in advance of their use. Some Boost libraries coexist as independent
 </QA>
 <QA ID="298" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
   <Question>
-     What is new in C++11 in terms of threading library ?
+     What are the 4 new features in C++11 in terms of threading library ?
   </Question>
   <Answer>
     c++11 new functions in STL Threading library :
      1) thread class
      2) promises and futures
      3) async(), function template for launching concurrent tasks
-     4) tread_local storage type for declaring thread-unique data.
+     4) thread_local storage type for declaring thread-unique data.
+        all functions in the thread can share/access the storage,
+        which is different from variables local to a function.
   </Answer>
 </QA>
 <QA ID="299" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
@@ -4767,7 +4865,7 @@ to be built in advance of their use. Some Boost libraries coexist as independent
      7. async() facility, and of course
      8. a multithreading library.
 
-   c++11 lacks a GC but it does include a state-of–the-art threading library.
+   c++11 lacks a GC but it does include a state-of-the-art threading library.
   </Answer>
 </QA>
 <QA ID="302" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
@@ -4817,7 +4915,7 @@ to be built in advance of their use. Some Boost libraries coexist as independent
 </QA>
 <QA ID="306" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
   <Question>
-    In order to make a function defined in a C++ file callable from C, you need to
+    In order to make a function defined in a C file callable from C++, you need to
      A. declare the function in an extern "C" block.
      B. ensure the function isn't overloaded.
      C. declare the function as static.
@@ -4846,7 +4944,7 @@ to be built in advance of their use. Some Boost libraries coexist as independent
   </Question>
   <Answer>
      #!/usr/bin/python3
-     # Some calculations.  Note the lack of semicolons.  Statements end at the end
+     # Some calculations.  Note the lack of semicolons at Statements end at the end
      # of the line.  Also, variables need not start with a special symbol as in
      # perl and some other Unix-bred languages.
      fred = 18
@@ -4883,8 +4981,8 @@ to be built in advance of their use. Some Boost libraries coexist as independent
      print("fred =", fred)
      print()
 
-     # The compiler will also combine lines when the line break in contained
-     # in a grouping pair, such as parens.
+     # The compiler will also combine lines when the line break contained
+     # in a grouping pair, such as parenthesis.
      joe = 3 * (fred +
              bill - alice)
      print ("joe =", fred)
@@ -5138,7 +5236,7 @@ to be built in advance of their use. Some Boost libraries coexist as independent
 </QA>
 <QA ID="317" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
   <Question>
-     How to display 10 lines after the line that contains MARKER, but not the one containing MARKER ?
+     How to display 10 lines after the line that contains MARKER, but not include the one containing MARKER ?
   </Question>
   <Answer>
     cat file.txt | grep -A10 MARKER | grep -v MARKER
@@ -5281,12 +5379,13 @@ to be built in advance of their use. Some Boost libraries coexist as independent
     
   </Answer>
 </QA>
-<QA ID="324" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+<QA ID="324" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
   <Question>
-     How to perform a process trace using tusc ?
+     What is nm command in linux ?
   </Question>
   <Answer>
-    template
+    nm is a command to list symbols from object files:
+    nm app.obj
   </Answer>
 </QA>
 <QA ID="325" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
@@ -5312,9 +5411,15 @@ to be built in advance of their use. Some Boost libraries coexist as independent
   </Question>
   <Answer>
     if [ -z $name2 ]; then
-     echo "name2 is null"
+      echo "name2 is null"
     else
-     echo "name2 is not null"
+      echo "name2 is not null"
+    fi
+    # or simply
+    if [ ! $name2 ]; then
+      echo "name2 is null"
+    else
+      echo "name2 is not null"
     fi
   </Answer>
 </QA>
@@ -5418,11 +5523,17 @@ to be built in advance of their use. Some Boost libraries coexist as independent
 
     /home/zhuyali>dig +short myip.opendns.com @resolver1.opendns.com
     40.76.74.83
+ 
+    20Wed-13:14:27 /general/yali >dig +short gpscamera.ddns.net
+    68.204.125.18
+
+    Note: the +short is for short display.
+
   </Answer>
 </QA>
 <QA ID="335" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
   <Question>
-     how to install a web sever on ubuntu linux?     
+     how to install a web server on ubuntu linux?     
   </Question>
   <Answer>
      Apache is the most commonly used Web server on Linux systems. Web servers are used to 
@@ -5444,7 +5555,7 @@ to be built in advance of their use. Some Boost libraries coexist as independent
 </QA>
 <QA ID="337" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
   <Question>
-     What is the top 10 usage of strace?     
+     What is the top 10 usage of strace? (no use for now, skip) 
   </Question>
   <Answer>
     1: Trace System Calls: strace df -h
@@ -5504,7 +5615,7 @@ to be built in advance of their use. Some Boost libraries coexist as independent
     most often Hypertext Transfer Protocol (HTTP) or Simple Mail Transfer Protocol (SMTP), for message negotiation 
     and transmission.
 
-    SOAP allows processes running on disparate operating systems (such as Windows and Linux) to communicate using 
+    SOAP allows processes running on disparate operating systems (such as WINDOWS and Linux) to communicate using 
     Extensible Markup Language (XML). Since Web protocols like HTTP are installed and running on all operating systems, 
     SOAP allows clients to invoke web services and receive responses independent of language and platforms.
 
@@ -5739,6 +5850,20 @@ to be built in advance of their use. Some Boost libraries coexist as independent
 
      Every write() to the opened device node places a log entry in
      the kernel's printk buffer.
+   
+     Example: 
+       mldb shell
+       phaedra:/ # echo "test msg" > /dev/kmsg
+       phaedra:/ # dmesg
+          ...
+       [ 2365.795438] EXT4-fs warning (device sda39): ext4_lookup:1619: Inconsistent encryption contexts: 2138120/2138122
+       [ 2365.795438] 
+       [ 2375.466133] test msg
+       [ 2380.793385] Error: Failed to find key with descriptor: ext4:7287feaf97c6a18e:2 (inode num: 2138122)
+       [ 2380.793413] EXT4-fs warning (device sda39): ext4_lookup:1619: Inconsistent encryption contexts: 2138120/2138122
+       [ 2380.793413] 
+       phaedra:/ # 
+
 
   </Answer>
 </QA>
@@ -5815,7 +5940,7 @@ to be built in advance of their use. Some Boost libraries coexist as independent
 
   </Answer>
 </QA>
-<QA ID="356" type="OneAnswer" category="LiNUX" countdown="0" resetto="0" >
+<QA ID="356" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
   <Question>
      how to get a substring from a string starting from a keyword ?
   </Question>
@@ -5844,7 +5969,7 @@ to be built in advance of their use. Some Boost libraries coexist as independent
   </Question>
   <Answer>
      + - Equivalent to one or more occurrences of previous character.
-     ? - This denotes almost 1 repetition of previous character. Like: a? Would match 'a' or 'aa'.
+     ? - This denotes atmost 1 repetition of previous character. Like: a? Would match 'a' or 'aa'.
      ( - Start of alternation expression.
      ) - End of alternation expression.
      | - Matching either of the expression separated by '|'. Like: "(a|b)cde" would match
@@ -5920,7 +6045,7 @@ to be built in advance of their use. Some Boost libraries coexist as independent
   </Question>
   <Answer>
      D. strlen() will keep counting until it sees 0, which is NOT included!
-     please notece the difference between strlen() and sizeof(), which counts ending 0
+     please notice the difference between strlen() and sizeof(), which counts ending 0
      Another difference is strlen takes (char *) and sizeof takes char array as an arg.
   </Answer>
 </QA>
@@ -5929,7 +6054,7 @@ to be built in advance of their use. Some Boost libraries coexist as independent
      alias command
   </Question>
   <Answer>
-     alais command displays alias defs or define alias
+     alias command displays alias defs or define alias
   </Answer>
 </QA>
 <QA ID="362" type="OneAnswer" category="WINDOWS" countdown="0" resetto="0" >
@@ -6011,6 +6136,16 @@ to be built in advance of their use. Some Boost libraries coexist as independent
      aaaa
      bbbb
      cccc
+     but: :> a=123
+          :> echo -e '$a'
+          $a
+          :>echo -e "$a\r\aaaaa\r"
+          aaaa     #aaaa overwrites 123
+     but echo always add a \n at the end for each echo statement
+     so to print a line with \r without adding a \n at the end, using printf:
+     printf "$j * $underrun * ${tmpline} \r"
+     or use -n: echo -n "aaaa"
+
   </Answer>
 </QA>
 <QA ID="369" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
@@ -6036,6 +6171,7 @@ to be built in advance of their use. Some Boost libraries coexist as independent
      yali.zhu@MacMini3Win7:work> echo ${ar[2]}
      ccc
 
+     size of array is ${#ar[@]}
   </Answer>
 </QA>
 <QA ID="370" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
@@ -6047,6 +6183,11 @@ to be built in advance of their use. Some Boost libraries coexist as independent
      echo ${array[0]}     #line 1
      echo ${array[1]}     #line 2
      ...
+ 
+     For many command line interpreters ("shell") of Unix operating systems, 
+     the internal field separator (abbreviated IFS) refers to a variable which 
+     defines the character or characters used to separate a pattern into tokens 
+     for some operations. ... If the value of IFS is null, no word splitting occurs.
   </Answer>
 </QA>
 <QA ID="371" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
@@ -6054,6 +6195,7 @@ to be built in advance of their use. Some Boost libraries coexist as independent
      How to insert a space between every charactor in a string ?
   </Question>
   <Answer>
+     by replacing every char with itself plus a space using sed:
      $ echo US1234
      US1234
      $ echo US1234 | sed 's/./&amp; /g'
@@ -6106,12 +6248,15 @@ to be built in advance of their use. Some Boost libraries coexist as independent
      ba
      -> echo abc | rev | cut -c 2- | rev
      ab
+     ------------or-------------- 
+     -> echo abc | sed 's/.$//'
+     ab
 
   </Answer>
 </QA>
-<QA ID="375" type="OneAnswer" category="WIN" countdown="0" resetto="0" >
+<QA ID="375" type="OneAnswer" category="WINDOWS" countdown="0" resetto="0" >
   <Question>
-     How to launch an app using system() and return immedately on Windows ?
+     How to launch an app using system() and return immedately on WINDOWS ?
   </Question>
   <Answer>
      using API call system("appname") to launch an app and the system() will
@@ -6233,6 +6378,8 @@ to be built in advance of their use. Some Boost libraries coexist as independent
      if [ $num -gt 0 -a $num -lt 10 ]; then
         ...
      fi
+     
+     Please notice that only one -a can be used in a statement, no concatnate of "-a"s, "-o"s allowed
   </Answer>
 </QA>
 <QA ID="386" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
@@ -6337,12 +6484,12 @@ to be built in advance of their use. Some Boost libraries coexist as independent
      
   </Answer>
 </QA>
-<QA ID="393" type="OneAnswer" category="WIN" countdown="0" resetto="0" >
+<QA ID="393" type="OneAnswer" category="WINDOWS" countdown="0" resetto="0" >
   <Question>
      What is WSL ?
   </Question>
   <Answer>
-     It is the Windows Subsystem for Linux, it runs an Ubuntu on windows.
+     It is the WINDOWS Subsystem for Linux, it runs an Ubuntu on windows.
   </Answer>
 </QA>
 <QA ID="394" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
@@ -6566,7 +6713,7 @@ to be built in advance of their use. Some Boost libraries coexist as independent
     }
 
     a) abcdefghij
-    b) address of string “abcdefghij”
+    b) address of string "abcdefghij"
     c) compile time error
     d) runtime error
     
@@ -6600,10 +6747,11 @@ to be built in advance of their use. Some Boost libraries coexist as independent
   <Question>
        What is the output of the program ?
 
-     	int a = 5, b = 6, c;
-	c = a, b;
-	int d = (a, b);
-	cout &lt;&lt; c &lt;&lt; ' ' &lt;&lt; d;
+     	int a = 5, b = 6;
+        int c = a, b;
+        int d = (a, b);
+
+        cout &lt;&lt; c &lt;&lt; ' ' &lt;&lt; d;
 
        a) 5 6
        b) 6 5
@@ -6631,7 +6779,7 @@ to be built in advance of their use. Some Boost libraries coexist as independent
 </QA>
 <QA ID="415" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
   <Question>
-     How are many sequences of statements present in c++? and what are they ?
+     How many sequences of statements are present in c++? and what are they ?
   </Question>
   <Answer>
      There are 5 sequences of statements:
@@ -6676,10 +6824,19 @@ to be built in advance of their use. Some Boost libraries coexist as independent
 </QA>
 <QA ID="418" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
   <Question>
-     awk usage
+     Why should we always put double quots around a variable ?
   </Question>
   <Answer>
-     xxxxxxxxxxxxxxxxx
+     Because if we don't and when the varaible is empty, it will be converted
+     to something invalid, for example:
+        if [ $1 != -v ]; then
+     will be converted to:
+        if [ != -v ]; then
+     when empty, which is invalid. And with double quote:
+        if [ "$1" != -v ]; then
+     it will be converted to:
+        if [ "" != -v ]; then
+     when empty, which is still valid.
   </Answer>
 </QA>
 <QA ID="419" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
@@ -6703,172 +6860,2557 @@ to be built in advance of their use. Some Boost libraries coexist as independent
        set +x
   </Answer>
 </QA>
-<QA ID="421" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+<QA ID="421" type="OneAnswer" category="MAGICLEAP" countdown="0" resetto="0" >
   <Question>
-     mmmmmmmmmmmmmmmmmmmmmm?     
+     How to run profile.sh against emtd running in the deivce ?
   </Question>
   <Answer>
-     xxxxxxxxxxxxxxxxx
+     with emtd process running in the device, run following command at terminal:
+     $ profile.sh emtd   #after mldb shell into the shell of the device ?
+     
+     From root of nova build tree:
+     $ system/extras/simpleperf/scripts/nova_process_profile.sh processName
+
+
+     You need to run following commands first to setup environment:
+     $ . build/envsetup.sh
+     $ lunch
+     then:
+     $ system/extras/simpleperf/scripts/nova_process_profile.sh graph_pss 
   </Answer>
 </QA>
-<QA ID="422" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+<QA ID="422" type="OneAnswer" category="MAGICLEAP" countdown="0" resetto="0" >
   <Question>
-     mmmmmmmmmmmmmmmmmmmmmm?     
+     How to get device software version ?
   </Question>
   <Answer>
-     xxxxxxxxxxxxxxxxx
+     mldb getprop ro.build.id
   </Answer>
 </QA>
 <QA ID="423" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
   <Question>
-     mmmmmmmmmmmmmmmmmmmmmm?     
+     How to uncompress filename.gz file in place ?
   </Question>
   <Answer>
-     xxxxxxxxxxxxxxxxx
+     gzip -d filename.gz  
   </Answer>
 </QA>
 <QA ID="424" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
   <Question>
-     mmmmmmmmmmmmmmmmmmmmmm?     
+     How to supress error messages as well as stdout messages ?
   </Question>
   <Answer>
-     xxxxxxxxxxxxxxxxx
+     command 2>/dev/null >/dev/null
   </Answer>
 </QA>
-<QA ID="425" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+<QA ID="425" type="OneAnswer" category="MAGICLEAP" countdown="0" resetto="0" >
   <Question>
-     mmmmmmmmmmmmmmmmmmmmmm?     
+     How to use command to pair totem with device ?
   </Question>
   <Answer>
-     xxxxxxxxxxxxxxxxx
+     mldb controller pairing on
+     mldb controller accept
   </Answer>
 </QA>
-<QA ID="426" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+<QA ID="426" type="OneAnswer" category="MAGICLEAP" countdown="0" resetto="0" >
   <Question>
-     mmmmmmmmmmmmmmmmmmmmmm?     
+     How to use strace ?         
   </Question>
   <Answer>
-     xxxxxxxxxxxxxxxxx
+     strace -tt -f -o &lt;outputpathfilename&gt; &lt;command with arguments&gt;
+     example:
+     strace -tt -f -o outputpathfile.log emtd 3 1000
   </Answer>
 </QA>
 <QA ID="427" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
   <Question>
-     mmmmmmmmmmmmmmmmmmmmmm?     
+     How to get the length of a string in shell script ?
   </Question>
   <Answer>
-     xxxxxxxxxxxxxxxxx
+     using ${#string}:
+     test="Welcome to the Land of Linux"
+     echo "Our variable test is ${#test} characters long"
   </Answer>
 </QA>
 <QA ID="428" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
   <Question>
-     mmmmmmmmmmmmmmmmmmmmmm?     
+     how to remove a directory recursively and forcefully ?
   </Question>
   <Answer>
-     xxxxxxxxxxxxxxxxx
+     rm -rf directoryName
   </Answer>
 </QA>
 <QA ID="429" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
   <Question>
-     mmmmmmmmmmmmmmmmmmmmmm?     
+     How to enter a folder as an administrator ?
   </Question>
   <Answer>
-     xxxxxxxxxxxxxxxxx
+     try using sudo -s to start a root shell and then simply cd into the directory.
+     When you're done as root, press Ctrl+D or type exit.
+
+      -s, --shell 
+        Run the shell specified by the SHELL environment variable if it is set
+     example:
+        sudo -s bash
+        cd dirname
   </Answer>
 </QA>
 <QA ID="430" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
   <Question>
-     mmmmmmmmmmmmmmmmmmmmmm?     
+     How to add my userID to the plugdev group ?
   </Question>
   <Answer>
-     xxxxxxxxxxxxxxxxx
+     $ sudo gpasswd -a $USER plugdev
+     # verify you are part of that groups by issuing
+     $ sudo getent group plugdev
+     plugdev:x:46:hummingbird,yzhu
+
+     $ groups    #list all groups that you are a member of
+
+     $ groups | grep -oh plugdev
+     plugdev
   </Answer>
 </QA>
-<QA ID="431" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+<QA ID="431" type="OneAnswer" category="MAGICLEAP" countdown="0" resetto="0" >
   <Question>
-     mmmmmmmmmmmmmmmmmmmmmm?     
+     How to kill a process inside device ?
   </Question>
   <Answer>
-     xxxxxxxxxxxxxxxxx
+     1. sudo mldb root
+     2. mldb shell
+     3. killall -4 settings_app  #using -9 to kill, no core dump file will be created
   </Answer>
 </QA>
-<QA ID="432" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+<QA ID="432" type="OneAnswer" category="MAGICLEAP" countdown="0" resetto="0" >
   <Question>
-     mmmmmmmmmmmmmmmmmmmmmm?     
+     How to use systrace to capture/profile ?
   </Question>
   <Answer>
-     xxxxxxxxxxxxxxxxx
+     ./catapult/systrace/bin/systrace -t 4 -b 80000 -o output.html
+     or simply do: YaliSystrace &lt;Descriptive OutputFileName> 
+
+    #above commands must be run on root of systrace tree if not run YaliSystrace
+    like: cd ~/workspace/aaa
+    then, run:
+    ./catapult/systrace/bin/systrace -t 10 -b 80000 -o gallery_player_freeze.html
   </Answer>
 </QA>
 <QA ID="433" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
   <Question>
-     mmmmmmmmmmmmmmmmmmmmmm?     
+     How to commit changes in git ?
   </Question>
   <Answer>
-     xxxxxxxxxxxxxxxxx
+         when you change a file which is already in the repository, 
+     you have to git add it again if you want it to be staged.
+
+         This allows you to commit only a subset of the changes you made 
+     since the last commit. For example, let's say you have file a, file b 
+     and file c. You modify file a and file b but the changes are very 
+     different in nature and you don't want all of them to be in one single 
+     commit. You issue
+
+     git add a
+     git commit a -m "bugfix, in a"
+     git add b
+     git commit b -m "new feature, in b"
+
+     As a side note, if you want to commit everything you can just type
+
+     git commit -a
+     
+     or 
+
+     git commit -am "comment goes here"
   </Answer>
 </QA>
-<QA ID="434" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+<QA ID="434" type="OneAnswer" category="MAGICLEAP" countdown="0" resetto="0" >
   <Question>
-     mmmmmmmmmmmmmmmmmmmmmm?     
+     How to build nova-phaedra software ?
   </Question>
   <Answer>
-     xxxxxxxxxxxxxxxxx
+     vendor/ml/proprietary/build/bin/build_device.sh -p phaedra [-v userdebug] | tee ~/buildlog.log
   </Answer>
 </QA>
-<QA ID="435" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+<QA ID="435" type="OneAnswer" category="MAGICLEAP" countdown="0" resetto="0" >
   <Question>
-     mmmmmmmmmmmmmmmmmmmmmm?     
+     How to see the log while it is running on the device ?
   </Question>
   <Answer>
-     xxxxxxxxxxxxxxxxx
+     mldb logcat      
   </Answer>
 </QA>
-<QA ID="436" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+<QA ID="436" type="OneAnswer" category="MAGICLEAP" countdown="0" resetto="0" >
   <Question>
-     mmmmmmmmmmmmmmmmmmmmmm?     
+     How to put device in recovery mode ?
   </Question>
   <Answer>
-     xxxxxxxxxxxxxxxxx
+     1: hold 3 keys for 8 or more seconds (vol up and down plus power button) to power off the device
+     2: then, hold power button and vol up button (for 4 seconds, no more)to start the device in recover mode
+     3. then you can use usb to flash the device with new build or reload a build using script: flash_nvidia.sh
+   
+
+     From mldb mode:
+      To get to recovery mode using command: mldb reboot forced-recovery
+      To get to fastboot mode using command: mldb reboot bootloader
   </Answer>
 </QA>
-<QA ID="437" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+<QA ID="437" type="OneAnswer" category="MAGICLEAP" countdown="0" resetto="0" >
   <Question>
-     mmmmmmmmmmmmmmmmmmmmmm?     
+     How to get device software version ?
   </Question>
   <Answer>
-     xxxxxxxxxxxxxxxxx
+     mldb shell getprop ro.build.version
   </Answer>
 </QA>
-<QA ID="438" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+<QA ID="438" type="OneAnswer" category="MAGICLEAP" countdown="0" resetto="0" >
   <Question>
-     mmmmmmmmmmmmmmmmmmmmmm?     
+     How to collect bug report using mldb ?
   </Question>
   <Answer>
-     xxxxxxxxxxxxxxxxx
+     mldb bugreport 
   </Answer>
 </QA>
-<QA ID="439" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+<QA ID="439" type="OneAnswer" category="MAGICLEAP" countdown="0" resetto="0" >
   <Question>
-     mmmmmmmmmmmmmmmmmmmmmm?     
+     How to list application processes inside devices?
   </Question>
   <Answer>
-     xxxxxxxxxxxxxxxxx
+     mlls list      
   </Answer>
 </QA>
 <QA ID="440" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
   <Question>
-     mmmmmmmmmmmmmmmmmmmmmm?     
+     How to pipe stderr output to a file using tee ?
   </Question>
   <Answer>
-     xxxxxxxxxxxxxxxxx
+     aaa.sh 2>&amp;1 | tee -a log
   </Answer>
 </QA>
 <QA ID="441" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
   <Question>
-     mmmmmmmmmmmmmmmmmmmmmm?     
+     How do I launch image viewer to view a picture in ubuntu terminal ?
   </Question>
   <Answer>
-     xxxxxxxxxxxxxxxxx
+     eog filename
+
+     eog means Eye Of Gnome
+  </Answer>
+</QA>
+<QA ID="442" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     how to sum a column using awk ?
+  </Question>
+  <Answer>
+     awk '{SUM+=$1} END{print SUM}'
+     awk '{count+=1} END{print count}'
+     awk '{SUM+=$1;COUNT+=1;if(MAX&lt;$1)MAX=$1}END{print SUM" "COUNT" avg="SUM/COUNT" MAX="MAX}' 
+    
+     Yali tool: awksum
+  </Answer>
+</QA>
+<QA ID="443" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     How to troubleshoot USB device not connecting ?
+  </Question>
+  <Answer>
+     We could try following:
+     - dmesg | tail
+     - sudo service udev reload
+     - view /var/log/syslog
+
+  </Answer>
+</QA>
+<QA ID="444" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     how to unzip .gz file using gzip?     
+  </Question>
+  <Answer>
+     gzip -d file.gz  
+  </Answer>
+</QA>
+<QA ID="445" type="OneAnswer" category="MAGICLEAP" countdown="0" resetto="0" >
+  <Question>
+     How to start gallery using mldb command from commandline ?
+  </Question>
+  <Answer>
+     mldb shell mlls start com.magicleap.gallery
+     mldb shell mlls stop  com.magicleap.gallery
+     mldb shell mlls pause  com.magicleap.gallery
+     mldb shell mlls resume  com.magicleap.gallery
+  </Answer>
+</QA>
+<QA ID="446" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     ad-hoc means what ?     
+  </Question>
+  <Answer>
+     formed, arranged, or done for a particular purpose only.
+  </Answer>
+</QA>
+<QA ID="447" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     How to list the files inside a tar file using tar command?
+  </Question>
+  <Answer>
+     tar -tvf report.tar
+  </Answer>
+</QA>
+<QA ID="448" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     how to tar multiple file into one tar file ?
+  </Question>
+  <Answer>
+     tar -cf report.tar *.rpt
+  </Answer>
+</QA>
+<QA ID="449" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     How to untar the .gz file using tar command ? 
+  </Question>
+  <Answer>
+     tar -xzf report.tar.gz
+  </Answer>
+</QA>
+<QA ID="450" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     How to zip up files into one .gz file using tar command?
+  </Question>
+  <Answer>
+     tar -czvf file.tar.gz cvd*.txt
+  </Answer>
+</QA>
+<QA ID="451" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     What is ninja in computing ?
+  </Question>
+  <Answer>
+     Ninja is a small build system with a focus on speed. It differs from other build systems in 
+     two major respects: it is designed to have its input files generated by a higher-level build 
+     system, and it is designed to run builds as fast as possible.
+
+     In essence, Ninja is meant to replace Make, which is slow when performing incremental (or no-op) 
+     builds. This can considerably slow down developers working on large projects, such as Google 
+     Chrome which compiles 30,000 input files into a single executable. In fact, Google Chrome is a 
+     main user and motivation for Ninja. It's also used to build Android, and is used by most developers 
+     working on LLVM.
+
+     In contrast to Make, Ninja lacks features such as string manipulation, as Ninja build files are 
+     not meant to be written by hand. Instead, a "build generator" should be used to generate Ninja 
+     build files. CMake and Meson are popular build management software tools which support creating 
+     build files for Ninja.
+  </Answer>
+</QA>
+<QA ID="452" type="OneAnswer" category="MAGICLEAP" countdown="0" resetto="0" >
+  <Question>
+     How to do simpleperf profiling on nova device?     
+  </Question>
+  <Answer>
+     1. make sure the device flashed software matched the locally downloaded source as much as possible
+     2. got to the root folder of the source
+     3. run: . build/envsetup.sh   # it actually does loading
+     4. run: lunch 
+        and pick the number 9 option: phaedra_full-userdebug
+     5. run profiling script respectively for profiling:
+         ./system/extras/simpleperf/scripts/nova_process_profile.sh graph_pss
+         ./system/extras/simpleperf/scripts/nova_process_profile.sh novainputservice
+     6. see the last 3 lines of the output for information of the final report
+  </Answer>
+</QA>
+<QA ID="453" type="OneAnswer" category="MAGICLEAP" countdown="0" resetto="0" >
+  <Question>
+     How to kill a process and collect logs on Nova device?     
+  </Question>
+  <Answer>
+     $ mldb pull /data/mlog
+
+     the log is at /data/mlog/events:
+
+     -rw-r--r-- 1 yzhu ml     537 Aug 30 13:35 1535644660_wblhealth.zip
+     -rw-r--r-- 1 yzhu ml     324 Aug 30 13:35 last_stability_event.bin
+     -rw-r--r-- 1 yzhu ml 1149362 Aug 30 13:35 1535648126_appcrash.zip
+     -rw-r--r-- 1 yzhu ml 1295537 Aug 30 13:35 1535649777_appcrash.zip
+
+
+      [~/bugs/SPR-2914/tmp2/mlog/events] 30Thu-13:37:46>unzip 1535648126_appcrash.zip
+      Archive:  1535648126_appcrash.zip
+       inflating: tombstone.txt           
+       inflating: current_logcat.txt      
+       inflating: event_summary.txt     
+  </Answer>
+</QA>
+<QA ID="454" type="OneAnswer" category="MAGICLEAP" countdown="0" resetto="0" >
+  <Question>
+     How to flash a device with a local build when it is in recovery mode?     
+  </Question>
+  <Answer>
+     1. put device in recovery mode
+     2. goto ROOT/out/target/product/phaedra
+     3. run ./flash_nvidia.sh     #has to be in recovery mode or the script wont work, it will complain!, 
+        (To put device in recovery mode: 
+         1 powerbutton + vol+ and vol- button at the same time for 8 seconds to power it down
+         2 powerbutton + vol+ button at the same time for 4 seconds, no more to boot up to recovery mode) 
+  </Answer>
+</QA>
+<QA ID="455" type="OneAnswer" category="MAGICLEAP" countdown="0" resetto="0" >
+  <Question>
+     How to create a system.log for a device?     
+  </Question>
+  <Answer>
+     mldb shell su root logcat -d > system.log
+  </Answer>
+</QA>
+<QA ID="456" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     How to make the ubuntu mouse non-sticky to edges ?
+  </Question>
+  <Answer>
+     Run following command in terminal:
+
+     dconf write /org/compiz/profiles/unity/plugins/unityshell/launcher-capture-mouse false
+  </Answer>
+</QA>
+<QA ID="457" type="OneAnswer" category="MAGICLEAP" countdown="0" resetto="0" >
+  <Question>
+     What is ad-hoc build and what is base line build ?
+  </Question>
+  <Answer>
+     Ad-hoc build is specially build one, can not rebuild locally from artifactory without 
+     special directions from builder
+
+     Baseline build can be fould in stable candidates SC, for example: 
+     baseline A0C.180821.01-P.001 can be found at:
+         https://artifactory.magicleap.com/artifactory/release/qdr/0.92.0/sc/A0C.180821.01-P.001/
+
+     To rebuild baseline A0C.180821.01-P.001 locally, goto 
+         https://artifactory.magicleap.com/artifactory/release/qdr/0.92.0/sc/A0C.180821.01-P.001/
+       1. click full
+       2. then, click release_notes-A0C.180821.01-P.001.html 
+       3. copy the line under Commands to initialize Nova:
+
+          repo init -u https://gerrit.magicleap.com/platform/mlmanifest -b sc-A0C.180821.01-P.001 
+            --repo-url https://gerrit.magicleap.com/tools/repo --no-repo-verify 
+            -g default,nova-browser,preload-apps,screens,platform-linux
+
+       4. and exeute it under a dedicated empty folder
+       5. copy and paste next line to the terminal and execute it: repo sync -c -q --no-tags
+          this step will take a few hours maybe!
+       6. run the command next for "Command to build Nova directly" to build the downloaded source locally:
+          ./vendor/ml/proprietary/build/bin/build_device.sh -p phaedra_full -j 64 -v userdebug -o --archive-full-symbols --verbose 
+  </Answer>
+</QA>
+<QA ID="458" type="OneAnswer" category="MAGICLEAP" countdown="0" resetto="0" >
+  <Question>
+     When you do push, it tells you it is a readonly system, what should you do ?
+  </Question>
+  <Answer>
+     You should do a "mldb remount"
+  </Answer>
+</QA>
+<QA ID="459" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     How to check local disk space ?
+  </Question>
+  <Answer>
+     df -h | grep dev/sda1 | awk '{print "Total: "$2"\nUsed:  "  $3"\nFree:   " $4}'
+
+     or
+
+     df -m | grep dev/sda1 | awk '{printf("Total: %4.1f GB \nUsed:  %4.1f GB\nFree:   %4.1f GB\n",$2/1024,$3/1024,$4/1024)}'
+  </Answer>
+</QA>
+<QA ID="460" type="OneAnswer" category="MAGICLEAP" countdown="0" resetto="0" >
+  <Question>
+     What is Periodic Builds ?   
+  </Question>
+  <Answer>
+     Periodic Builds are Nova integration builds that run continuously on the mainline (develop) every 1 hr 
+     to check the sanity of the mainline (develop) branch.
+  </Answer>
+</QA>
+<QA ID="461" type="OneAnswer" category="ENGLISH" countdown="0" resetto="0" >
+  <Question>
+     judder ?     
+  </Question>
+  <Answer>
+     shake
+  </Answer>
+</QA>
+<QA ID="462" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     Coverity ?     
+  </Question>
+  <Answer>
+     Coverity is a brand of software development products from Synopsys, consisting primarily of static code 
+     analysis and dynamic code analysis tools. The tools enable engineers and security teams to find defects 
+     and security vulnerabilities in custom source code written in C, C++, Java, C#, JavaScript and more.
+  </Answer>
+</QA>
+<QA ID="463" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     Elasticsearch ?     
+  </Question>
+  <Answer>
+     Elasticsearch is a popular open source search server that is used for real-time distributed search and 
+     analysis of data. When used for anything other than development, Elasticsearch should be deployed across 
+     multiple servers as a cluster, for the best performance, stability, and scalability.
+  </Answer>
+</QA>
+<QA ID="464" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     make command will look for which file to use ?
+  </Question>
+  <Answer>
+     In the order of: GNUmakefile, makefile, Makefile
+     if you use make -f &lt;makefile name>, it will not use default makefiles above
+     make -f file.mk
+     make --file file.mk
+     make --file=file.mk
+  </Answer>
+</QA>
+<QA ID="465" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     In make file, what do following mean ?
+     %.o
+     $@
+     $^
+     $&lt;
+
+  </Question>
+  <Answer>
+     %.o : all *.o files
+     $@  : left side of :
+     $^  : right side of :
+     $&lt; : the first item in the dependencies list
+  </Answer>
+</QA>
+<QA ID="466" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     what does the command "make clean" mean?     
+  </Question>
+  <Answer>
+     execute the lines in make file starting with the label "clean:"
+  </Answer>
+</QA>
+<QA ID="467" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     What is regression test ?   
+  </Question>
+  <Answer>
+     Regression testing is re-running functional and non-functional tests to ensure that previously developed and 
+     tested software still performs after a change. If not, that would be called a regression. Changes that may 
+     require regression testing include bug fixes, software enhancements, configuration changes, and even substitution 
+     of electronic components. As regression test suites tend to grow with each found defect, test automation is 
+     frequently involved. Sometimes a change impact analysis is performed to determine an appropriate subset of 
+     tests.
+  </Answer>
+</QA>
+<QA ID="468" type="OneAnswer" category="MAGICLEAP" countdown="0" resetto="0" >
+  <Question>
+     How to hide universe  ?     
+  </Question>
+  <Answer>
+     mldb shell mage universe launcher hide
+  </Answer>
+</QA>
+<QA ID="469" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     How to create subfolders with numbers of uniform digits ?
+  </Question>
+  <Answer>
+     cycle_dir=$(printf "$PWD/SPR-3181/%04d" $loop) # notice it is not %4d, it is %04d !
+     echo "Making dir: $cycle_dir"
+     mkdir -p $cycle_dir
+  </Answer>
+</QA>
+<QA ID="470" type="OneAnswer" category="ENGLISH" countdown="0" resetto="0" >
+  <Question>
+     slump ?     
+  </Question>
+  <Answer>
+     a sudden severe or prolonged fall in the price
+  </Answer>
+</QA>
+<QA ID="471" type="OneAnswer" category="ENGLISH" countdown="0" resetto="0" >
+  <Question>
+     torrid ?     
+  </Question>
+  <Answer>
+    full of difficulty or tribulation.
+         "Wall Street is in for a torrid time in the next a few weeks"
+  </Answer>
+</QA>
+<QA ID="472" type="OneAnswer" category="ENGLISH" countdown="0" resetto="0" >
+  <Question>
+     tribulation ?     
+  </Question>
+  <Answer>
+      great trouble or suffering
+  </Answer>
+</QA>
+<QA ID="473" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     How to select all files in vi (to copy to another vi on diff window)?     
+  </Question>
+  <Answer>
+     vi ~/.vimrc
+     add following line:
+     map &lt;C-a> &lt;esc>ggVG&lt;CR>
+     save it and launch vi
+     now you can select all by using &lt;ctrl+A> windows shortcut to do it 
+  </Answer>
+</QA>
+<QA ID="474" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     How to tell what kind of file it is ?     
+  </Question>
+  <Answer>
+     using command: file:
+     file &lt;TheFile>
+  </Answer>
+</QA>
+<QA ID="475" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     How to tell if the system is linux or not?     
+  </Question>
+  <Answer>
+     using command: uname. For example:
+     $> uname
+     Linux
+  </Answer>
+</QA>
+<QA ID="476" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     How to detect a folder/file exist or not ?     
+  </Question>
+  <Answer>
+     one line:
+     if [ -e ./subfolder ]; then echo "Folder exist"; else echo "Folder not exist"; fi
+
+     multi lines:
+       if [ -e ./subfolder ]; then
+           echo "Folder exist"
+       else
+           echo "Folder not exist"
+       fi
+     # notice that multi lines with one statement per line do not require ; at end of each line.
+  </Answer>
+</QA>
+<QA ID="477" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     How to tell how many cpus on the machine?     
+  </Question>
+  <Answer>
+     2 ways:
+       1: cat /proc/cpuinfo | grep processor | wc -l
+       2: nproc
+  </Answer>
+</QA>
+<QA ID="478" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     what does whereis command do ?     
+  </Question>
+  <Answer>
+     Whereis command is helpful to locate binary, source and manual pages of commands in the Linux system
+
+     It is different from command "which", which is locating the command that follows
+  </Answer>
+</QA>
+<QA ID="479" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     How to time a command?     
+  </Question>
+  <Answer>
+     time &lt;command>
+  </Answer>
+</QA>
+<QA ID="480" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     How to assign multiple vars in one line ?     
+  </Question>
+  <Answer>
+     var1=1 var2=2 var3=3
+     #or
+     var1=1;var2=2;var3=3
+  </Answer>
+</QA>
+<QA ID="481" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     What are the differences between running a command directly and running it as an argument of "command" in linux?     
+  </Question>
+  <Answer>
+     Run  command  with  args  suppressing  the normal shell function lookup. 
+     Only builtin commands or commands found in the PATH are executed.   
+        If the -p option is given, the search for command is performed using a
+    default value for PATH that is guaranteed to find all of the standard utilities. 
+  </Answer>
+</QA>
+<QA ID="482" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     What does the .mk files do in building an executible?
+  </Question>
+  <Answer>
+     .mk files are used to be included in the makefile and are for variable settings
+     the format is like this:
+     VARNAME := VALUE
+  </Answer>
+</QA>
+<QA ID="483" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     What is STLport ?
+  </Question>
+  <Answer>
+     STLport is a C++ Standard library implementation
+     STLport is a C++ library
+  </Answer>
+</QA>
+<QA ID="484" type="OneAnswer" category="MAGICLEAP" countdown="0" resetto="0" >
+  <Question>
+     How to install a .mpk package ?
+  </Question>
+  <Answer>
+    >mldb install 11-09-18_rev_69092_InvadersML.mpk
+  </Answer>
+</QA>
+<QA ID="485" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     What is Futex ?
+  </Question>
+  <Answer>
+     In computing, a futex (short for "fast userspace mutex") is a kernel system call 
+   that programmers can use to implement basic locking, or as a building block for 
+   higher-level locking abstractions such as semaphores and POSIX mutexes or condition 
+   variables.
+
+     A futex consists of a kernelspace wait queue that is attached to an atomic integer 
+   in userspace. Multiple processes or threads operate on the integer entirely in 
+   userspace (using atomic operations to avoid interfering with one another), and only 
+   resort to relatively expensive system calls to request operations on the wait queue 
+   (for example to wake up waiting processes, or to put the current process on the wait 
+   queue). A properly programmed futex-based lock will not use system calls except when 
+   the lock is contended; since most operations do not require arbitration between 
+   processes, this will not happen in most cases.
+
+     Futexes have two basic operations, WAIT and WAKE. A third operation called REQUEUE 
+   is available and functions as a more generic WAKE operation that can move threads 
+   between waiting queues.
+
+     WAIT(addr, val)
+   If the value stored at the address addr is val, puts the current thread to sleep.
+
+     WAKE(addr, num)
+   Wakes up num number of threads waiting on the address addr.
+
+     CMP_REQUEUE(old_addr, new_addr, num_wake, num_move, val)
+   If the value stored at the address old_addr is val, wakes num_wake threads waiting 
+   on the address old_addr, and enqueues num_move threads waiting on the address old_addr 
+   to now wait on the address new_addr. This can be used to avoid the Thundering herd 
+   problem on wake.
+  </Answer>
+</QA>
+<QA ID="486" type="OneAnswer" category="MAGICLEAP" countdown="0" resetto="0" >
+  <Question>
+     How to list client apps of nvidia chip memory on device ?
+  </Question>
+  <Answer>
+     19Wed-12:12:12 ~/bugs/SPR-3181 >mldb shell cat /sys/kernel/debug/nvmap/iovmm/clients
+     CLIENT                        PROCESS      PID        SIZE
+     user                         universe     1394     679488K
+     user                     cameraserver      407      33900K
+     user                       mediacodec      410          0K
+     user                      mediaserver      414          0K
+     user                         systemui      861     571290K
+     user                     magicflinger      843     321750K
+     total                                             1606428K
+
+  </Answer>
+</QA>
+<QA ID="487" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     How to uncompress a tar file using tar ?
+  </Question>
+  <Answer>
+     tar -xf file.tar
+  </Answer>
+</QA>
+<QA ID="488" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     How to check docs on signal 7 ?
+  </Question>
+  <Answer>
+     man 7 signal 
+  </Answer>
+</QA>
+<QA ID="489" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     Thread Programming and condition vairable example 
+  </Question>
+  <Answer>
+     // condition_variable example
+     #include &lt;iostream>           // std::cout
+     #include &lt;thread>             // std::thread
+     #include &lt;mutex>              // std::mutex, std::unique_lock
+     #include &lt;condition_variable> // std::condition_variable
+     #include &lt;unistd.h>           // for sleep(int t) function
+
+     using namespace std;
+     condition_variable cv;
+     mutex mtx;
+     void thread_func(int id){
+       cout &lt;&lt; "Non-synched access area:" &lt;&lt; id &lt;&lt; endl;
+       unique_lock&lt;mutex> lock(mtx);
+       cout &lt;&lt; "mutex synched access area 1:" &lt;&lt; id &lt;&lt; endl;
+       cv.wait(lock);
+       cout &lt;&lt; "mutext synched access area 2:" &lt;&lt; id &lt;&lt; endl;
+     }
+     void go(){
+       unique_lock&lt;mutex> lock(mtx);
+       cv.notify_all();   //notice this call also needs to be mutex-proctected
+     }
+     int main(){
+       thread threads[10];
+       for (int i=0;i&lt;10;i++)
+          threads[i]=thread(thread_func,i);
+       sleep(5);
+       cout &lt;&lt "10 threads ready to race...\n";
+       go(); 
+       for (auto&amp; th : threads) th.join();
+       return 0;
+     }
+
+     //To build, using following command:
+     g++ ytest3.cpp -o ytest3 -pthread -std=c++11
+     if using Makefile, remember the second line always starts with "\t":
+
+     main6: ytest3.o
+        g++ ytest3.o -o main6 -std=c++11 -pthread
+     ytest3.o: ytest3.cpp
+        g++ -c ytest3.cpp -o ytest3.o -pthread -std=c++11 
+
+  </Answer>
+</QA>
+<QA ID="490" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     How to search and replace in vi ?
+  </Question>
+  <Answer>
+     /searchstr                    # search for searchstr, n: next shift+n: prev
+     :s/searchstr/replacestr/      # work for current line first instance
+     :s/searchstr/replacestr/g     # work for current line multiple instances
+     :%s/searchstr/replacestr/     # work for eachline, but only first instance
+     :%s/searchstr/replacestr/g    # work for all lines and all instances
+  </Answer>
+</QA>
+<QA ID="491" type="OneAnswer" category="MAGICLEAP" countdown="0" resetto="0" >
+  <Question>
+     When you want to open a bug, where do you go ?
+  </Question>
+  <Answer>
+     issues.magicleap.com then go to issues/reported by me, or directly click "Create"
+  </Answer>
+</QA>
+<QA ID="492" type="OneAnswer" category="MAGICLEAP" countdown="0" resetto="0" >
+  <Question>
+     How to disable memory monitoring ?
+  </Question>
+  <Answer>
+     1. mldb remount
+     2. mldb shell
+     3. busybox vi /system/etc/lifecycle.conf
+     4. change the line: 
+            enable_memory_monitoring = true
+        to
+            enable_memory_monitoring = false
+  </Answer>
+</QA>
+<QA ID="493" type="OneAnswer" category="MAGICLEAP" countdown="0" resetto="0" >
+  <Question>
+     How to check memory info on the device ?
+  </Question>
+  <Answer>
+     mldb shell into the device and do:
+     cat /proc/meminfo
+  </Answer>
+</QA>
+<QA ID="494" type="OneAnswer" category="MAGICLEAP" countdown="0" resetto="0" >
+  <Question>
+     How to collect cpu, gpu running info ?
+  </Question>
+  <Answer>
+     ml_stc -l | grep cpu to get field name list info
+
+     then do
+
+     ml_stc -j [fields separated by comma]
+
+     example:
+     ml_stc -j power:cpu:PowerMW,gpustat:gpu:loadPercentage,frequency:gpu:frequencyHz,power:cpu:PowerMW,power:gpu:PowerMW,temperature:gpu:TemperatureMC
+  </Answer>
+</QA>
+<QA ID="495" type="OneAnswer" category="MAGICLEAP" countdown="0" resetto="0" >
+  <Question>
+     What is binder thread ?
+  </Question>
+  <Answer>
+     Binder thread represents a separate thread of your service process. 
+     Binder is a mechamism that provides inter process communication
+  
+     You need to run several replicas of Service for different client. Android runs 
+     these replicas in different threads of the Process and these threads are 
+     called "Binder Thread #N".
+ 
+     The Binder framework communication is a client server model. Each client 
+     initiates communication and waits for response from the server. Each client 
+     would have a proxy object for the client side communication. The server side 
+     constitutes a pool of worker threads.The server shall spawn a new thread 
+     for each new Binder request from the client. The bridge between the client 
+     and the server process is the binder driver. The Binder driver is a character 
+     device that is part of kernel space. This module  ensures the client reaches 
+     the appropriate destination across process boundaries.
+  </Answer>
+</QA>
+<QA ID="496" type="OneAnswer" category="MAGICLEAP" countdown="0" resetto="0" >
+  <Question>
+     In source code DownloadUploadservice.cpp, what is this ?
+     using android::sp;
+
+  </Question>
+  <Answer>
+     sp&lt;> is Android-specific.  sp&lt;> is Strong Pointer, wp&lt;> is Weak Pointer; 
+     they came into being as part of the Binder IPC implementation
+  </Answer>
+</QA>
+<QA ID="497" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     How to unzip multiple zip files using unzip in linux ?
+  </Question>
+  <Answer>
+     unzip *.zip does not work, it will print some message like this:
+     unzip *.zip
+     Archive:  20180920_1647-20181004T214603Z-001.zip
+     caution: filename not matched:  20180921_1519-20181004T214357Z-001.zip
+     caution: filename not matched:  20180925_1520-20181004T212326Z-001.zip
+     caution: filename not matched:  20180925_1729-20181004T212302Z-001.zip
+     caution: filename not matched:  20180928_1155-20181004T212020Z-001.zip
+     caution: filename not matched:  20181003_1651-20181004T211858Z-001.zip
+     caution: filename not matched:  20181003_1718-20181004T211823Z-001.zip
+
+     Correct way to do it is put wild card in single quote:
+        unzip '*.zip'
+  </Answer>
+</QA>
+<QA ID="498" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     What does the -H mean for grep command ?
+     like:
+        grep -H &lt;string> *
+  </Question>
+  <Answer>
+     -H, --with-filename       print the file name for each match
+  </Answer>
+</QA>
+<QA ID="499" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     How to get tree command and how to use it ?
+  </Question>
+  <Answer>
+     sudo apt-get install tree    #install it
+     tree .                       #list tree with current dir as root
+  </Answer>
+</QA>
+<QA ID="500" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     How to insert code block in gira comment ?
+  </Question>
+  <Answer>
+     {code}
+     {noformat}
+  </Answer>
+</QA>
+<QA ID="501" type="OneAnswer" category="MAGICLEAP" countdown="0" resetto="0" >
+  <Question>
+     How to change a process nice value in device ?
+  </Question>
+  <Answer>
+     mldb shell renice -n 20 $(pidof downloaduploadservice)
+
+     While the nice command lets you execute a program/process with modified 
+     scheduling priority, the renice command allows you to change the scheduling 
+     priority of an already running process. 
+     
+     default priority is 0 (range is -20 ~ 19, -20 is the highest priority) 
+  </Answer>
+</QA>
+<QA ID="502" type="OneAnswer" category="MAGICLEAP" countdown="0" resetto="0" >
+  <Question>
+     when do simpleperf profile, how to copy the symbols to where ?
+  </Question>
+  <Answer>
+     1) download the .gz files from symbols folder
+     2) unzip all the .gz files
+     3) copy the symbol files to the following location (from root of nova):
+        out/target/product/phaedra/symbols
+  </Answer>
+</QA>
+<QA ID="503" type="OneAnswer" category="MAGICLEAP" countdown="0" resetto="0" >
+  <Question>
+     How to list process nice values inside the device ?
+  </Question>
+  <Answer>
+     Use ps command with option -p -t:
+     use renice to change nice value of a running process:
+
+     > mldb shell ps -t -p | egrep "(download|NICE)"  | awk '{print $1" "$2" "$6" "$7" "$12" "$13}' | column -tx
+     USER                    PID   PRIO  NICE  NAME
+     downloadupload_service  404   39    19    S     /system/bin/downloaduploadservice
+     downloadupload_service  787   20    0     S     Binder:404_1
+     downloadupload_service  3199  39    19    R     DownloadReq
+     > mldb shell renice -n 19 -p 787
+     > mldb shell ps -t -p | egrep "(download|NICE)"  | awk '{print $1" "$2" "$6" "$7" "$12" "$13}' | column -tx
+     USER                    PID   PRIO  NICE  NAME
+     downloadupload_service  404   39    19    S     /system/bin/downloaduploadservice
+     downloadupload_service  787   39    19    S     Binder:404_1
+     downloadupload_service  3199  39    19    R     DownloadReq
+  </Answer>
+</QA>
+<QA ID="504" type="OneAnswer" category="MAGICLEAP" countdown="0" resetto="0" >
+  <Question>
+     How to collect cpu related data on device ?
+  </Question>
+  <Answer>
+     ml_stc -l | grep cpu     # list all the cpu related stat names
+     ml_stc -j [fields separated by comma]
+ 
+     example:
+     ml_stc -j power:cpu:PowerMW,gpustat:gpu:loadPercentage,frequency:gpu:frequencyHz,power:cpu:PowerMW,power:gpu:PowerMW,temperature:gpu:TemperatureMC
+  </Answer>
+</QA>
+<QA ID="505" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     When you install an mpk app, what to do about error: You are not logged to the cloud ?
+  </Question>
+  <Answer>
+     >mldb install angry-birds-fps-1.5.32900-MagicLeap.mpk
+      [100%] angry-birds-fps-1.5.32900-MagicLeap.mpk
+      error: Failed to retrieve a cloud token. Make sure that you are logged-in to the cloud.
+
+     >mldb root
+     >mldb security all off
+     >mldb install angry-birds-fps-1.5.32900-MagicLeap.mpk
+      [100%] angry-birds-fps-1.5.32900-MagicLeap.mpk
+      Successfully installed com.resolutiongames.abfps.magicleap
+  </Answer>
+</QA>
+<QA ID="506" type="OneAnswer" category="MAGICLEAP" countdown="0" resetto="0" >
+  <Question>
+     How to do meminfo on a device ?
+  </Question>
+  <Answer>
+     cat /proc/meminfo
+     procrank
+  </Answer>
+</QA>
+<QA ID="507" type="OneAnswer" category="MAGICLEAP" countdown="0" resetto="0" >
+  <Question>
+     How to commit your change and start code review on jira ?
+  </Question>
+  <Answer>
+    #switch to master
+    git checkout master
+    #show current branch
+    git branch
+    #list all the branches
+    git branch -a
+    git status
+
+    #start a new commit and review
+    git commit -a -s
+
+    git log .
+    #modify comments
+    git commit -a -s --amend           
+    #push to master
+    git push origin HEAD:refs/for/master
+
+    # it will print an url for code review, remember that
+    Counting objects: 31, done.
+    Delta compression using up to 32 threads.
+    Compressing objects: 100% (4/4), done.
+    Writing objects: 100% (4/4), 620 bytes | 0 bytes/s, done.
+    Total 4 (delta 3), reused 0 (delta 0)
+    remote: Resolving deltas: 100% (3/3)
+    remote: Processing changes: new: 1, refs: 1, done    
+    remote: 
+    remote: New Changes:
+    remote:   https://gerrit.magicleap.com/186394 SPR-3549 Make download niced
+    remote: 
+    To ssh://gerrit.magicleap.com:29418/nova/frameworks/services2/downloaduploadservice
+    * [new branch]      HEAD -> refs/for/master
+
+  </Answer>
+</QA>
+<QA ID="508" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     How to check out the manual usage of a linux command on system api call for like nice ?
+  </Question>
+  <Answer>
+     using commands: man 2 nice
+     or            : apropos nice
+  </Answer>
+</QA>
+<QA ID="509" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     In vi, how to switch between files ?
+  </Question>
+  <Answer>
+     :n to switch to next file
+     :N to switch to previous file
+    OR
+     :next for next file
+     :prev for previous file
+  </Answer>
+</QA>
+<QA ID="510" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     What is Andoroid NDK ?
+  </Question>
+  <Answer>
+     The Android NDK is a toolset that lets you implement parts of your app 
+     in native code, using languages such as C and C++. For certain types of 
+     apps, this can help you reuse code libraries written in those languages.
+
+  </Answer>
+</QA>
+<QA ID="511" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     What is JNI ?
+  </Question>
+  <Answer>
+     The Java Native Interface (JNI) is a programming framework that enables Java 
+     code running in a Java Virtual Machine (JVM) to call and be called by native 
+     applications (programs specific to a hardware and operating system platform) 
+     and libraries written in other languages such as C, C++ and assembly. 
+  </Answer>
+</QA>
+<QA ID="512" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     What is the command dconf ?
+  </Question>
+  <Answer>
+     dconf is a low-level configuration system. Its main purpose is to provide a 
+     backend to GSettings on platforms that don't already have configuration storage 
+     systems.
+
+     dconf is a simple key-based configuration system. Keys exist in an unstructured 
+     database (but it is intended that keys that logically belong together are 
+     grouped together).
+
+     Having all of the keys in a single compact binary format also avoids the intense 
+     fragmentation problems currently experienced by the tree-of-directories-of-xml-files 
+     approach.
+
+     dconf is optimised for reads. Typically, reading a key from dconf involves zero 
+     system calls and zero context switches. Writes are less optimised -- they traverse 
+     the bus and are handled by a "writer" -- a DBus service -- in the ordinary way.
+
+     There is also a gui version of the tool: dconf-editor
+  </Answer>
+</QA>
+<QA ID="513" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     How to mount a dir onto another dir so that one folder can have 2 access points ?
+  </Question>
+  <Answer>
+     sudo mount -B MountsrcPathDir MountToPahtDir
+     if MoutSrcPathDir is a block device, -B should be omited
+   
+     mount -t [type] -o [option] srcDevice dstDir
+     umount dstDir
+  </Answer>
+</QA>
+<QA ID="514" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     how to process each line in a file using shell script?
+  </Question>
+  <Answer>
+     while read line;
+     do
+       printf "==> $line "
+       file=$(basename $line)
+       path=$(dirname $line)
+       printf "$path + $file"
+       echo
+     done &lt; zipfilelist.txt
+  </Answer>
+</QA>
+<QA ID="515" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     How to show mounted filesystem in ubuntu ?
+  </Question>
+  <Answer>
+     mount | column -t
+  </Answer>
+</QA>
+<QA ID="516" type="OneAnswer" category="MAGICLEAP" countdown="0" resetto="0" >
+  <Question>
+     What is inside folder /data/mlog ?
+  </Question>
+  <Answer>
+     /data/mlog/bugreport 
+     /data/mlog/events 
+     /data/mlog/logs 
+                    /beltpack/build_info.txt
+                             /mllog_part_1
+                             /...       _2
+                             /...
+                    /nordic
+                    /nordic_crash
+                    /sec_violations
+                    /wearable
+  </Answer>
+</QA>
+<QA ID="517" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     What is thundering herd problem ?
+  </Question>
+  <Answer>
+     In computer science, the thundering herd problem occurs when a large number of processes 
+     waiting for an event are awoken when that event occurs, but only one process is able to 
+     proceed at a time. After the processes wake up, they all demand the resource and a decision 
+     must be made as to which process can continue. After the decision is made, the remaining 
+     processes are put back to sleep, only to all wake up again to request access to the resource.
+
+     This occurs repeatedly, until there are no more processes to be woken up. Because all the 
+     processes use system resources upon waking, it is more efficient if only one process is woken 
+     up at a time.
+
+     This may render the computer unusable, but it can also be used as a technique if there is no 
+     other way to decide which process should continue (for example when programming with semaphores).
+  </Answer>
+</QA>
+<QA ID="518" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     What is affinity mask ?
+  </Question>
+  <Answer>
+     An affinity mask is a bit mask indicating what processor(s) a thread or process should be run on 
+     by the scheduler of an operating system.
+  </Answer>
+</QA>
+<QA ID="519" type="OneAnswer" category="ENGLISH" countdown="0" resetto="0" >
+  <Question>
+     vegan, what does it mean ?
+  </Question>
+  <Answer>
+     Vegetarian
+  </Answer>
+</QA>
+<QA ID="520" type="OneAnswer" category="ENGLISH" countdown="0" resetto="0" >
+  <Question>
+     ramblings, what does it mean ?
+  </Question>
+  <Answer>
+     speech or writing that is meaningless. Sui2 Bi3 in Chinese
+  </Answer>
+</QA>
+<QA ID="521" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     How to change direcotry using script ?
+  </Question>
+  <Answer>
+     put cd command in an script, then run the script with a dot .:
+     . changeDirScript.sh
+  </Answer>
+</QA>
+<QA ID="522" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     Where are the applications installed in ubuntu machine ?
+  </Question>
+  <Answer>
+     Applications are usually installed at /usr/share/applications
+  </Answer>
+</QA>
+<QA ID="523" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     How to list the files inside the zipped file ?
+  </Question>
+  <Answer>
+     unzip -l zipfile.zip
+  </Answer>
+</QA>
+<QA ID="524" type="OneAnswer" category="ENGLISH" countdown="0" resetto="0" >
+  <Question>
+     Just for giggles
+  </Question>
+  <Answer>
+     It means something like "for amusement". If you do something just for 
+   shits and giggles, you're doing it without having any serious purpose 
+   in mind, you're doing it just for the fun of it.
+  </Answer>
+</QA>
+<QA ID="525" type="OneAnswer" category="ENGLISH" countdown="0" resetto="0" >
+  <Question>
+     jump on board with, what does it mean by example ?
+  </Question>
+  <Answer>
+     European and Japanese car makers are jumping on board with EV's now
+  </Answer>
+</QA>
+<QA ID="526" type="OneAnswer" category="ENGLISH" countdown="0" resetto="0" >
+  <Question>
+     clunk                        
+  </Question>
+  <Answer>
+     Men4Xiang3 men4sound
+  </Answer>
+</QA>
+<QA ID="527" type="OneAnswer" category="ENGLISH" countdown="0" resetto="0" >
+  <Question>
+     gimmicky                     
+  </Question>
+  <Answer>
+     intended to attract attention, publicity, or trade: hua1shao4
+  </Answer>
+</QA>
+<QA ID="528" type="OneAnswer" category="ENGLISH" countdown="0" resetto="0" >
+  <Question>
+     renege                       
+  </Question>
+  <Answer>
+     break promise:
+
+     The administration had reneged on its election promises.
+  </Answer>
+</QA>
+<QA ID="529" type="OneAnswer" category="ENGLISH" countdown="0" resetto="0" >
+  <Question>
+     plethora                     
+  </Question>
+  <Answer>
+     too much:
+
+     A plethora of ...                                                  
+  </Answer>
+</QA>
+<QA ID="530" type="OneAnswer" category="ENGLISH" countdown="0" resetto="0" >
+  <Question>
+     Kudos
+  </Question>
+  <Answer>
+     praise and honor received for an achievement:
+           The Projector Team Earns our First Major Kudos.
+           Kudos to everyone who ...
+  </Answer>
+</QA>
+<QA ID="531" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     How to find the maximum number of files a process can open ?
+  </Question>
+  <Answer>
+     To find limit of number of open files per process:
+
+     08Tue-16:48:07 ~ >ulimit -n
+     1024
+
+     To get help list all options: ulimit -a
+
+     To get maximum number of open files allowed:
+
+     08Tue-16:49:13 ~ >cat /proc/sys/fs/file-max
+     6568253
+
+  </Answer>
+</QA>
+<QA ID="532" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     Why is number of open files limited in Linux ?
+  </Question>
+  <Answer>
+    The reason is that the operating system needs memory to manage each open file, 
+    and memory is a limited resource - especially on embedded systems.
+
+    As root user you can change the maximum of the open files count per process (via ulimit -n) 
+    and per system 
+
+    e.g. 
+        echo 800000 > /proc/sys/fs/file-max
+  </Answer>
+</QA>
+<QA ID="533" type="OneAnswer" category="ENGLISH" countdown="0" resetto="0" >
+  <Question>
+     What is codec ?
+  </Question>
+  <Answer>
+     A codec is a device or computer program for encoding or decoding a digital data stream or signal
+     A codec encodes a data stream or a signal for transmission and storage.
+  </Answer>
+</QA>
+<QA ID="534" type="OneAnswer" category="ENGLISH" countdown="0" resetto="0" >
+  <Question>
+     backdrop
+  </Question>
+  <Answer>
+     Background, for a scene, event, or situation.
+
+     Example: The backdrop of Musk's visit was hard not to notice.
+  </Answer>
+</QA>
+<QA ID="535" type="OneAnswer" category="ENGLISH" countdown="0" resetto="0" >
+  <Question>
+     foothold
+  </Question>
+  <Answer>
+     A secuire position from which further progress maybe made
+     Example: 
+     We hope you can get a firm foothold and expand the market
+  </Answer>
+</QA>
+<QA ID="536" type="OneAnswer" category="ENGLISH" countdown="0" resetto="0" >
+  <Question>
+     Upscale
+  </Question>
+  <Answer>
+     Relatively expensive and designed to appeal to affluent consumers. GaoDang!
+     Example:
+     This makes Tesla more upscale!
+
+  </Answer>
+</QA>
+<QA ID="537" type="OneAnswer" category="ENGLISH" countdown="0" resetto="0" >
+  <Question>
+     upend
+  </Question>
+  <Answer>
+     pronounced as: "abend"
+     set on its end or upside down:
+
+     Kitty upended her purse, dumping out all her money.
+  </Answer>
+</QA>
+<QA ID="538" type="OneAnswer" category="ENGLISH" countdown="0" resetto="0" >
+  <Question>
+     venue
+  </Question>
+  <Answer>
+     the place where something happens:
+
+     The river could soon be the venue for a powerboat world championship event
+  </Answer>
+</QA>
+<QA ID="539" type="OneAnswer" category="C++" countdown="0" resetto="0" >
+  <Question>
+     What is tuple, give some usage examples.
+  </Question>
+  <Answer>
+
+     tuple is a fixed-size collection of heterogeneous values
+     (pronounced as TAple)
+
+#include &lt;tuple>
+#include &lt;iostream>
+#include &lt;string>
+#include &lt;stdexcept>
+ 
+std::tuple&lt;double, char, std::string> get_student(int id)
+{
+    if (id == 0) return std::make_tuple(3.8, 'A', "Lisa Simpson");
+    if (id == 1) return std::make_tuple(2.9, 'C', "Milhouse Van Houten");
+    if (id == 2) return std::make_tuple(1.7, 'D', "Ralph Wiggum");
+    throw std::invalid_argument("id");
+}
+ 
+int main()
+{
+    auto student0 = get_student(0);
+    std::cout &lt;&lt; "ID: 0, "
+              &lt;&lt; "GPA: " &lt;&lt; std::get&lt;0>(student0) &lt;&lt; ", "
+              &lt;&lt; "grade: " &lt;&lt; std::get&lt;1>(student0) &lt;&lt; ", "
+              &lt;&lt; "name: " &lt;&lt; std::get&lt;2>(student0) &lt;&lt; '\n';
+ 
+    double gpa1;
+    char grade1;
+    std::string name1;
+    std::tie(gpa1, grade1, name1) = get_student(1);
+    std::cout &lt;&lt; "ID: 1, "
+              &lt;&lt; "GPA: " &lt;&lt; gpa1 &lt;&lt; ", "
+              &lt;&lt; "grade: " &lt;&lt; grade1 &lt;&lt; ", "
+              &lt;&lt; "name: " &lt;&lt; name1 &lt;&lt; '\n';
+ 
+    // C++17 structured binding:
+    auto [ gpa2, grade2, name2 ] = get_student(2);
+    std::cout &lt;&lt; "ID: 2, "
+              &lt;&lt; "GPA: " &lt;&lt; gpa2 &lt;&lt; ", "
+              &lt;&lt; "grade: " &lt;&lt; grade2 &lt;&lt; ", "
+              &lt;&lt; "name: " &lt;&lt; name2 &lt;&lt; '\n';
+}
+  </Answer>
+</QA>
+<QA ID="540" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     In linux script, how to make a var local to the function ?
+  </Question>
+  <Answer>
+     use keyword local:
+
+     local arg=$1
+     
+  </Answer>
+</QA>
+<QA ID="541" type="OneAnswer" category="ENGLISH" countdown="0" resetto="0" >
+  <Question>
+     advise
+  </Question>
+  <Answer>
+     1. offer suggestions
+     2. recommend
+     3. inform about a situation in a formal or official way. Example: 
+        We will advise once this issue is fixed
+  </Answer>
+</QA>
+<QA ID="542" type="OneAnswer" category="ENGLISH" countdown="0" resetto="0" >
+  <Question>
+     amortize
+  </Question>
+  <Answer>
+     gradually write off the initial cost of (an asset) over a period.
+  </Answer>
+</QA>
+<QA ID="543" type="OneAnswer" category="ENGLISH" countdown="0" resetto="0" >
+  <Question>
+     broad-brush
+  </Question>
+  <Answer>
+     lacking in detail and subtlety [sudlti] :
+
+     They did so with an immensely broad brush 
+  </Answer>
+</QA>
+<QA ID="544" type="OneAnswer" category="ENGLISH" countdown="0" resetto="0" >
+  <Question>
+     immensely 
+  </Question>
+  <Answer>
+     to a great extent; extremely
+  </Answer>
+</QA>
+<QA ID="545" type="OneAnswer" category="ENGLISH" countdown="0" resetto="0" >
+  <Question>
+     inclement
+  </Question>
+  <Answer>
+     bad (weather)
+  </Answer>
+</QA>
+<QA ID="546" type="OneAnswer" category="ENGLISH" countdown="0" resetto="0" >
+  <Question>
+     iffy   
+  </Question>
+  <Answer>
+     full of uncertainty; doubtful.
+
+     I'm always ready to disengage if weather becomes iffy for visibility or traction.
+  </Answer>
+</QA>
+<QA ID="547" type="OneAnswer" category="ENGLISH" countdown="0" resetto="0" >
+  <Question>
+     dwindle 
+  </Question>
+  <Answer>
+     diminish gradually in size, amount, or strength.
+  </Answer>
+</QA>
+<QA ID="548" type="OneAnswer" category="ENGLISH" countdown="0" resetto="0" >
+  <Question>
+     wazoo 
+  </Question>
+  <Answer>
+     The anus.
+
+     Phrase: up the wazoo: very much; in great quantity; to a great degree:
+
+     he is insured up the wazoo.
+     And the manufacturing engineers are undoubtedly have DNAs up the wazoo.
+  </Answer>
+</QA>
+<QA ID="549" type="OneAnswer" category="ENGLISH" countdown="0" resetto="0" >
+  <Question>
+     histogram
+  </Question>
+  <Answer>
+     rectangle diagram
+  </Answer>
+</QA>
+<QA ID="550" type="OneAnswer" category="ENGLISH" countdown="0" resetto="0" >
+  <Question>
+     affliction
+  </Question>
+  <Answer>
+     pain or suffering.
+  </Answer>
+</QA>
+<QA ID="551" type="OneAnswer" category="ENGLISH" countdown="0" resetto="0" >
+  <Question>
+     Amenity
+  </Question>
+  <Answer>
+     Li3Yi2
+
+     -The pleasantness of a place or a person, niceness
+     -a desirable or useful feature
+     -facility of a building or place
+  </Answer>
+</QA>
+<QA ID="552" type="OneAnswer" category="ENGLISH" countdown="0" resetto="0" >
+  <Question>
+     long haul
+  </Question>
+  <Answer>
+     a long distance of transport or travel:
+
+     a long-haul flight.
+  </Answer>
+</QA>
+<QA ID="553" type="OneAnswer" category="ENGLISH" countdown="0" resetto="0" >
+  <Question>
+     inhibitor
+  </Question>
+  <Answer>
+     a thing which inhibits someone or something:
+
+     The inhibitor is the affordability
+
+  </Answer>
+</QA>
+<QA ID="554" type="OneAnswer" category="ENGLISH" countdown="0" resetto="0" >
+  <Question>
+     defunct
+  </Question>
+  <Answer>
+     no longer existing or functioning:
+
+     A defunct british car maker MG Rover
+  </Answer>
+</QA>
+<QA ID="555" type="OneAnswer" category="ENGLISH" countdown="0" resetto="0" >
+  <Question>
+     capex  
+  </Question>
+  <Answer>
+     capital expenditure
+  </Answer>
+</QA>
+<QA ID="556" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     Examples of double quote in comparisions in shell script:
+  </Question>
+  <Answer>
+     29Tue-17:56:32 ~/bin >echo $aa
+
+     29Tue-17:56:48 ~/bin >aa=bb
+     29Tue-17:56:52 ~/bin >echo $aa
+     bb
+     29Tue-17:56:55 ~/bin >if [ "$aa" == "bb" ]; then echo Yes; else echo No; fi
+     Yes
+     29Tue-17:57:29 ~/bin >if [ "$aa" == "" ]; then echo Yes; else echo No; fi
+     No
+     29Tue-17:57:43 ~/bin >if [ "" == "bb" ]; then echo Yes; else echo No; fi
+     No
+     29Tue-17:58:32 ~/bin >if [ -n $cc ]; then echo Yes; else echo No; fi
+     Yes
+     29Tue-17:59:29 ~/bin >if [ -n "$cc" ]; then echo Yes; else echo No; fi
+     No
+     01Fri-13:25:52 ~/bin >if [ -n "" ]; then echo Yes; else echo No; fi
+     No
+     01Fri-13:26:00 ~/bin >if [ -n " " ]; then echo Yes; else echo No; fi
+     Yes
+  </Answer>
+</QA>
+<QA ID="557" type="OneAnswer" category="ENGLISH" countdown="0" resetto="0" >
+  <Question>
+     nutty [nadi]
+  </Question>
+  <Answer>
+     peculiar; insane. [Feng1Kuang1]:
+     It is pretty nutty.
+  </Answer>
+</QA>
+<QA ID="558" type="OneAnswer" category="PYTHON" countdown="0" resetto="0" >
+  <Question>
+     What do first 2 lines of python script look like ?
+  </Question>
+  <Answer>
+     #!/usr/bin/python
+     print("Hello world")
+     print("Hello","world")
+  </Answer>
+</QA>
+<QA ID="559" type="OneAnswer" category="PYTHON" countdown="0" resetto="0" >
+  <Question>
+     Numeric Computation: division for python
+  </Question>
+  <Answer>
+     a=b/c     #no truncation, with decimal
+     c=b//c    #integer division
+  </Answer>
+</QA>
+<QA ID="560" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     How to create a filename to save to inside vi ? 
+  </Question>
+  <Answer>
+     do following inside vi:
+     :w filename
+
+     then, you have to save it to the file with the name:
+     :w
+  </Answer>
+</QA>
+<QA ID="561" type="OneAnswer" category="ENGLISH" countdown="0" resetto="0" >
+  <Question>
+     counsel
+  </Question>
+  <Answer>
+     legal adviser
+  </Answer>
+</QA>
+<QA ID="562" type="OneAnswer" category="ENGLISH" countdown="0" resetto="0" >
+  <Question>
+     How to untar a tar file to a specific directory ?
+  </Question>
+  <Answer>
+     tar -xvf articles.tar -C /tmp/my_article/
+  </Answer>
+</QA>
+<QA ID="563" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     How to compare a string to a string in var ? 
+  </Question>
+  <Answer>
+     if [ "$var" == "string" ]; then
+        echo "mmmmm"
+     fi
+     #Notice that you have to put $var in quotes !!
+  </Answer>
+</QA>
+<QA ID="564" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     What does this mean:
+     AA=`bb` 
+  </Question>
+  <Answer>
+     it means that execute command bb
+     and put the resulting string in AA
+  </Answer>
+</QA>
+<QA ID="565" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     What is toolchain ? 
+  </Question>
+  <Answer>
+      A toolchain is a set of distinct software development tools that are linked (or chained) 
+   together by specific stages such as GCC, binutils and glibc (a portion of the GNU Toolchain). 
+   Optionally, a toolchain may contain other tools such as a debugger or a compiler for a 
+   specific programming language, such as C++.
+  </Answer>
+</QA>
+<QA ID="566" type="OneAnswer" category="ENGLISH" countdown="0" resetto="0" >
+  <Question>
+     rescinding, rescind
+  </Question>
+  <Answer>
+     abolish, revoke, cancel
+  </Answer>
+</QA>
+<QA ID="567" type="OneAnswer" category="ENGLISH" countdown="0" resetto="0" >
+  <Question>
+     clash 
+  </Question>
+  <Answer>
+     conflict, collision; ring, ding, sounding.
+  </Answer>
+</QA>
+<QA ID="568" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     How to get last field from a string with delimiter of "/"
+  </Question>
+  <Answer>
+     cat pathfilelist.txt | rev | cut -d / -f 1 | rev
+  </Answer>
+</QA>
+<QA ID="569" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     How to import a file into current file, current position in vi ? 
+  </Question>
+  <Answer>
+     1. put cursor at the right insert position
+     2. type: :r filename
+  </Answer>
+</QA>
+<QA ID="570" type="OneAnswer" category="WINDOWS" countdown="0" resetto="0" >
+  <Question>
+     How to get a list of running process on windows ?
+  </Question>
+  <Answer>
+     Tasklist
+  </Answer>
+</QA>
+<QA ID="571" type="OneAnswer" category="PYTHON" countdown="0" resetto="0" >
+  <Question>
+     When a string starts with an r, what does it mean in python ?
+  </Question>
+  <Answer>
+     r means the string will be treated as raw string. From here: When an 'r' 
+     or 'R' prefix is present, a character following a backslash is included 
+     in the string without change, and all backslashes are left in the string. 
+     For example, the string literal r"\n" consists of two characters: 
+     a backslash and a lowercase 'n'.
+  </Answer>
+</QA>
+<QA ID="572" type="OneAnswer" category="ENGLISH" countdown="0" resetto="0" >
+  <Question>
+     shim ?
+  </Question>
+  <Answer>
+     a washer or thin strip  of material used to align parts, make them fit, or reduce wear
+  </Answer>
+</QA>
+<QA ID="573" type="OneAnswer" category="ENGLISH" countdown="0" resetto="0" >
+  <Question>
+     noop ?
+  </Question>
+  <Answer>
+     No operation
+  </Answer>
+</QA>
+<QA ID="574" type="OneAnswer" category="ENGLISH" countdown="0" resetto="0" >
+  <Question>
+     torment
+  </Question>
+  <Answer>
+     severe physical or mental suffering, Zhe2Mo2:
+
+     If you find a job you don't like and you are not passionate about it, every minute 
+   of going to work is a torment.
+  </Answer>
+</QA>
+<QA ID="575" type="OneAnswer" category="ENGLISH" countdown="0" resetto="0" >
+  <Question>
+     slob
+  </Question>
+  <Answer>
+     1. a person who is lazy and has low standards of cleanliness.
+     
+     People are slobs.
+
+     2. verb: behave in a lazy and slovenly way:
+     
+     He spent his life watching television and generally slobbing around
+  </Answer>
+</QA>
+<QA ID="576" type="OneAnswer" category="ENGLISH" countdown="0" resetto="0" >
+  <Question>
+     breakneck
+  </Question>
+  <Answer>
+     Dangerously or extremely fast:
+     They work at breakneck speed.
+  </Answer>
+</QA>
+<QA ID="577" type="OneAnswer" category="ENGLISH" countdown="0" resetto="0" >
+  <Question>
+     scrapped
+  </Question>
+  <Answer>
+     discard or remove from service
+  </Answer>
+</QA>
+<QA ID="578" type="OneAnswer" category="ENGLISH" countdown="0" resetto="0" >
+  <Question>
+     go ballistic
+  </Question>
+  <Answer>
+     â€” fly into a rage.
+     He will go ballistic if ...
+  </Answer>
+</QA>
+<QA ID="579" type="OneAnswer" category="ENGLISH" countdown="0" resetto="0" >
+  <Question>
+     courtyard
+  </Question>
+  <Answer>
+     an unroofed area that is completely or mostly enclosed by the walls of a large building.
+     Ting2Yuan4
+  </Answer>
+</QA>
+<QA ID="580" type="OneAnswer" category="ENGLISH" countdown="0" resetto="0" >
+  <Question>
+     flip one's lid
+  </Question>
+  <Answer>
+     To react to something with strong emotion. The reaction can be to something positive or negative.
+  </Answer>
+</QA>
+<QA ID="581" type="OneAnswer" category="ENGLISH" countdown="0" resetto="0" >
+  <Question>
+     Amenities Building
+  </Question>
+  <Answer>
+     A facility building that tenants have access to but does not belong to the part of renting. Owner manages it.
+     It is a place for pleasantness such as gym that the owner provides to the tenants as an additional benefit.
+  </Answer>
+</QA>
+<QA ID="582" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     if vi is editing multiple files, how to just close current one ?
+  </Question>
+  <Answer>
+     just do:
+       :bd
+  </Answer>
+</QA>
+<QA ID="583" type="OneAnswer" category="WINDOWS" countdown="0" resetto="0" >
+  <Question>
+     in vi, how to put # at the beginning of every line from 10 to 20 ?
+  </Question>
+  <Answer>
+     To do it, just do:
+       :10,20s/^/#/
+     To remove them, just do:
+       :10,20s/^#//
+  </Answer>
+</QA>
+<QA ID="584" type="OneAnswer" category="GIT" countdown="0" resetto="0" >
+  <Question>
+     How to list a change history for a file in git ?
+  </Question>
+  <Answer>
+     git log -- filename
+  </Answer>
+</QA>
+<QA ID="585" type="OneAnswer" category="GIT" countdown="0" resetto="0" >
+  <Question>
+     how to show last change of a file in git ?
+  </Question>
+  <Answer>
+     git log -p filename
+  </Answer>
+</QA>
+<QA ID="586" type="OneAnswer" category="GIT" countdown="0" resetto="0" >
+  <Question>
+     how to grep a string with 2 or more - in it ?
+  </Question>
+  <Answer>
+     cat test.txt | grep -e "---"
+  </Answer>
+</QA>
+<QA ID="587" type="OneAnswer" category="GIT" countdown="0" resetto="0" >
+  <Question>
+     how to I discard changes in git ?
+  </Question>
+  <Answer>
+    Unstaged local changes (before you commit)
+    1. Discard all local changes, but save them for possible re-use later:
+        git stash.
+    2. Discarding local changes (permanently) to a file: 
+        git checkout -- filename 
+    3. Discard all local changes to all files permanently:
+        git fetch origin   #may need to run this first
+        git reset --hard.     
+    To list uncommited changes:
+        git diff [--name-only]
+    To check status:
+        git status
+  </Answer>
+</QA>
+<QA ID="588" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     How to find the index of last occurance of a character in a string in awk ?
+  </Question>
+  <Answer>
+     Example:
+       echo 12:45:78 | awk '{print match($1, /:[^:]*$/)}'
+     To find the first one:
+       echo 12:45:78 | awk '{print match($1, /:.+$/)}'
+  </Answer>
+</QA>
+<QA ID="589" type="OneAnswer" category="ENGLISH" countdown="0" resetto="0" >
+  <Question>
+     Butterfingers ?
+  </Question>
+  <Answer>
+     noun: a person who regularly drops or fails to keep hold of things
+           a tendency to drop or fail to keep hold of things:
+           
+  </Answer>
+</QA>
+<QA ID="590" type="OneAnswer" category="GIT" countdown="0" resetto="0" >
+  <Question>
+     Git: checkout a single file from a specific commit ?
+  </Question>
+  <Answer>
+     git checkout &lt;COMMIT#> &lt;file>
+
+     Example:
+      git checkout f08a63ff4fa7b8479f8c698e5998ee1afcac3a4e Gemfile
+  </Answer>
+</QA>
+<QA ID="591" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     How to extract substring given an equation string like tmp="abc=def" ?
+  </Question>
+  <Answer>
+     parameter=${tmp%%=*}     # Extract name.
+     value=${tmp##*=}         # Extract value.
+  </Answer>
+</QA>
+<QA ID="592" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     How to set default value of a var in shell script?
+  </Question>
+  <Answer>
+     using ":-" like:
+     echo ${var:-default}
+  </Answer>
+</QA>
+<QA ID="593" type="OneAnswer" category="PYTHON" countdown="0" resetto="0" >
+  <Question>
+     How to process each line in a file using python?
+  </Question>
+  <Answer>
+     sample code:
+
+     #!/usr/bin/python
+     import sys
+     # Loop through each input line.
+     for line in sys.stdin.readlines():
+       # Print each line read.
+       print(line[:-1])   #remove the newline at the end
+       print(line[:-2])   #remove the newline and last char of eachline
+       print line         #add a new line at end of each line (which already have one)
+ 
+     another way of doing it is:
+   
+     while 1:
+       line = sys.stdin.readline()       # Get the line, exit if none.
+       if not line:
+           break
+       print(line[:-1])                   # Print the line read.
+     
+     Yet another way:
+
+     line=sys.stdin.readline()
+     while line:
+       print(line[:-1])
+       line=sys.stdin.readline()
+
+  </Answer>
+</QA>
+<QA ID="594" type="OneAnswer" category="GIT" countdown="0" resetto="0" >
+  <Question>
+     how to push the recent commits to remote github server ?
+  </Question>
+  <Answer>
+     "git push origin master" wont work, it has to be:
+
+     git push origin HEAD:master
+  </Answer>
+</QA>
+<QA ID="595" type="OneAnswer" category="ENGLISH" countdown="0" resetto="0" >
+  <Question>
+     Empanadas
+  </Question>
+  <Answer>
+     [empernaders]
+     [xian er bing]
+     Actually it looks more like a JiaoZi from appearance
+     A Spanish or Latin American pastry turnover filled with a variety of 
+   savory ingredients and baked or fried.
+  </Answer>
+</QA>
+<QA ID="596" type="OneAnswer" category="ENGLISH" countdown="0" resetto="0" >
+  <Question>
+     apocalypse
+  </Question>
+  <Answer>
+    [aparkerlips]
+    1.The complete final destruction of the world, as described in the 
+      biblical book of Revelation.
+    2.An event involving destruction or damage on an awesome or catastrophic scale:
+      "a stock market apocalypse"
+  </Answer>
+</QA>
+<QA ID="597" type="OneAnswer" category="ENGLISH" countdown="0" resetto="0" >
+  <Question>
+     jam 
+  </Question>
+  <Answer>
+     fruit jelly (guo3 jiang4)
+  </Answer>
+</QA>
+<QA ID="598" type="OneAnswer" category="ENGLISH" countdown="0" resetto="0" >
+  <Question>
+     savory  
+  </Question>
+  <Answer>
+     [seivery]
+     tast salty or spicy rather than sweet or bland (dan in tast)
+     antonyms:	sweet
+  </Answer>
+</QA>
+<QA ID="599" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     antonym 
+  </Question>
+  <Answer>
+     [anternerm]
+     a word opposite in meaning
+  </Answer>
+</QA>
+<QA ID="600" type="OneAnswer" category="PYTHON" countdown="0" resetto="0" >
+  <Question>
+     How to check version of matplotlib ?
+  </Question>
+  <Answer>
+     >>> import matplotlib
+     >>> print(matplotlib.__version__)
+     1.3.1
+  </Answer>
+</QA>
+<QA ID="601" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     how to set a default value for a shell variable ?
+  </Question>
+  <Answer>
+     Using ":-"
+
+     >echo ${b:-4}
+     4
+     b=2
+     >echo ${b:-4}
+     2
+  </Answer>
+</QA>
+<QA ID="602" type="OneAnswer" category="PYTHON" countdown="0" resetto="0" >
+  <Question>
+     How to test for empty string in python ?
+  </Question>
+  <Answer>
+   while True:
+     if not string:  #if string empty, exit while loop
+       break
+     print string
+  </Answer>
+</QA>
+<QA ID="603" type="OneAnswer" category="AWK" countdown="0" resetto="0" >
+  <Question>
+     how to awk lines that column 5 contains "ax" ?
+  </Question>
+  <Answer>
+     awk '$5 ~ /ax/ {print $0}' filename
+  </Answer>
+</QA>
+<QA ID="604" type="OneAnswer" category="ENGLISH" countdown="0" resetto="0" >
+  <Question>
+     Rhetorical Question
+  </Question>
+  <Answer>
+     A rhetorical question is a question someone asks without expecting an answer. 
+     The question might not have an answer, or it might have an obvious answer. 
+     ... Well, sometimes these questions are asked to punch up a point.
+  </Answer>
+</QA>
+<QA ID="605" type="OneAnswer" category="ENGLISH" countdown="0" resetto="0" >
+  <Question>
+     At this juncture (A Phrase)
+  </Question>
+  <Answer>
+     At this particular point in events or time
+  </Answer>
+</QA>
+<QA ID="606" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     How to use kill and trap ?
+  </Question>
+  <Answer>
+     In one shell script:
+       kill -15 pid   #pid of another script
+     in another shell script:
+       trap "flag=1" 15
+  </Answer>
+</QA>
+<QA ID="607" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     how to use true/false flag in shell script ?
+  </Question>
+  <Answer>
+     flag=true
+     if $flag; then
+       echo "flag is true"
+     fi
+
+     if ! $flag; then
+       echo "flag is not true"
+     fi
+
+     Note:following 5 cases will make flag above true
+     # Variable var not defined beforehand.  Case 1
+     flag=''  # Equivalent to var="".        Case 2
+     flag=    #                              Case 3
+     unset flag  #                           Case 4
+     flag='some valid command'  #            Case 5
+
+     use following instead:
+  
+     if [ "$flag" = true ]; then ...
+  </Answer>
+</QA>
+<QA ID="608" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     Code42 CrashPlan having problem connect to server
+  </Question>
+  <Answer>
+     Fix: CrashPlan service not working properly, restarting resolved it:
+       sudo service crashplan stop
+       sudo service crashplan start
+  </Answer>
+</QA>
+<QA ID="609" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     git cheat sheet
+  </Question>
+  <Answer>
+     git init
+     git status
+     git add filename
+     git commit -a
+     git log
+     git ls-tree -r branchname --name-only
+     git branch
+     git checkout branchname
+     git branch newBranchname commitIDCode
+     git checkot commitIDcode
+     git checkot commitIDcode filename  #get filename for that version/commit
+     git commit --amend
+     git reset --hard HEAD^    #remove last commit
+     git rebase -i HEAD~2
+     git push origin HEAD:refs/for/master
+     git reset HEAD~2
+     git reset 'HEAD@{2}'   #undo above
+
+       Lesss used:
+     git reflog
+
+  </Answer>
+</QA>
+<QA ID="610" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     how to just print lines that only column 2 contains a string using awk?
+  </Question>
+  <Answer>
+     cat QASheet.txt | awk '$2 ~ /62/'
+     cat QASheet.txt | awk '$2 ~ /62/{print $0}'
+  </Answer>
+</QA>
+<QA ID="611" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     What does the command dig stand for in meaning ? 
+  </Question>
+  <Answer>
+     domain information groper
+     groper means search machine, searcher
+  </Answer>
+</QA>
+<QA ID="612" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     How to remove last charater from a string using sed ?
+  </Question>
+  <Answer>
+     echo "asfd" | sed 's/.$//'
+  </Answer>
+</QA>
+<QA ID="613" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     What is the site for: https://whois.arin.net
+  </Question>
+  <Answer>
+     American Registry for Internet Number (ARIN)
+  </Answer>
+</QA>
+<QA ID="614" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     how to remove anything in a string up to the last a using sed ?
+  </Question>
+  <Answer>
+     > echo ax aaaabcd | sed 's/.*a//'
+     > bcd
+
+  </Answer>
+</QA>
+<QA ID="615" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     echo "/a/b/c/d/e" | awk -F / '{ print $(NF-1) }'
+     what does it print ?
+  </Question>
+  <Answer>
+     d
+  </Answer>
+</QA>
+<QA ID="616" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     git how to list full tree of files tracked ?    
+  </Question>
+  <Answer>
+     git ls-tree --full-tree -r --name-only HEAD   #whatever branch the HEAD is pointing to
+     git ls-tree [--full-tree] -r --name-only branchname   #without --full-tree, it will only list
+                                                             whatever are in the current folder
+     HEAD is the branch name of current branch
+     you can use (other) branch name in place of HEAD
+  </Answer>
+</QA>
+<QA ID="617" type="OneAnswer" category="GIT" countdown="0" resetto="0" >
+  <Question>
+     how to list all the commits which have deleted files, as well as the files deleted ?
+  </Question>
+  <Answer>
+     git log --diff-filter=D --summary
+  </Answer>
+</QA>
+<QA ID="618" type="OneAnswer" category="GIT" countdown="0" resetto="0" >
+  <Question>
+     How to change the commit author in git ?
+  </Question>
+  <Answer>
+     git commit --amend --author="Author Name &lt;email@address.com>"
+  </Answer>
+</QA>
+<QA ID="619" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     How to unzip a zip file into a folder not created yet ?
+  </Question>
+  <Answer>
+     using -d:
+       unzip bugGalleryCrash.zip -d bug2019-09-24_dir
+  </Answer>
+</QA>
+<QA ID="620" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     how to remove new line from windows based editor edited files ?
+  </Question>
+  <Answer>
+     cat file | sed 's/\r//'
+  </Answer>
+</QA>
+<QA ID="621" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     how to do global string replacement in a file using sed command ?
+  </Question>
+  <Answer>
+     sed -i'.origin' 's/oldstring/newstring/gi' filename
+ 
+     it will create a backup file named filename.origin
+  </Answer>
+</QA>
+<QA ID="622" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     How to switch a pair of words?
+  </Question>
+  <Answer>
+     >cat testnames.txt
+     Yali Zhu
+     Liang Guo
+     >cat testnames.txt | sed 's/\(.*\) \(.*\)/\2,\1/g'
+     Zhu,Yali
+     Guo,Liang
+
+     #Parentheses, being special characters, need to be escaped, as do the numbers 1 and 2.
+  </Answer>
+</QA>
+<QA ID="623" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     How to do conditional replacement with sed command ?
+  </Question>
+  <Answer>
+     >cat testnames.txt
+     Yali Zhu
+     Liang Guo
+     >cat testnames.txt | sed '/Zhu/ s/a/x/g'
+     Yxli Zhu
+     Liang Guo
+
+  </Answer>
+</QA>
+<QA ID="624" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     How to do 2 or more substitutes at once using sed command ?
+  </Question>
+  <Answer>
+     >cat testnames.txt
+     Yali Zhu
+     Liang Guo
+     >cat testnames.txt | sed 's/a/x/g;s/u/w/g'
+     Yxli Zhw
+     Lixng Gwo
+
+  </Answer>
+</QA>
+<QA ID="625" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     How to display a range of lines using sed command ?
+  </Question>
+  <Answer>
+     sed -n '5,10p' myfile.txt
+  </Answer>
+</QA>
+<QA ID="626" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     How to hide a range of lines using sed command ?
+  </Question>
+  <Answer>
+     sed '5,10d' myfile.txt
+  </Answer>
+</QA>
+<QA ID="627" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     How to show 2 or more ranges of lines using sed command ?
+  </Question>
+  <Answer>
+     sed -n -e '5,7p' -e '10,13p' myfile.txt
+  </Answer>
+</QA>
+<QA ID="628" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     How to do string replacement case insensitive using sed command ?
+  </Question>
+  <Answer>
+     Using gi:
+     sed 's/version/story/gi' myfile.txt
+  </Answer>
+</QA>
+<QA ID="629" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     How to remove empty lines, the lines without even spaces in it using sed command ?
+
+  </Question>
+  <Answer>
+     cat file | sed '/^$/d'
+  </Answer>
+</QA>
+<QA ID="630" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     How to do string replacement using square bracket for options using sed command ?
+  </Question>
+  <Answer>
+     >cat testnames.txt
+     Yali Zhu
+     Liang Guo
+     >cat testnames.txt | sed 's/[Gh]u/AB/g'
+     Yali ZAB
+     Liang ABo
+  </Answer>
+</QA>
+<QA ID="631" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     How to display lines that match a given pattern using sed command ?
+  </Question>
+  <Answer>
+     >cat testnames.txt
+     Yali Zhu
+     Liang Guo
+     >cat testnames.txt | sed -n '/^Ya/ p'
+     Yali Zhu
+  </Answer>
+</QA>
+<QA ID="632" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     How to change everything into uppercase using tr command ?
+  </Question>
+  <Answer>
+     >cat testnames.txt | tr [:lower:]  [:upper:]
+     YALI ZHU
+     LIANG GUO
+  </Answer>
+</QA>
+<QA ID="633" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     How to extracting a substring from a Variable ?
+  </Question>
+  <Answer>
+     ${string:position} and ${string:position:length}:
+     test1=${test:0:7}
+  </Answer>
+</QA>
+<QA ID="634" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     How to use date command to show today's date ?
+  </Question>
+  <Answer>
+    =>date +%D
+    10/07/19
+    =>date +%F
+    2019-10-07
+  </Answer>
+</QA>
+<QA ID="635" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     xxxxxxxxxxxxxxxxxxxxx
+  </Question>
+  <Answer>
+     mmmmmmmmmmmmmmmmmmmmmmmmm
+  </Answer>
+</QA>
+<QA ID="636" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     xxxxxxxxxxxxxxxxxxxxx
+  </Question>
+  <Answer>
+     mmmmmmmmmmmmmmmmmmmmmmmmm
+  </Answer>
+</QA>
+<QA ID="637" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     xxxxxxxxxxxxxxxxxxxxx
+  </Question>
+  <Answer>
+     mmmmmmmmmmmmmmmmmmmmmmmmm
+  </Answer>
+</QA>
+<QA ID="638" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     xxxxxxxxxxxxxxxxxxxxx
+  </Question>
+  <Answer>
+     mmmmmmmmmmmmmmmmmmmmmmmmm
+  </Answer>
+</QA>
+<QA ID="639" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     xxxxxxxxxxxxxxxxxxxxx
+  </Question>
+  <Answer>
+     mmmmmmmmmmmmmmmmmmmmmmmmm
+  </Answer>
+</QA>
+<QA ID="640" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     xxxxxxxxxxxxxxxxxxxxx
+  </Question>
+  <Answer>
+     mmmmmmmmmmmmmmmmmmmmmmmmm
+  </Answer>
+</QA>
+<QA ID="641" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     xxxxxxxxxxxxxxxxxxxxx
+  </Question>
+  <Answer>
+     mmmmmmmmmmmmmmmmmmmmmmmmm
+  </Answer>
+</QA>
+<QA ID="642" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     xxxxxxxxxxxxxxxxxxxxx
+  </Question>
+  <Answer>
+     mmmmmmmmmmmmmmmmmmmmmmmmm
   </Answer>
 </QA>
 </QuestionsAndAnswers>

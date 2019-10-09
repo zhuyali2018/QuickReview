@@ -396,7 +396,7 @@ void searchAndDisplayByQAs(char * word, vector<Question> questions) {
 		std::size_t found1 = it->question.find(word);
 		std::size_t found2 = it->answer.find(word);
 		
-		if ((found1 != std::string::npos)|| (found1 != std::string::npos)) {
+		if ((found1 != std::string::npos)|| (found2 != std::string::npos)) {
 			display(it);
 		}
 	}
