@@ -18,7 +18,7 @@
 using namespace tinyxml2;
 using namespace std;
 
-void searchAndDisplayByQ2Words(char * word, vector<Question> questions);
+int searchAndDisplayByQ2Words(char * word, vector<Question> questions);
 void searchAndDisplayByQuestions(char * word, vector<Question> questions);
 void searchAndDisplayByAnswers(char * word, vector<Question> questions);
 void searchAndDisplayByQAs(char * word, vector<Question> questions);
@@ -354,7 +354,7 @@ int main(int argc, const char ** argv)
 				searchAndDisplayByQAs(k + 1, questions);
 			}
 			else if (k[0] == 'c') {   //search questions with 2 key words	
-				searchAndDisplayByQ2Words(k + 1, questions);
+				qno=searchAndDisplayByQ2Words(k + 1, questions);
 			}
 		}
 		if (!reload)
@@ -387,7 +387,7 @@ void searchAndDisplayByQuestions(char * word, vector<Question> questions) {
 	}
 	cin.get();
 }
-void searchAndDisplayByQ2Words(char * word, vector<Question> questions) {
+int searchAndDisplayByQ2Words(char * word, vector<Question> questions) {
 	//search for 2 words 
    char * p = word;  //moving pointer to scan the words line
    char * rd=NULL;   //for second word
@@ -404,7 +404,7 @@ void searchAndDisplayByQ2Words(char * word, vector<Question> questions) {
    else{
       cout << endl << "   Error: did not find second word" << endl;
       cin.get();
-      return;
+      return 0;
    }
    cout << endl;
 
@@ -415,7 +415,11 @@ void searchAndDisplayByQ2Words(char * word, vector<Question> questions) {
          display(it);
       }
 	}
-	cin.get();
+   cout << "    Go to question number:";
+   char k[32] = { 0 };
+	cin.getline(k, 30);
+	int qno = atoi(k);
+   return qno;
 }
 void searchAndDisplayByAnswers(char * word, vector<Question> questions) {
 	//search using phone number and list the matched records
