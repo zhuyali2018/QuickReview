@@ -3675,7 +3675,7 @@ to be built in advance of their use. Some Boost libraries coexist as independent
 </QA>
 <QA ID="223" type="OneAnswer" category="GIT" countdown="0" resetto="0" >
   <Question>
-     How to show commit history ?
+     How to show commit history in git ?
   </Question>
   <Answer>
      git hist

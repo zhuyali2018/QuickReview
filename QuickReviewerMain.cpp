@@ -212,8 +212,8 @@ void promptAtQuestion() {
 	printf("          a<word>: search Answers \n");
 	printf("          b<word>: search both questions and answers \n");
 	printf("                l: list questions \n");
-	printf("          2<word words>: search questions with 2 separate words \n");
-	printf("                example: 2replace in vi \n");
+	printf("          c<word words>: search questions with 2 separate words \n");
+	printf("                example: creplace in vi \n");
 	printf("        p<number>: Specify the nubmer of questions per page \n");
 	printf("           q or x: Exit \n");
 	printf("       Your Input: ");
@@ -353,7 +353,7 @@ int main(int argc, const char ** argv)
 			else if (k[0] == 'b') {   //search questions and answers	
 				searchAndDisplayByQAs(k + 1, questions);
 			}
-			else if (k[0] == '2') {   //search questions with 2 key words	
+			else if (k[0] == 'c') {   //search questions with 2 key words	
 				searchAndDisplayByQ2Words(k + 1, questions);
 			}
 		}
