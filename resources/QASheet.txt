@@ -6282,7 +6282,7 @@ to be built in advance of their use. Some Boost libraries coexist as independent
   </Question>
   <Answer>
      Example:
-     To downlaod with image files
+     To download with image files
      wget -E -H -k -p  http://news.creaders.net/china/2018/03/27/1937442.html
 
      To just download html file:

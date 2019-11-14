@@ -317,7 +317,7 @@ int main(int argc, const char ** argv)
 			qno = 0;  //reset goto question No
 			system("clear");   //clear the screen of command line window
          if(category.length()==0)
-   	     printf("[Qid:%d]  Question %d/%d : \n%s\n", q.id,questionNo, total, q.question.c_str());  //print question on screen
+   	     printf("[Qid:%d, %s]  Question %d/%d : \n%s\n", q.id,q.qcategory.c_str() ,questionNo, total, q.question.c_str());  //print question on screen
          else
 			  printf("[Qid:%d, %s/%s]  Question %d/%d : \n%s\n", q.id,category.c_str(),q.qcategory.c_str() ,questionNo, total, q.question.c_str());  //print question on screen
 			cin.getline(k, 30);       //wait for input from user before showing answer
