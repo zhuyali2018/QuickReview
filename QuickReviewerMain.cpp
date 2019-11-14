@@ -21,10 +21,10 @@ using namespace std;
 
 string listCategories(vector<Question> questions); 
 int moveToNextInCategory(vector<Question> questions, string category, int questionNo);
-int searchAndDisplayByQ2Words(char * word, vector<Question> questions);
-int searchAndDisplayByQuestions(char * word, vector<Question> questions);
-int searchAndDisplayByAnswers(char * word, vector<Question> questions);
-int searchAndDisplayByQAs(char * word, vector<Question> questions);
+int searchAndDisplayByQ2Words(char * word, vector<Question> questions,string cat);
+int searchAndDisplayByQuestions(char * word, vector<Question> questions,string cat);
+int searchAndDisplayByAnswers(char * word, vector<Question> questions,string cat);
+int searchAndDisplayByQAs(char * word, vector<Question> questions,string cat);
 unsigned pagesize = 5;
 static inline void trim(std::string &s);
 // trim from start (in place)
@@ -316,7 +316,10 @@ int main(int argc, const char ** argv)
 			Question &q = questions[questionNo];
 			qno = 0;  //reset goto question No
 			system("clear");   //clear the screen of command line window
-			printf("[Qid:%d, %s]  Question %d/%d : \n%s\n", q.id,category.c_str() ,questionNo, total, q.question.c_str());  //print question on screen
+         if(category.length()==0)
+   	     printf("[Qid:%d]  Question %d/%d : \n%s\n", q.id,questionNo, total, q.question.c_str());  //print question on screen
+         else
+			  printf("[Qid:%d, %s/%s]  Question %d/%d : \n%s\n", q.id,category.c_str(),q.qcategory.c_str() ,questionNo, total, q.question.c_str());  //print question on screen
 			cin.getline(k, 30);       //wait for input from user before showing answer
 
 			printf("Answer : \n%s\n", q.answer.c_str());   //once the return is detected, all the inputs are in the k, whose size is 32 chars
@@ -350,16 +353,16 @@ int main(int argc, const char ** argv)
 					pagesize = 5;
 			}
 			else if (k[0] == 's') {   //search questions	
-				qno=searchAndDisplayByQuestions(k + 1, questions);				
+				qno=searchAndDisplayByQuestions(k + 1, questions,category);				
 			}
 			else if (k[0] == 'a') {   //search Answers
-				qno=searchAndDisplayByAnswers(k + 1, questions);
+				qno=searchAndDisplayByAnswers(k + 1, questions,category);
 			}
 			else if (k[0] == 'b') {   //search questions and answers	
-				qno=searchAndDisplayByQAs(k + 1, questions);
+				qno=searchAndDisplayByQAs(k + 1, questions,category);
 			}
 			else if (k[0] == 'c') {   //search questions with 2 key words	
-				qno=searchAndDisplayByQ2Words(k + 1, questions);
+				qno=searchAndDisplayByQ2Words(k + 1, questions,category);
 			}
 			else if (k[0] == 'C') {   //search questions with 2 key words	
 				category=listCategories(questions);
@@ -431,12 +434,19 @@ int moveToNextInCategory(vector<Question> questions, string category, int questi
     int n=questionNo+1;
     while (category.compare(questions[n].qcategory) != 0){
        n++;
+       if ( n >= questions.size())   //boundary check
+         return ++questionNo;
     }
     return n;
 }
-int searchAndDisplayByQuestions(char * word, vector<Question> questions) {
+int searchAndDisplayByQuestions(char * word, vector<Question> questions,string cat) {
 	//search using phone number and list the matched records
 	for (vector<Question>::iterator it = questions.begin(); it != questions.end(); ++it) {		
+      if (cat.length()>0){
+         if (cat.compare(it->qcategory)!=0){
+            continue;
+         }  
+      }
 		std::size_t found = it->question.find(word);
 		if (found != std::string::npos) {
 			display(it);
@@ -444,7 +454,7 @@ int searchAndDisplayByQuestions(char * word, vector<Question> questions) {
 	}
    return jump_to_question();
 }
-int searchAndDisplayByQ2Words(char * word, vector<Question> questions) {
+int searchAndDisplayByQ2Words(char * word, vector<Question> questions,string cat) {
 	//search for 2 words 
    char * p = word+1;   //moving pointer to scan the words line
    char * rd=NULL;      //for second word
@@ -466,6 +476,12 @@ int searchAndDisplayByQ2Words(char * word, vector<Question> questions) {
    cout << endl;
 
 	for (vector<Question>::iterator it = questions.begin(); it != questions.end(); ++it) {		
+      if (cat.length()>0){
+         if (cat.compare(it->qcategory)!=0){
+            continue;
+         }
+      }
+
 		std::size_t found1 = it->question.find(word);
 		std::size_t found2 = it->question.find(rd);
       if ((found1 != std::string::npos)&&(found2 != std::string::npos)) {
@@ -475,9 +491,15 @@ int searchAndDisplayByQ2Words(char * word, vector<Question> questions) {
    // here is an offer to jump directly to the interested question
    return jump_to_question();
 }
-int searchAndDisplayByAnswers(char * word, vector<Question> questions) {
+int searchAndDisplayByAnswers(char * word, vector<Question> questions,string cat) {
 	//search using phone number and list the matched records
 	for (vector<Question>::iterator it = questions.begin(); it != questions.end(); ++it) {		
+      if (cat.length()>0){
+         if (cat.compare(it->qcategory)!=0){
+            continue;
+         }
+      }
+
 		std::size_t found = it->answer.find(word);
 		if (found != std::string::npos) {
 			display(it);
@@ -485,9 +507,15 @@ int searchAndDisplayByAnswers(char * word, vector<Question> questions) {
 	}
    return jump_to_question();
 }
-int searchAndDisplayByQAs(char * word, vector<Question> questions) {
+int searchAndDisplayByQAs(char * word, vector<Question> questions,string cat) {
 	//search using phone number and list the matched records
 	for (vector<Question>::iterator it = questions.begin(); it != questions.end(); ++it) {
+      if (cat.length()>0){
+         if (cat.compare(it->qcategory)!=0){
+            continue;
+         }
+      }
+
 		std::size_t found1 = it->question.find(word);
 		std::size_t found2 = it->answer.find(word);
 		
