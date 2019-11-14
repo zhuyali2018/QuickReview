@@ -4058,15 +4058,15 @@ to be built in advance of their use. Some Boost libraries coexist as independent
 
 <QA ID="253" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
   <Question>
-     How to display the first argument of last command in linux ?
+     How to display the last argument of last command in linux ?
   </Question>
   <Answer>
     echo $_
 
     Example:
-    $ cat /etc/passwd
+    $ cat /etc/passwd trash
     $ echo $_
-    /etc/passwd 
+    trash
   </Answer>
 </QA>
 
@@ -4392,7 +4392,7 @@ to be built in advance of their use. Some Boost libraries coexist as independent
      $* : wrappedProgram 1 2 3 4 5 6 7
 
     $# : number of parameters passed in
-    $! : pid of most recently executed (maybe should be $$ ?)
+    $! : pid of most recently executed (maybe should be $$ ?($$ is pid of current shell))
   </Answer>
 </QA>
 <QA ID="274" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
@@ -5456,6 +5456,8 @@ to be built in advance of their use. Some Boost libraries coexist as independent
     Note:
         !  Start a history substitution
         $  means the last word. This is usually the last argument.
+        $_ means last word in last command that can be connected using &amp;&amp; in one line
+        but !$ means last words in last command not account for &amp;&amp; connection.
 
   </Answer>
 </QA>
@@ -5636,6 +5638,7 @@ to be built in advance of their use. Some Boost libraries coexist as independent
   <Answer>
     Use tool dos2unix to change to unix format before using the sed '/^$/d' !
     you can use tool XXD &lt;file&gt; to exam the file in binary format.
+    you can use tool od -c &lt;filename> to exam the file in ascii data format.
   </Answer>
 </QA>
 <QA ID="342" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
@@ -5723,7 +5726,7 @@ to be built in advance of their use. Some Boost libraries coexist as independent
      What is NFS ?
   </Question>
   <Answer>
-     NSF stands for Network File System, it is a distributed file system protocol originally 
+     NFS stands for Network File System, it is a distributed file system protocol originally 
      developed by Sun Microsystems in 1984, allowing a user on a client computer to access 
      files over a computer network much like local storage is accessed.
 
@@ -6910,6 +6913,12 @@ to be built in advance of their use. Some Boost libraries coexist as independent
   <Answer>
      mldb controller pairing on
      mldb controller accept
+     obselete above. should be:
+     
+     mldb controller connect $addr
+
+     To find an addres of a controler, turn on the controller and do:
+     mldb controller scan
   </Answer>
 </QA>
 <QA ID="426" type="OneAnswer" category="MAGICLEAP" countdown="0" resetto="0" >
@@ -9028,7 +9037,7 @@ int main()
 </QA>
 <QA ID="606" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
   <Question>
-     How to use kill and trap ?
+     How to use kill and trap in shell script?
   </Question>
   <Answer>
      In one shell script:
@@ -9168,7 +9177,7 @@ int main()
 </QA>
 <QA ID="617" type="OneAnswer" category="GIT" countdown="0" resetto="0" >
   <Question>
-     how to list all the commits which have deleted files, as well as the files deleted ?
+     In git, how to list all the commits which have deleted files, as well as the files deleted ?
   </Question>
   <Answer>
      git log --diff-filter=D --summary
@@ -9211,7 +9220,7 @@ int main()
 </QA>
 <QA ID="622" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
   <Question>
-     How to switch a pair of words?
+     How to switch a pair of words using sed ?
   </Question>
   <Answer>
      >cat testnames.txt
@@ -9331,7 +9340,7 @@ int main()
 </QA>
 <QA ID="633" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
   <Question>
-     How to extracting a substring from a Variable ?
+     How to extracting a substring from a variable in shell script ?
   </Question>
   <Answer>
      ${string:position} and ${string:position:length}:
@@ -9373,7 +9382,282 @@ int main()
       This will fix all existing tabs.
   </Answer>
 </QA>
-<QA ID="636" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+<QA ID="636" type="OneAnswer" category="PYTHON" countdown="0" resetto="0" >
+  <Question>
+     How to print all the files in subdirectory tree from a directory in python ?
+  </Question>
+  <Answer>
+     for root, _, files in os.walk(symfs_dir):  #all filenames in each subdirectories
+        print "root,_,files in symfs_dir==>",root,_,files 
+  </Answer>
+</QA>
+<QA ID="637" type="OneAnswer" category="PYTHON" countdown="0" resetto="0" >
+  <Question>
+     In Python, how to get full path from path and filename ?
+  </Question>
+  <Answer>
+     os.path.join(path,filename)
+  </Answer>
+</QA>
+<QA ID="638" type="OneAnswer" category="PYTHON" countdown="0" resetto="0" >
+  <Question>
+     In Python, how to do string connection ?
+  </Question>
+  <Answer>
+     string1="literal string" + string2
+  </Answer>
+</QA>
+<QA ID="639" type="OneAnswer" category="PYTHON" countdown="0" resetto="0" >
+  <Question>
+     How to create a folder in Python ?
+  </Question>
+  <Answer>
+     os.makedirs(binary_cache_dir)
+  </Answer>
+</QA>
+<QA ID="640" type="OneAnswer" category="PYTHON" countdown="0" resetto="0" >
+  <Question>
+     How to test if a file exist in Python ?
+  </Question>
+  <Answer>
+     os.path.isfile(target_file)
+  </Answer>
+</QA>
+<QA ID="641" type="OneAnswer" category="PYTHON" countdown="0" resetto="0" >
+  <Question>
+     How to get dirname from a path+file string in Python ?
+  </Question>
+  <Answer>
+     os.path.dirname(target_file)
+  </Answer>
+</QA>
+<QA ID="642" type="OneAnswer" category="PYTHON" countdown="0" resetto="0" >
+  <Question>
+     How to check if a folder exist or not in Python ?
+  </Question>
+  <Answer>
+     if not os.path.isdir(target_dir):
+        os.makedirs(target_dir)
+  </Answer>
+</QA>
+<QA ID="643" type="OneAnswer" category="PYTHON" countdown="0" resetto="0" >
+  <Question>
+     How to delete a file in Python ?
+  </Question>
+  <Answer>
+     os.remove(binary_cache_file)
+  </Answer>
+</QA>
+<QA ID="644" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     How to remove the leading spaces of each line using sed ?
+  </Question>
+  <Answer>
+     cat out1.txt | sed 's/^ *//'
+  </Answer>
+</QA>
+<QA ID="645" type="OneAnswer" category="PYTHON" countdown="0" resetto="0" >
+  <Question>
+     How to get substring from a string in Python
+  </Question>
+  <Answer>
+     string[5:]    #substring start from position 5 to the end
+  </Answer>
+</QA>
+<QA ID="646" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     How to change a date string "08-May-2019" to a time stamp in unix shell script ?
+  </Question>
+  <Answer>
+     $ date -d "08-May-2019" '+%y%m%d'
+     190508
+  </Answer>
+</QA>
+<QA ID="647" type="OneAnswer" category="AWK" countdown="0" resetto="0" >
+  <Question>
+     how to format print into a var in awk ?
+  </Question>
+  <Answer>
+     example:
+       awk '{j=sprintf("%04d", NR); print j}'
+  </Answer>
+</QA>
+<QA ID="648" type="OneAnswer" category="PYTHON" countdown="0" resetto="0" >
+  <Question>
+     How to do mulitple substitution in a string in python?
+  </Question>
+  <Answer>
+     namestr.replace('>', '&amp;gt;').replace('&lt;', '&amp;lt;')
+  </Answer>
+</QA>
+<QA ID="649" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     How to escape &amp; in xml file ?
+  </Question>
+  <Answer>
+     use &amp;amp; in place of &amp;
+  </Answer>
+</QA>
+<QA ID="650" type="OneAnswer" category="PYTHON" countdown="0" resetto="0" >
+  <Question>
+     How to write or define a funciton that return a map in python ?
+  </Question>
+  <Answer>
+    def gen_function_map(self):
+      func_map = {}
+      ...
+      func_map[func_id] = func_data
+      return func_map
+
+  </Answer>
+</QA>
+<QA ID="651" type="OneAnswer" category="PYTHON" countdown="0" resetto="0" >
+  <Question>
+     How to print a specified number of spaces in python ?
+  </Question>
+  <Answer>
+     print " "*n
+  </Answer>
+</QA>
+<QA ID="652" type="OneAnswer" category="PYTHON" countdown="0" resetto="0" >
+  <Question>
+     global object usage example in python
+  </Question>
+  <Answer>
+   #!/usr/bin/python
+   class ABC:
+     def __init__(self):
+       aa=1
+   def sub():
+     global abc
+     abc.aa=2
+   def main():
+      global abc
+      abc=ABC()
+      abc.aa=3
+      sub()
+      print "abc=",abc.aa
+
+   if __name__ == '__main__':
+      main()
+     
+  </Answer>
+</QA>
+<QA ID="653" type="OneAnswer" category="PYTHON" countdown="0" resetto="0" >
+  <Question>
+     How to print fixed width of data in python ?
+  </Question>
+  <Answer>
+     print "%4d" % self.level, var1-unrelated
+  </Answer>
+</QA>
+<QA ID="654" type="OneAnswer" category="PYTHON" countdown="0" resetto="0" >
+  <Question>
+     how to get substring in python
+  </Question>
+  <Answer>
+     format: string[start pos:length]
+     for example:
+        string[0,5]
+  </Answer>
+</QA>
+<QA ID="655" type="OneAnswer" category="PYTHON" countdown="0" resetto="0" >
+  <Question>
+     How to locate a substring in a string in python ?
+  </Question>
+  <Answer>
+     position=string.find(substr)
+     if ( position != -1):
+         print "found substr in string"
+  </Answer>
+</QA>
+<QA ID="656" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     How to set bash to vi mode ?
+  </Question>
+  <Answer>
+     set -o vi
+     to set it back:
+     set -o emacs
+  </Answer>
+</QA>
+<QA ID="657" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     What is vi basic usage ?
+  </Question>
+  <Answer>
+     :w  save file
+     :x  save and exit
+     ZZ  save and exit
+     :q  exit if not change
+     :q! exit abort changes
+     :set nu  display line numbers
+  </Answer>
+</QA>
+<QA ID="658" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     vi move keys
+  </Question>
+  <Answer>
+    h  Move left one character.
+    j  Move down one character.
+    k  Move up one character.
+    l  Move right one character.
+    w  Move forward one word.
+    b  Move to the start of the word.
+    e  Move to the end of the word.
+    (  Move back one sentence.
+    )  Move forward one sentence.
+    {  Move back one paragraph.
+    }  Move forward one paragraph.
+    ^  Move to the beginning of the line.
+    $  Move to the end of the line.
+    &lt;n>G  Move to the nth line.
+    G  Move to the last line.
+    gg  Move to the first line.
+    %  Move to the matching bracket.
+  </Answer>
+</QA>
+<QA ID="659" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     vi delete commands ?
+  </Question>
+  <Answer>
+     x      Delete a single character.
+     D      Delete the rest of the line.
+     dd     Delete the entire current line.
+     ndw    Delete the next n words.
+     ndd    Delete the next n lines.
+     :x,yd  Delete from line x through to line y
+      </Answer>
+</QA>
+<QA ID="660" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     key for Inserting mode in vi ?
+  </Question>
+  <Answer>
+    i  At the cursor.
+    a  After the cursor.
+    I  Before the current line.
+    A  After the current line.
+    o  Insert a new line after the current line.
+    O  Insert a new line before the current line.
+    C  Delete the rest of current line then enter into inserting mode
+    ESC  Exit Insert mode.
+  </Answer>
+</QA>
+<QA ID="661" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+    cut and paste commands in vi ? 
+  </Question>
+  <Answer>
+    p   Paste the clipboard contents.
+    yy  Yank (copy) a line.
+    yw  Yank a word.
+    y$  Yank to the end of the lin
+  </Answer>
+</QA>
+<QA ID="662" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
   <Question>
      xxxxxxxxxxxxxxxxxxxxx
   </Question>
@@ -9381,7 +9665,7 @@ int main()
      mmmmmmmmmmmmmmmmmmmmmmmmm
   </Answer>
 </QA>
-<QA ID="637" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+<QA ID="663" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
   <Question>
      xxxxxxxxxxxxxxxxxxxxx
   </Question>
@@ -9389,7 +9673,7 @@ int main()
      mmmmmmmmmmmmmmmmmmmmmmmmm
   </Answer>
 </QA>
-<QA ID="638" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+<QA ID="664" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
   <Question>
      xxxxxxxxxxxxxxxxxxxxx
   </Question>
@@ -9397,7 +9681,7 @@ int main()
      mmmmmmmmmmmmmmmmmmmmmmmmm
   </Answer>
 </QA>
-<QA ID="639" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+<QA ID="665" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
   <Question>
      xxxxxxxxxxxxxxxxxxxxx
   </Question>
@@ -9405,7 +9689,7 @@ int main()
      mmmmmmmmmmmmmmmmmmmmmmmmm
   </Answer>
 </QA>
-<QA ID="640" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+<QA ID="666" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
   <Question>
      xxxxxxxxxxxxxxxxxxxxx
   </Question>
@@ -9413,7 +9697,7 @@ int main()
      mmmmmmmmmmmmmmmmmmmmmmmmm
   </Answer>
 </QA>
-<QA ID="641" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+<QA ID="667" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
   <Question>
      xxxxxxxxxxxxxxxxxxxxx
   </Question>
@@ -9421,7 +9705,23 @@ int main()
      mmmmmmmmmmmmmmmmmmmmmmmmm
   </Answer>
 </QA>
-<QA ID="642" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+<QA ID="668" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     xxxxxxxxxxxxxxxxxxxxx
+  </Question>
+  <Answer>
+     mmmmmmmmmmmmmmmmmmmmmmmmm
+  </Answer>
+</QA>
+<QA ID="669" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     xxxxxxxxxxxxxxxxxxxxx
+  </Question>
+  <Answer>
+     mmmmmmmmmmmmmmmmmmmmmmmmm
+  </Answer>
+</QA>
+<QA ID="670" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
   <Question>
      xxxxxxxxxxxxxxxxxxxxx
   </Question>

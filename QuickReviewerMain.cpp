@@ -119,7 +119,7 @@ vector<Question> GetAllQuestions(XMLElement * parent, XMLElement * parent1) {
 		}
 		Question q(id, qtype, category, countdown, resetto, question, answer);
 		q.Qc = QA;   //save pointer to QA in order to be able to set resetto
-        //now q is properly constructed, ready to be inserted in tovector 
+        //now q is properly constructed, ready to be inserted into vector 
 		if (countdown == 0) {
 			if (!firstTimeHide)
 			    Qs.push_back(q);
@@ -130,7 +130,7 @@ vector<Question> GetAllQuestions(XMLElement * parent, XMLElement * parent1) {
 				QA->SetAttribute("countdown", countdown);     //if just decrease to 0 and reset was just reset to 0
 			}
 		}
-		else {  //if countdown is not 0 yest, not added for showing
+		else {  //if countdown is not 0 yet, not added for showing
 			QA->SetAttribute("countdown", countdown);
 		}
 
@@ -181,7 +181,7 @@ vector<Question> GetAllQuestions(XMLElement * parent) {
 		}
 		Question q(id, qtype, category, countdown, resetto, question, answer);
 		q.Qc = QA;   //save pointer to QA in order to be able to set resetto
-					 //now q is properly constructed, ready to be inserted in tovector 
+					 //now q is properly constructed, ready to be inserted into vector 
 		if (countdown == 0) {
 			if (!firstTimeHide)
 				Qs.push_back(q);
@@ -192,7 +192,7 @@ vector<Question> GetAllQuestions(XMLElement * parent) {
 				QA->SetAttribute("countdown", countdown);     //if just decrease to 0 and reset was just reset to 0
 			}
 		}
-		else {  //if countdown is not 0 yest, not added for showing
+		else {  //if countdown is not 0 yet, not added for showing
 			QA->SetAttribute("countdown", countdown);
 		}
 
@@ -232,13 +232,13 @@ int main(int argc, const char ** argv)
 	   doc = new XMLDocument();          //in tinyxml2 namespace
 	   XMLDocument* docCfg = nullptr;    //For Doc Question Settings only
 
-		if (argc == 1) {
+		if (argc == 1) {    // in case of no arguments passed in, look in current dir for NewSavedXMLFile.xml first, QASheet.txt second
 			cout << "\n Usage: " << argv[0] << " <questionDataFile> [oldQuestionDataFile]" << endl;
 			cout << "\n Note: oldQuestionDataFile for question rotation settings only" << endl << endl;
 			//return -1;
 			doc->LoadFile(newPath.c_str());
 			if (doc->ErrorID()) {
-				if (doc->ErrorID() == XML_ERROR_FILE_NOT_FOUND)
+				if (doc->ErrorID() == XML_ERROR_FILE_NOT_FOUND)     //It means to look for NewSavedXMLFile.xml file first, if not found, try QASheet.txt second on current dir
 					doc->LoadFile("QASheet.txt");
 				if (!doc->ErrorID()) {
 					printf("XML file QASheet.txt loaded and parsed successfully\n\n");
@@ -251,22 +251,22 @@ int main(int argc, const char ** argv)
 				printf("XML file '%s' loaded and parsed successfully\n\n", newPath.c_str());
 			}
 		}
-		else {
-			doc->LoadFile(argv[1]);
+		else {  // if one or more argements passed in
+			doc->LoadFile(argv[1]);  //load the first file from first argument
 			if (!doc->ErrorID()) {
 				printf("XML file '%s' loaded and parsed succesfully\n\n", argv[1]);
 				//loading config file
-				if (argc == 3) {   //only when the first file loaded successfully
+				if (argc == 3) {   //only when the first file loaded successfully //if there is a second argument, which means config file for each questions
 					docCfg = new XMLDocument();       //For Doc Question Settings only
-					docCfg->LoadFile(argv[2]);
+					docCfg->LoadFile(argv[2]);        // load it 
 					int errorID = docCfg->ErrorID();
-					if (errorID) {
+					if (errorID) {              
 						printf("XML file %s loading or parsing failed: \n"
 							"              Error   ID: %d\n"
 							"              Error  Msg: %s\n"
 							"              Error Line: %d\n", argv[3], errorID, doc->ErrorName() + 4, doc->ErrorLineNum());
 					}
-					else {
+					else { // if config file loaded succesfully
 						printf("Question config file '%s' loaded and parsed succesfully\n\n", argv[2]);
 						applyConfigfile = true;   //set the configfile flag
 					}
@@ -283,25 +283,25 @@ int main(int argc, const char ** argv)
 			//cin.get();
 			exit(0);
 		}
-
+      //everything loaded, now start
 		cin.get();    //press Enter to start
 		//-----------------------------------------------------------------------------
 		const char * name = "QuestionsAndAnswers";
-		XMLElement* root = doc->FirstChildElement(name);
+		XMLElement* root = doc->FirstChildElement(name);   //get the root object
 		XMLElement* root1 = nullptr;  //for configfile
-		vector<Question> questions;
+		vector<Question> questions;                        //set up a vector for all the question objects 
 
-		if (applyConfigfile) {
-			root1 = docCfg->FirstChildElement(name);
-			questions = GetAllQuestions(root, root1);
+		if (applyConfigfile) {  // true if a second file passed in as a settings file                        
+			root1 = docCfg->FirstChildElement(name);        //get the root for settings
+			questions = GetAllQuestions(root, root1);       //load questions in to the vector
 		}
 		else {
-			questions = GetAllQuestions(root);
+			questions = GetAllQuestions(root);              //load questions in to the vector 
 		}
 		//cin.get();
 		//loop through each questions
 		char k[32] = { 0 };
-		int questionNo = 1;
+		int questionNo = 1;    //as an index to vector questions
 		unsigned qno = 0;
 		int total = questions.size();
 		//for (Question q : questions) {
@@ -311,29 +311,29 @@ int main(int argc, const char ** argv)
 			Question &q = questions[questionNo];
 			qno = 0;  //reset goto question No
 			system("clear");   //clear the screen of command line window
-			printf("[Qid:%d]  Question %d/%d : \n%s\n", q.id, questionNo++, total, q.question.c_str());
-			cin.getline(k, 30);       //wait before show answer
+			printf("[Qid:%d]  Question %d/%d : \n%s\n", q.id, questionNo++, total, q.question.c_str());  //print question on screen
+			cin.getline(k, 30);       //wait for input from user before showing answer
 
-			printf("Answer : \n%s\n", q.answer.c_str());
-			promptAtQuestion();    //show options to exit or job to another questions
+			printf("Answer : \n%s\n", q.answer.c_str());   //once the return is detected, all the inputs are in the k, whose size is 32 chars
+			promptAtQuestion();    //show options to exit or jump to another questions
 
-			cin.getline(k, 30);
-			qno = atoi(k);
-			if ((k[0] == 'x') || (k[0] == 'q'))   //out of loop to exit
-				break;
-			else if (k[0] == 'r') {               //skip specified number of rounds, rarely used feature
-				if (k[1] == 0)
-					q.Qc->SetAttribute("resetto", 3);
+			cin.getline(k, 30);    //set to take command from user for next action
+			qno = atoi(k);         //if command is a number, assuming it is a question number to jump to next
+			if ((k[0] == 'x') || (k[0] == 'q'))   //out of loop to exit, if command is x or q, it is exit command
+				break;                             //break the loop to exit
+			else if (k[0] == 'r') {               //r command for skipping specified number of rounds, rarely used feature
+				if (k[1] == 0)                     //if the number following r command is 0
+					q.Qc->SetAttribute("resetto", 3);  //set it to 3 as default
 				else {
-					char *p = &k[1];
-					int n = atoi(p);
+					char *p = &k[1];                //if the number following r is not 0
+					int n = atoi(p);                //get that number in n
 					if (n > 0 && n < 999)           //range is up to 999
-						q.Qc->SetAttribute("resetto", n);
+						q.Qc->SetAttribute("resetto", n);   //set the n in resetto setting
 				}
 			}
-			else if (k[0] == 'R') {   //reload 
+			else if (k[0] == 'R') {   //reload command 
 				delete doc;
-				reload = true;
+				reload = true;         //set reload flag
 				break;
 			}
 			else if (k[0] == 'l') {   //list all questions				
@@ -341,7 +341,7 @@ int main(int argc, const char ** argv)
 			}
 			else if (k[0] == 'p') {   //list all questions by page, size is set here
 				pagesize = atoi(k + 1);
-				if (pagesize < 5)
+				if (pagesize < 5)      //min page size is 5 that can be set
 					pagesize = 5;
 			}
 			else if (k[0] == 's') {   //search questions	
@@ -361,7 +361,7 @@ int main(int argc, const char ** argv)
 			break;
 	}
 	
-	doc->SaveFile(newPath.c_str());
+	doc->SaveFile(newPath.c_str());   //save the file with questions and their new settings to NewSavedXMLFile.xml
 	int errorID = doc->ErrorID();
 	if (errorID) {
 		printf("\nXML file '%s' Save failed: ErrorID=%d\n", argv[1], errorID);		
@@ -389,17 +389,17 @@ void searchAndDisplayByQuestions(char * word, vector<Question> questions) {
 }
 int searchAndDisplayByQ2Words(char * word, vector<Question> questions) {
 	//search for 2 words 
-   char * p = word;  //moving pointer to scan the words line
-   char * rd=NULL;   //for second word
-   while (*p!=0){
-      if ( *p == ' '){
+   char * p = word+1;   //moving pointer to scan the words line
+   char * rd=NULL;      //for second word
+   while (*p!=0){       // loop until 0 is encountered
+      if ( *p == ' '){  // if space is found, it marks the beginning of second word to search for 
           *p=0;
-          rd=p+1;
-          break;
+          rd=p+1;       // rd is not pointing to beginning of second words
+          break;        // once begining of second word is located, end of this task
       }
       p++;
    }
-   if (rd != NULL && *rd !=0)
+   if (rd != NULL && *rd !=0)   //with second word pointer not null and not an empty string, move on to search for them
       cout << endl << right << setw(4) << "       2 words used :" << word << " 2rd: " << rd << endl;
    else{
       cout << endl << "   Error: did not find second word" << endl;
@@ -415,6 +415,7 @@ int searchAndDisplayByQ2Words(char * word, vector<Question> questions) {
          display(it);
       }
 	}
+   // here is an offer to jump directly to the interested question
    cout << "    Go to question number:";
    char k[32] = { 0 };
 	cin.getline(k, 30);
