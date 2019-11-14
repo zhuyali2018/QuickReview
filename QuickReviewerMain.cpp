@@ -19,9 +19,9 @@ using namespace tinyxml2;
 using namespace std;
 
 int searchAndDisplayByQ2Words(char * word, vector<Question> questions);
-void searchAndDisplayByQuestions(char * word, vector<Question> questions);
-void searchAndDisplayByAnswers(char * word, vector<Question> questions);
-void searchAndDisplayByQAs(char * word, vector<Question> questions);
+int searchAndDisplayByQuestions(char * word, vector<Question> questions);
+int searchAndDisplayByAnswers(char * word, vector<Question> questions);
+int searchAndDisplayByQAs(char * word, vector<Question> questions);
 unsigned pagesize = 5;
 static inline void trim(std::string &s);
 // trim from start (in place)
@@ -224,7 +224,7 @@ int main(int argc, const char ** argv)
 {
 	bool applyConfigfile = false;
 	string newPath = "NewSavedXMLFile.xml";
-	cout << "\n Quick Reviewer version 3.8" << endl << endl;
+	cout << "\n Quick Reviewer version 3.9" << endl << endl;
 	bool reload = true;
 	XMLDocument* doc = nullptr;
 	while (reload) {
@@ -345,13 +345,13 @@ int main(int argc, const char ** argv)
 					pagesize = 5;
 			}
 			else if (k[0] == 's') {   //search questions	
-				searchAndDisplayByQuestions(k + 1, questions);				
+				qno=searchAndDisplayByQuestions(k + 1, questions);				
 			}
 			else if (k[0] == 'a') {   //search Answers
-				searchAndDisplayByAnswers(k + 1, questions);
+				qno=searchAndDisplayByAnswers(k + 1, questions);
 			}
 			else if (k[0] == 'b') {   //search questions and answers	
-				searchAndDisplayByQAs(k + 1, questions);
+				qno=searchAndDisplayByQAs(k + 1, questions);
 			}
 			else if (k[0] == 'c') {   //search questions with 2 key words	
 				qno=searchAndDisplayByQ2Words(k + 1, questions);
@@ -377,7 +377,14 @@ void display(vector<Question>::iterator it) {
 	cout << right << setw(4) << it->id << " " << question.c_str() ;
 	cout << endl;
 }
-void searchAndDisplayByQuestions(char * word, vector<Question> questions) {
+int jump_to_question(){
+   cout << "    Go to question number:";
+   char k[32] = { 0 };
+   cin.getline(k, 30);
+   int qno = atoi(k);
+   return qno;
+}
+int searchAndDisplayByQuestions(char * word, vector<Question> questions) {
 	//search using phone number and list the matched records
 	for (vector<Question>::iterator it = questions.begin(); it != questions.end(); ++it) {		
 		std::size_t found = it->question.find(word);
@@ -385,7 +392,7 @@ void searchAndDisplayByQuestions(char * word, vector<Question> questions) {
 			display(it);
 		}
 	}
-	cin.get();
+   return jump_to_question();
 }
 int searchAndDisplayByQ2Words(char * word, vector<Question> questions) {
 	//search for 2 words 
@@ -416,13 +423,9 @@ int searchAndDisplayByQ2Words(char * word, vector<Question> questions) {
       }
 	}
    // here is an offer to jump directly to the interested question
-   cout << "    Go to question number:";
-   char k[32] = { 0 };
-	cin.getline(k, 30);
-	int qno = atoi(k);
-   return qno;
+   return jump_to_question();
 }
-void searchAndDisplayByAnswers(char * word, vector<Question> questions) {
+int searchAndDisplayByAnswers(char * word, vector<Question> questions) {
 	//search using phone number and list the matched records
 	for (vector<Question>::iterator it = questions.begin(); it != questions.end(); ++it) {		
 		std::size_t found = it->answer.find(word);
@@ -430,9 +433,9 @@ void searchAndDisplayByAnswers(char * word, vector<Question> questions) {
 			display(it);
 		}
 	}
-	cin.get();
+   return jump_to_question();
 }
-void searchAndDisplayByQAs(char * word, vector<Question> questions) {
+int searchAndDisplayByQAs(char * word, vector<Question> questions) {
 	//search using phone number and list the matched records
 	for (vector<Question>::iterator it = questions.begin(); it != questions.end(); ++it) {
 		std::size_t found1 = it->question.find(word);
@@ -442,7 +445,7 @@ void searchAndDisplayByQAs(char * word, vector<Question> questions) {
 			display(it);
 		}
 	}
-	cin.get();
+   return jump_to_question();
 }
 void browse(vector<Question> questions) {
 	//search using phone number and list the matched records
