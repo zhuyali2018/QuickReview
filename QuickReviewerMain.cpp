@@ -11,6 +11,7 @@
 #include <iomanip>
 #include <algorithm>
 #include <array>
+#include <set>
 
 #include "Question.h"
 #include "QuSetting.h"
@@ -18,6 +19,8 @@
 using namespace tinyxml2;
 using namespace std;
 
+string listCategories(vector<Question> questions); 
+int moveToNextInCategory(vector<Question> questions, string category, int questionNo);
 int searchAndDisplayByQ2Words(char * word, vector<Question> questions);
 int searchAndDisplayByQuestions(char * word, vector<Question> questions);
 int searchAndDisplayByAnswers(char * word, vector<Question> questions);
@@ -215,6 +218,7 @@ void promptAtQuestion() {
 	printf("          c<word words>: search questions with 2 separate words \n");
 	printf("                example: creplace in vi \n");
 	printf("        p<number>: Specify the nubmer of questions per page \n");
+	printf("                C: list available categories \n");
 	printf("           q or x: Exit \n");
 	printf("       Your Input: ");
 }
@@ -304,14 +308,15 @@ int main(int argc, const char ** argv)
 		int questionNo = 1;    //as an index to vector questions
 		unsigned qno = 0;
 		int total = questions.size();
+      string category;
 		//for (Question q : questions) {
 		while (true) {
 			if ((qno > 0) && (qno < questions.size()))
-				questionNo = qno;
+				questionNo = qno;   //if qno is 0, go with questionNo, which increases itself by 1 for each loop
 			Question &q = questions[questionNo];
 			qno = 0;  //reset goto question No
 			system("clear");   //clear the screen of command line window
-			printf("[Qid:%d]  Question %d/%d : \n%s\n", q.id, questionNo++, total, q.question.c_str());  //print question on screen
+			printf("[Qid:%d, %s]  Question %d/%d : \n%s\n", q.id,category.c_str() ,questionNo, total, q.question.c_str());  //print question on screen
 			cin.getline(k, 30);       //wait for input from user before showing answer
 
 			printf("Answer : \n%s\n", q.answer.c_str());   //once the return is detected, all the inputs are in the k, whose size is 32 chars
@@ -356,6 +361,12 @@ int main(int argc, const char ** argv)
 			else if (k[0] == 'c') {   //search questions with 2 key words	
 				qno=searchAndDisplayByQ2Words(k + 1, questions);
 			}
+			else if (k[0] == 'C') {   //search questions with 2 key words	
+				category=listCategories(questions);
+            qno=moveToNextInCategory(questions,category,questionNo);
+			}else if (qno == 0 ){     //qno is 0 means nothing input from user, go to next question
+            qno=moveToNextInCategory(questions,category,questionNo);
+         }
 		}
 		if (!reload)
 			break;
@@ -383,6 +394,45 @@ int jump_to_question(){
    cin.getline(k, 30);
    int qno = atoi(k);
    return qno;
+}
+string listCategories(vector<Question> questions) {
+   system("clear");
+   set<string> catset;
+   for (vector<Question>::iterator it = questions.begin(); it != questions.end(); ++it) {
+      catset.insert(it->qcategory);
+   }
+   printf("Pick A Category:\n");
+   vector<string> cat;
+   for (set<string>::iterator it=catset.begin(); it != catset.end(); ++it){
+       cat.push_back(*it);       
+   }
+   int n=0;
+   for (vector<string>::iterator it = cat.begin(); it != cat.end(); ++it) {
+       cout << ++n << ": " << cat[n] << endl;
+   }
+   printf("Your selection is: ");
+   char k[32] = { 0 };
+   cin.getline(k, 30);
+   int qno = atoi(k);
+   if (( qno != 0 ) && ( qno <= cat.size())){
+     printf("You have picked the category %d, which is %s\n",qno,cat[qno-1].c_str());
+     cin.get();
+     return cat[qno-1];
+   }else
+     printf("You have picked invalid option:%d\n",qno);
+
+   cin.get();
+   return "";
+}
+int moveToNextInCategory(vector<Question> questions, string category, int questionNo){
+    //printf("Question No:%d\n",questionNo+1);
+    if (category.length()==0)
+       return ++questionNo;
+    int n=questionNo+1;
+    while (category.compare(questions[n].qcategory) != 0){
+       n++;
+    }
+    return n;
 }
 int searchAndDisplayByQuestions(char * word, vector<Question> questions) {
 	//search using phone number and list the matched records
