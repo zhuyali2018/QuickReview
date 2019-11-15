@@ -6335,7 +6335,7 @@ to be built in advance of their use. Some Boost libraries coexist as independent
      if [ "${branch}" = "" ]; then ...   #should use == instead ?
   </Answer>
 </QA>
-<QA ID="383" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+<QA ID="383" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
   <Question>
      How to do math in shell script ?
   </Question>
@@ -7103,6 +7103,8 @@ to be built in advance of their use. Some Boost libraries coexist as independent
      eog filename
 
      eog means Eye Of Gnome
+     
+     gnome is an acronym for GNU Network Object Model Environment
   </Answer>
 </QA>
 <QA ID="442" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >

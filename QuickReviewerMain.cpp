@@ -19,6 +19,7 @@
 using namespace tinyxml2;
 using namespace std;
 
+void createTest(vector<Question> questions, string cat,int noq);
 string listCategories(vector<Question> questions); 
 int moveToNextInCategory(vector<Question> questions, string category, int questionNo);
 int searchAndDisplayByQ2Words(char * word, vector<Question> questions,string cat);
@@ -219,6 +220,7 @@ void promptAtQuestion() {
 	printf("                example: creplace in vi \n");
 	printf("        p<number>: Specify the nubmer of questions per page \n");
 	printf("                C: list and specify categories \n");
+	printf("                t: create a test for current category \n");
 	printf("           q or x: Exit \n");
 	printf("       Your Input: ");
 }
@@ -364,6 +366,11 @@ int main(int argc, const char ** argv)
 			else if (k[0] == 'c') {   //search questions with 2 key words	
 				qno=searchAndDisplayByQ2Words(k + 1, questions,category);
 			}
+			else if (k[0] == 't') {   //create test questions for current category	
+            int numberOfQuestions=atoi(k + 1);
+            printf("number of questions to create: %d\n",numberOfQuestions);
+            createTest(questions,category,numberOfQuestions);
+			}
 			else if (k[0] == 'C') {   //search questions with 2 key words	
 				category=listCategories(questions);
             qno=moveToNextInCategory(questions,category,questionNo);
@@ -385,6 +392,51 @@ int main(int argc, const char ** argv)
 	return 0;
 }
 
+int getRandom(int sz){
+  long x = std::rand();
+  return sz*x/RAND_MAX;
+}
+
+void createTest(vector<Question> questions,string cat,int noq){
+   printf("Creating a test for category: %s\n",cat.c_str());
+   std::srand(std::time(nullptr));
+   vector<Question *>  TestQ;
+   int n=0;
+   int qn=0;    //count questions created 
+   while(n<questions.size()){
+      if ((cat.length()==0) || (cat.compare(questions[n].qcategory) == 0)){
+        TestQ.push_back(&questions[n]);
+        qn++;
+      }
+      n++;
+   }
+   printf("Found %d out of %d questions as a source lib for test question creation\n",qn,n);
+   n=0;
+   int local_noq=(noq>TestQ.size())?TestQ.size():noq;
+   vector<int> qids;   //vector of question ids
+   while(n<local_noq){
+      int q_index=getRandom(TestQ.size());
+      trim(TestQ[q_index]->question);
+      printf("Question %d: %s\n  Answer:\n",n+1,TestQ[q_index]->question.c_str()); 
+      qids.push_back(TestQ[q_index]->id);
+      TestQ.erase(TestQ.begin()+q_index);    
+      n++;
+   }
+   printf("\nQuestions and answers:\n");
+   n=0;
+   while(n<questions.size()){
+      int id=questions[n].id;
+      for (vector<int>::iterator it = qids.begin(); it != qids.end(); ++it) {
+         if(id==*it){
+            trim(questions[n].answer);
+            printf("[%s][%d]Question: %s\n   Answer:%s\n",questions[n].qcategory.c_str(),questions[n].id,questions[n].question.c_str(),questions[n].answer.c_str());  
+            break;
+         }
+      }
+      n++;
+   }
+   cin.get();
+}
 void display(vector<Question>::iterator it) {
 	string question = it->question;
 	trim(question);
