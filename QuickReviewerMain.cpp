@@ -218,7 +218,7 @@ void promptAtQuestion() {
 	printf("          c<word words>: search questions with 2 separate words \n");
 	printf("                example: creplace in vi \n");
 	printf("        p<number>: Specify the nubmer of questions per page \n");
-	printf("                C: list available categories \n");
+	printf("                C: list and specify categories \n");
 	printf("           q or x: Exit \n");
 	printf("       Your Input: ");
 }
