@@ -411,7 +411,8 @@ string listCategories(vector<Question> questions) {
    }
    int n=0;
    for (vector<string>::iterator it = cat.begin(); it != cat.end(); ++it) {
-       cout << ++n << ": " << cat[n] << endl;
+       cout << n << ": " << cat[n] << endl;
+       n++;
    }
    printf("Your selection is: ");
    char k[32] = { 0 };
