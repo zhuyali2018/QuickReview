@@ -80,12 +80,14 @@ vector<Question> GetAllQuestions(XMLElement * parent, XMLElement * parent1) {
 		int id;
 		const char *qtype;
 		const char *category;
+                const char *source;
 		int countdown;
 		int resetto;
 		bool firstTimeHide = false;   //first time to hide this question, when resetto >0 and countdown is 0
 		QA->QueryIntAttribute("ID", &id);
 		QA->QueryStringAttribute("type", &qtype);
 		QA->QueryStringAttribute("category", &category);
+		QA->QueryStringAttribute("source", &source);
 		QA->QueryIntAttribute("countdown", &countdown);
 		QA->QueryIntAttribute("resetto", &resetto);
 
@@ -121,7 +123,7 @@ vector<Question> GetAllQuestions(XMLElement * parent, XMLElement * parent1) {
 				answer = answerElement->GetText();
 			}
 		}
-		Question q(id, qtype, category, countdown, resetto, question, answer);
+		Question q(id, qtype, category, countdown, resetto, source, question, answer);
 		q.Qc = QA;   //save pointer to QA in order to be able to set resetto
         //now q is properly constructed, ready to be inserted into vector 
 		if (countdown == 0) {
@@ -155,12 +157,14 @@ vector<Question> GetAllQuestions(XMLElement * parent) {
 		int id;
 		const char *qtype;
 		const char *category;
+		const char *source;
 		int countdown;
 		int resetto;
 		bool firstTimeHide = false;   //first time to hide this question, when resetto >0 and countdown is 0
 		QA->QueryIntAttribute("ID", &id);
 		QA->QueryStringAttribute("type", &qtype);
 		QA->QueryStringAttribute("category", &category);
+		QA->QueryStringAttribute("source", &source);
 		QA->QueryIntAttribute("countdown", &countdown);
 		QA->QueryIntAttribute("resetto", &resetto);
 		if (countdown > 0) {
@@ -184,7 +188,7 @@ vector<Question> GetAllQuestions(XMLElement * parent) {
 				answer = answerElement->GetText();
 			}
 		}
-		Question q(id, qtype, category, countdown, resetto, question, answer);
+		Question q(id, qtype, category, countdown, resetto, source ,question, answer);
 		q.Qc = QA;   //save pointer to QA in order to be able to set resetto
 					 //now q is properly constructed, ready to be inserted into vector 
 		if (countdown == 0) {
@@ -321,9 +325,9 @@ int main(int argc, const char ** argv)
 			qno = 0;  //reset goto question No
 			system("clear");   //clear the screen of command line window
          if(category.length()==0)
-   	     printf("[Qid:%d, %s]  Question %d/%d : \n%s\n", q.id,q.qcategory.c_str() ,questionNo, total, q.question.c_str());  //print question on screen
+   	     printf("[Qid:%d, %s, %s]  Question %d/%d   : \n%s\n", q.id,q.qcategory.c_str() ,q.qsource.c_str() ,questionNo, total, q.question.c_str());  //print question on screen
          else
-			  printf("[Qid:%d, %s/%s]  Question %d/%d : \n%s\n", q.id,category.c_str(),q.qcategory.c_str() ,questionNo, total, q.question.c_str());  //print question on screen
+			  printf("[Qid:%d, %s/%s, %s]  Question %d/%d   : \n%s\n", q.id,category.c_str(),q.qcategory.c_str(),q.qsource.c_str() ,questionNo, total, q.question.c_str());  //print question on screen
 			cin.getline(k, 30);       //wait for input from user before showing answer
 
 			printf("Answer : \n%s\n", q.answer.c_str());   //once the return is detected, all the inputs are in the k, whose size is 32 chars
@@ -483,7 +487,8 @@ string listCategories(vector<Question> questions) {
    }
    int n=0;
    for (vector<string>::iterator it = cat.begin(); it != cat.end(); ++it) {
-       cout << ++n << ": " << cat[n] << endl;
+       cout << n << ": " << cat[n] << endl;
+       n++;
    }
    printf("Your selection is: ");
    char k[32] = { 0 };
