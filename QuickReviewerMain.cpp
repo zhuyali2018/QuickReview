@@ -129,6 +129,7 @@ vector<Question> GetAllQuestions(XMLElement * parent, XMLElement * parent1) {
 			    Qs.push_back(q);
 			if (resetto > 0) {
 				QA->SetAttribute("countdown", resetto);
+				QA->SetAttribute("resetto", 0);
 			}
 			else {
 				QA->SetAttribute("countdown", countdown);     //if just decrease to 0 and reset was just reset to 0
@@ -191,6 +192,7 @@ vector<Question> GetAllQuestions(XMLElement * parent) {
 				Qs.push_back(q);
 			if (resetto > 0) {
 				QA->SetAttribute("countdown", resetto);
+				QA->SetAttribute("resetto", 0);
 			}
 			else {
 				QA->SetAttribute("countdown", countdown);     //if just decrease to 0 and reset was just reset to 0
@@ -230,7 +232,7 @@ int main(int argc, const char ** argv)
 {
 	bool applyConfigfile = false;
 	string newPath = "NewSavedXMLFile.xml";
-	cout << "\n Quick Reviewer version 3.10" << endl << endl;
+	cout << "\n Quick Reviewer version 3.11" << endl << endl;
 	bool reload = true;
 	XMLDocument* doc = nullptr;
 	while (reload) {
@@ -419,6 +421,8 @@ void createTest(vector<Question> questions,string cat,int noq){
       trim(TestQ[q_index]->question);
       printf("Question %d: %s\n  Answer:\n",n+1,TestQ[q_index]->question.c_str()); 
       qids.push_back(TestQ[q_index]->id);
+      (TestQ[q_index])->Qc->SetAttribute("countdown", 0);      //modified on 11-24
+      (TestQ[q_index])->Qc->SetAttribute("resetto", 5);
       TestQ.erase(TestQ.begin()+q_index);    
       n++;
    }
@@ -503,7 +507,8 @@ int moveToNextInCategory(vector<Question> questions, string category, int questi
     while (category.compare(questions[n].qcategory) != 0){
        n++;
        if ( n >= questions.size())   //boundary check
-         return ++questionNo;
+         //return ++questionNo;       
+         return 1;                   //if no more, back to first record 
     }
     return n;
 }

@@ -8826,7 +8826,7 @@ int main()
     3. Discard all local changes to all files permanently:
         git fetch origin   #may need to run this first
         git reset --hard.     
-    To list uncommited changes:
+    To list uncommited changes(unadded changes):
         git diff [--name-only]
     To check status:
         git status
@@ -9107,7 +9107,7 @@ int main()
      git reset HEAD~2
      git reset 'HEAD@{2}'   #undo above
 
-       Lesss used:
+       Less used:
      git reflog
 
   </Answer>
@@ -9715,12 +9715,16 @@ int main()
      #default is optional and is None if not set
   </Answer>
 </QA>
-<QA ID="667" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+<QA ID="667" type="OneAnswer" category="PYTHON" countdown="0" resetto="0" >
   <Question>
-     xxxxxxxxxxxxxxxxxxxxx
+     How to access environment variable values in python?
   </Question>
   <Answer>
-     mmmmmmmmmmmmmmmmmmmmmmmmm
+     import os
+     print(os.environ['HOME'])
+     print(os.environ.get('KEY_THAT_MIGHT_EXIST'))
+     print(os.getenv('KEY_THAT_MIGHT_EXIST', default_value))
+     print os.environ["HOME"]
   </Answer>
 </QA>
 <QA ID="668" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
