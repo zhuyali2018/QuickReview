@@ -9727,7 +9727,88 @@ int main()
      print os.environ["HOME"]
   </Answer>
 </QA>
-<QA ID="668" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+<QA ID="668" type="OneAnswer" category="VSCODE" countdown="0" resetto="0" >
+  <Question>
+     How to open a terminal inside vscode ?
+  </Question>
+  <Answer>
+     Ctrl+`
+  </Answer>
+</QA>
+<QA ID="669" type="OneAnswer" category="NODE.JS" countdown="0" resetto="0" >
+  <Question>
+     how to use json file for configuration in node.js ?
+  </Question>
+  <Answer>
+     ~/learn-node 13-17:36:44 >cat config.json
+     {
+       "host": "localhost",
+       "port": 8080
+     }
+
+     ~/learn-node 13-17:38:22 >cat myjs.js
+     const { host, port } = require('./config');
+     console.log(`Server will run at http://${host}:${port}`);
+
+     ~/learn-node 13-17:38:38 >node myjs.js
+     Server will run at http://localhost:8080
+
+     ~/learn-node 13-17:38:48 >
+  </Answer>
+</QA>
+<QA ID="670" type="OneAnswer" category="NODE>JS" countdown="0" resetto="0" >
+  <Question>
+     how to loop through each line in a text file using node.js ?
+  </Question>
+  <Answer>
+     ~/learn-node 13-17:49:52 >cat readline.js
+     const readline = require('readline');
+     const fs = require('fs');
+
+     const linereader = readline.createInterface({
+       input: fs.createReadStream('sample.txt')
+     });
+
+     linereader.on('line', (line) => {
+       console.log('Line from file:', line);      //&lt;=====process each line here
+     });
+
+  </Answer>
+</QA>
+<QA ID="671" type="OneAnswer" category="NODE.JS" countdown="0" resetto="0" >
+  <Question>
+     how to compare string in node.js ?
+  </Question>
+  <Answer>
+     if(line =="666"){
+       console.log('Line from file:', line);
+     }else
+       console.log('xxxxx');
+
+  </Answer>
+</QA>
+<QA ID="672" type="OneAnswer" category="NODE.JS" countdown="0" resetto="0" >
+  <Question>
+     How to read from a text file line by line and write to another file in node.js ?
+  </Question>
+  <Answer>
+     const readline = require('readline');
+     const fs = require('fs');
+     const fin='sample.txt'
+     const fout='filecreated5.txt';
+     const linereader = readline.createInterface({
+       input: fs.createReadStream(fin)
+     });
+
+     linereader.on('line', (line) => {
+       fs.appendFile(fout,line+'\n',(err) => {
+         if (err) throw err;
+       });
+       console.log(line)
+     });
+  </Answer>
+</QA>
+<QA ID="673" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
   <Question>
      xxxxxxxxxxxxxxxxxxxxx
   </Question>
@@ -9735,7 +9816,7 @@ int main()
      mmmmmmmmmmmmmmmmmmmmmmmmm
   </Answer>
 </QA>
-<QA ID="669" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+<QA ID="674" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
   <Question>
      xxxxxxxxxxxxxxxxxxxxx
   </Question>
@@ -9743,7 +9824,47 @@ int main()
      mmmmmmmmmmmmmmmmmmmmmmmmm
   </Answer>
 </QA>
-<QA ID="670" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+<QA ID="675" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     xxxxxxxxxxxxxxxxxxxxx
+  </Question>
+  <Answer>
+     mmmmmmmmmmmmmmmmmmmmmmmmm
+  </Answer>
+</QA>
+<QA ID="676" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     xxxxxxxxxxxxxxxxxxxxx
+  </Question>
+  <Answer>
+     mmmmmmmmmmmmmmmmmmmmmmmmm
+  </Answer>
+</QA>
+<QA ID="677" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     xxxxxxxxxxxxxxxxxxxxx
+  </Question>
+  <Answer>
+     mmmmmmmmmmmmmmmmmmmmmmmmm
+  </Answer>
+</QA>
+<QA ID="678" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     xxxxxxxxxxxxxxxxxxxxx
+  </Question>
+  <Answer>
+     mmmmmmmmmmmmmmmmmmmmmmmmm
+  </Answer>
+</QA>
+<QA ID="679" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     xxxxxxxxxxxxxxxxxxxxx
+  </Question>
+  <Answer>
+     mmmmmmmmmmmmmmmmmmmmmmmmm
+  </Answer>
+</QA>
+<QA ID="680" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
   <Question>
      xxxxxxxxxxxxxxxxxxxxx
   </Question>
