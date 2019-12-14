@@ -4940,7 +4940,7 @@ to be built in advance of their use. Some Boost libraries coexist as independent
 </QA>
 <QA ID="307" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
   <Question>
-     Python Sample code ?
+     python Sample code ?
   </Question>
   <Answer>
      #!/usr/bin/python3
@@ -4974,7 +4974,7 @@ to be built in advance of their use. Some Boost libraries coexist as independent
      print("alice =", alice)
      print()
 
-     # Python allows lines to be continued by putting a backslash at the end of
+     # python allows lines to be continued by putting a backslash at the end of
      # the first part.
      fred = bill + alice + frank - \
             barney
@@ -4991,7 +4991,7 @@ to be built in advance of their use. Some Boost libraries coexist as independent
 </QA>
 <QA ID="308" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
   <Question>
-     Where is Python Sample code on web ?
+     Where is python Sample code on web ?
   </Question>
   <Answer>
     http://sandbox.mc.edu/~bennet/python/code/index.html
@@ -6335,7 +6335,7 @@ to be built in advance of their use. Some Boost libraries coexist as independent
      if [ "${branch}" = "" ]; then ...   #should use == instead ?
   </Answer>
 </QA>
-<QA ID="383" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+<QA ID="383" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
   <Question>
      How to do math in shell script ?
   </Question>
@@ -7103,6 +7103,8 @@ to be built in advance of their use. Some Boost libraries coexist as independent
      eog filename
 
      eog means Eye Of Gnome
+     
+     gnome is an acronym for GNU Network Object Model Environment
   </Answer>
 </QA>
 <QA ID="442" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
@@ -8182,7 +8184,7 @@ to be built in advance of their use. Some Boost libraries coexist as independent
 </QA>
 <QA ID="528" type="OneAnswer" category="ENGLISH" countdown="0" resetto="0" >
   <Question>
-     renege                       
+     renege [on]                      
   </Question>
   <Answer>
      break promise:
@@ -8824,7 +8826,7 @@ int main()
     3. Discard all local changes to all files permanently:
         git fetch origin   #may need to run this first
         git reset --hard.     
-    To list uncommited changes:
+    To list uncommited changes(unadded changes):
         git diff [--name-only]
     To check status:
         git status
@@ -9105,7 +9107,7 @@ int main()
      git reset HEAD~2
      git reset 'HEAD@{2}'   #undo above
 
-       Lesss used:
+       Less used:
      git reflog
 
   </Answer>
@@ -9393,7 +9395,7 @@ int main()
 </QA>
 <QA ID="637" type="OneAnswer" category="PYTHON" countdown="0" resetto="0" >
   <Question>
-     In Python, how to get full path from path and filename ?
+     In python, how to get full path from path and filename ?
   </Question>
   <Answer>
      os.path.join(path,filename)
@@ -9401,7 +9403,7 @@ int main()
 </QA>
 <QA ID="638" type="OneAnswer" category="PYTHON" countdown="0" resetto="0" >
   <Question>
-     In Python, how to do string connection ?
+     in python, how to do string connection ?
   </Question>
   <Answer>
      string1="literal string" + string2
@@ -9409,7 +9411,7 @@ int main()
 </QA>
 <QA ID="639" type="OneAnswer" category="PYTHON" countdown="0" resetto="0" >
   <Question>
-     How to create a folder in Python ?
+     How to create a folder in python ?
   </Question>
   <Answer>
      os.makedirs(binary_cache_dir)
@@ -9417,7 +9419,7 @@ int main()
 </QA>
 <QA ID="640" type="OneAnswer" category="PYTHON" countdown="0" resetto="0" >
   <Question>
-     How to test if a file exist in Python ?
+     How to test if a file exist in python ?
   </Question>
   <Answer>
      os.path.isfile(target_file)
@@ -9425,7 +9427,7 @@ int main()
 </QA>
 <QA ID="641" type="OneAnswer" category="PYTHON" countdown="0" resetto="0" >
   <Question>
-     How to get dirname from a path+file string in Python ?
+     How to get dirname from a path+file string in python ?
   </Question>
   <Answer>
      os.path.dirname(target_file)
@@ -9433,7 +9435,7 @@ int main()
 </QA>
 <QA ID="642" type="OneAnswer" category="PYTHON" countdown="0" resetto="0" >
   <Question>
-     How to check if a folder exist or not in Python ?
+     How to check if a folder exist or not in python ?
   </Question>
   <Answer>
      if not os.path.isdir(target_dir):
@@ -9442,7 +9444,7 @@ int main()
 </QA>
 <QA ID="643" type="OneAnswer" category="PYTHON" countdown="0" resetto="0" >
   <Question>
-     How to delete a file in Python ?
+     How to delete a file in python ?
   </Question>
   <Answer>
      os.remove(binary_cache_file)
@@ -9458,7 +9460,7 @@ int main()
 </QA>
 <QA ID="645" type="OneAnswer" category="PYTHON" countdown="0" resetto="0" >
   <Question>
-     How to get substring from a string in Python
+     How to get substring from a string in python
   </Question>
   <Answer>
      string[5:]    #substring start from position 5 to the end
@@ -9657,47 +9659,156 @@ int main()
     y$  Yank to the end of the lin
   </Answer>
 </QA>
-<QA ID="662" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+<QA ID="662" type="OneAnswer" category="PYTHON" countdown="0" resetto="0" >
   <Question>
-     xxxxxxxxxxxxxxxxxxxxx
+     how to define a function that return a string in python ?
   </Question>
   <Answer>
-     mmmmmmmmmmmmmmmmmmmmmmmmm
+     def fn_name(arg_string):
+       return ret_string
   </Answer>
 </QA>
-<QA ID="663" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+<QA ID="663" type="OneAnswer" category="PYTHON" countdown="0" resetto="0" >
   <Question>
-     xxxxxxxxxxxxxxxxxxxxx
+     An example using dictionary in python 
   </Question>
   <Answer>
-     mmmmmmmmmmmmmmmmmmmmmmmmm
+     namedic={}
+     default="none"
+     content=namedic.get(key,default)
+     if (content == "none"):
+        namedic[key]=content_to_set
+
+     #above code makes sure there wont be stepovers
+     Python raises a KeyError whenever a dict() object is requested 
+     (using the format a = adict[key]) and the key is not in the dictionary.
+
+     If you don't want to have an exception but would rather a default 
+     value used instead, you can use the get() method:
   </Answer>
 </QA>
-<QA ID="664" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+<QA ID="664" type="OneAnswer" category="PYTHON" countdown="0" resetto="0" >
   <Question>
-     xxxxxxxxxxxxxxxxxxxxx
+     Multiple condition if statement example in python
   </Question>
   <Answer>
-     mmmmmmmmmmmmmmmmmmmmmmmmm
+     if hit_map and addr_hit_map:
+        ...
   </Answer>
 </QA>
-<QA ID="665" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+<QA ID="665" type="OneAnswer" category="PYTHON" countdown="0" resetto="0" >
   <Question>
-     xxxxxxxxxxxxxxxxxxxxx
+     How to get a length of a string or a size of an array in python ?
   </Question>
   <Answer>
-     mmmmmmmmmmmmmmmmmmmmmmmmm
+     using function len()
   </Answer>
 </QA>
 <QA ID="666" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
   <Question>
-     xxxxxxxxxxxxxxxxxxxxx
+     How to get environment variable values in python ?
   </Question>
   <Answer>
-     mmmmmmmmmmmmmmmmmmmmmmmmm
+     import os
+     print os.getenv("MY_ENV_VAR")
+     print os.getenv("MY_ENV_VAR_2",default="My_Env_Var_2 not found")
+     #default is optional and is None if not set
   </Answer>
 </QA>
-<QA ID="667" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+<QA ID="667" type="OneAnswer" category="PYTHON" countdown="0" resetto="0" >
+  <Question>
+     How to access environment variable values in python?
+  </Question>
+  <Answer>
+     import os
+     print(os.environ['HOME'])
+     print(os.environ.get('KEY_THAT_MIGHT_EXIST'))
+     print(os.getenv('KEY_THAT_MIGHT_EXIST', default_value))
+     print os.environ["HOME"]
+  </Answer>
+</QA>
+<QA ID="668" type="OneAnswer" category="VSCODE" countdown="0" resetto="0" >
+  <Question>
+     How to open a terminal inside vscode ?
+  </Question>
+  <Answer>
+     Ctrl+`
+  </Answer>
+</QA>
+<QA ID="669" type="OneAnswer" category="NODE.JS" countdown="0" resetto="0" >
+  <Question>
+     how to use json file for configuration in node.js ?
+  </Question>
+  <Answer>
+     ~/learn-node 13-17:36:44 >cat config.json
+     {
+       "host": "localhost",
+       "port": 8080
+     }
+
+     ~/learn-node 13-17:38:22 >cat myjs.js
+     const { host, port } = require('./config');
+     console.log(`Server will run at http://${host}:${port}`);
+
+     ~/learn-node 13-17:38:38 >node myjs.js
+     Server will run at http://localhost:8080
+
+     ~/learn-node 13-17:38:48 >
+  </Answer>
+</QA>
+<QA ID="670" type="OneAnswer" category="NODE>JS" countdown="0" resetto="0" >
+  <Question>
+     how to loop through each line in a text file using node.js ?
+  </Question>
+  <Answer>
+     ~/learn-node 13-17:49:52 >cat readline.js
+     const readline = require('readline');
+     const fs = require('fs');
+
+     const linereader = readline.createInterface({
+       input: fs.createReadStream('sample.txt')
+     });
+
+     linereader.on('line', (line) => {
+       console.log('Line from file:', line);      //&lt;=====process each line here
+     });
+
+  </Answer>
+</QA>
+<QA ID="671" type="OneAnswer" category="NODE.JS" countdown="0" resetto="0" >
+  <Question>
+     how to compare string in node.js ?
+  </Question>
+  <Answer>
+     if(line =="666"){
+       console.log('Line from file:', line);
+     }else
+       console.log('xxxxx');
+
+  </Answer>
+</QA>
+<QA ID="672" type="OneAnswer" category="NODE.JS" countdown="0" resetto="0" >
+  <Question>
+     How to read from a text file line by line and write to another file in node.js ?
+  </Question>
+  <Answer>
+     const readline = require('readline');
+     const fs = require('fs');
+     const fin='sample.txt'
+     const fout='filecreated5.txt';
+     const linereader = readline.createInterface({
+       input: fs.createReadStream(fin)
+     });
+
+     linereader.on('line', (line) => {
+       fs.appendFile(fout,line+'\n',(err) => {
+         if (err) throw err;
+       });
+       console.log(line)
+     });
+  </Answer>
+</QA>
+<QA ID="673" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
   <Question>
      xxxxxxxxxxxxxxxxxxxxx
   </Question>
@@ -9705,7 +9816,7 @@ int main()
      mmmmmmmmmmmmmmmmmmmmmmmmm
   </Answer>
 </QA>
-<QA ID="668" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+<QA ID="674" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
   <Question>
      xxxxxxxxxxxxxxxxxxxxx
   </Question>
@@ -9713,7 +9824,7 @@ int main()
      mmmmmmmmmmmmmmmmmmmmmmmmm
   </Answer>
 </QA>
-<QA ID="669" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+<QA ID="675" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
   <Question>
      xxxxxxxxxxxxxxxxxxxxx
   </Question>
@@ -9721,7 +9832,39 @@ int main()
      mmmmmmmmmmmmmmmmmmmmmmmmm
   </Answer>
 </QA>
-<QA ID="670" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+<QA ID="676" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     xxxxxxxxxxxxxxxxxxxxx
+  </Question>
+  <Answer>
+     mmmmmmmmmmmmmmmmmmmmmmmmm
+  </Answer>
+</QA>
+<QA ID="677" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     xxxxxxxxxxxxxxxxxxxxx
+  </Question>
+  <Answer>
+     mmmmmmmmmmmmmmmmmmmmmmmmm
+  </Answer>
+</QA>
+<QA ID="678" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     xxxxxxxxxxxxxxxxxxxxx
+  </Question>
+  <Answer>
+     mmmmmmmmmmmmmmmmmmmmmmmmm
+  </Answer>
+</QA>
+<QA ID="679" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     xxxxxxxxxxxxxxxxxxxxx
+  </Question>
+  <Answer>
+     mmmmmmmmmmmmmmmmmmmmmmmmm
+  </Answer>
+</QA>
+<QA ID="680" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
   <Question>
      xxxxxxxxxxxxxxxxxxxxx
   </Question>
