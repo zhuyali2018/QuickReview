@@ -236,7 +236,7 @@ int main(int argc, const char ** argv)
 {
 	bool applyConfigfile = false;
 	string newPath = "NewSavedXMLFile.xml";
-	cout << "\n Quick Reviewer version 3.11" << endl << endl;
+	cout << "\n Quick Reviewer version 3.12" << endl << endl;
 	bool reload = true;
 	XMLDocument* doc = nullptr;
 	while (reload) {
@@ -452,7 +452,7 @@ void createTest(vector<Question> questions,string cat,int noq){
       for(vector<Question>::iterator it=questions.begin();it != questions.end();++it){
           if(qid==it->id){
             trim(it->answer);
-            printf("%d: [%s][%d]Question: %s\n   Answer:%s\n",n+1,it->qcategory.c_str(),it->id,it->question.c_str(),it->answer.c_str());
+            printf("%d. [%s][%d]Question: %s\n   Answer:%s\n",n+1,it->qcategory.c_str(),it->id,it->question.c_str(),it->answer.c_str());
             break;
           }
       }
