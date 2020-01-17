@@ -2545,8 +2545,8 @@ const char * const p = "Hello";       // const pointer, const data
   </Question>
   <Answer>
      Process table is a data structure in Linux kernel, which store information 
-     about all currently running process. The process table contains process ID's, 
-     memory usage of the process, all the file descriptors used in the process, etc.
+     about all currently running processes. The process table contains process ID's, 
+     memory usage, all the file descriptors used in the process, etc.
   </Answer>
 </QA>
 
@@ -4130,7 +4130,7 @@ to be built in advance of their use. Some Boost libraries coexist as independent
   </Answer>
 </QA>
 
-<QA ID="258" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+<QA ID="258" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
   <Question>
      How to process command line arguments inside a shell script ?
   </Question>
@@ -4170,7 +4170,7 @@ to be built in advance of their use. Some Boost libraries coexist as independent
   </Answer>
 </QA>
 
-<QA ID="259" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+<QA ID="259" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
   <Question>
      In line processing, how to grep lines start with fn or end with us ?
   </Question>
@@ -4180,7 +4180,7 @@ to be built in advance of their use. Some Boost libraries coexist as independent
   </Answer>
 </QA>
 
-<QA ID="260" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+<QA ID="260" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
   <Question>
      How to define a function for shell script ?
   </Question>
@@ -4193,7 +4193,7 @@ to be built in advance of their use. Some Boost libraries coexist as independent
   </Answer>
 </QA>
 
-<QA ID="261" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+<QA ID="261" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
   <Question>
      What is Metaprogramming ?
   </Question>
@@ -7257,6 +7257,8 @@ to be built in advance of their use. Some Boost libraries coexist as independent
      1. put device in recovery mode
      2. goto ROOT/out/target/product/phaedra
      3. run ./flash_nvidia.sh     #has to be in recovery mode or the script wont work, it will complain!, 
+     or run ./flash_nvidia.sh  -w -u   #not keeping the old user data 
+
         (To put device in recovery mode: 
          1 powerbutton + vol+ and vol- button at the same time for 8 seconds to power it down
          2 powerbutton + vol+ button at the same time for 4 seconds, no more to boot up to recovery mode) 
@@ -9756,7 +9758,7 @@ int main()
      ~/learn-node 13-17:38:48 >
   </Answer>
 </QA>
-<QA ID="670" type="OneAnswer" category="NODE>JS" countdown="0" resetto="0" >
+<QA ID="670" type="OneAnswer" category="NODE.JS" countdown="0" resetto="0" >
   <Question>
      how to loop through each line in a text file using node.js ?
   </Question>
@@ -9808,68 +9810,203 @@ int main()
      });
   </Answer>
 </QA>
-<QA ID="673" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+<QA ID="673" type="OneAnswer" category="VSCODE" countdown="0" resetto="0" >
   <Question>
-     xxxxxxxxxxxxxxxxxxxxx
+     How to check vscode version ?
   </Question>
   <Answer>
-     mmmmmmmmmmmmmmmmmmmmmmmmm
+     code --version
   </Answer>
 </QA>
-<QA ID="674" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+<QA ID="674" type="OneAnswer" category="VSCODE" countdown="0" resetto="0" >
   <Question>
-     xxxxxxxxxxxxxxxxxxxxx
+     How did I install the vscode on ubuntu ?
   </Question>
   <Answer>
-     mmmmmmmmmmmmmmmmmmmmmmmmm
+     1. I downloaded the code_1.41.0-1576089540_amd64.deb
+     2. From the GUI files, browse to file location and
+     3. Right click and click open with Ubuntu Software Center
+     4. Click on install button
   </Answer>
 </QA>
 <QA ID="675" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
   <Question>
-     xxxxxxxxxxxxxxxxxxxxx
+     How to start a telnet session ?
   </Question>
   <Answer>
-     mmmmmmmmmmmmmmmmmmmmmmmmm
+     An example would be:
+     telnet localhost 1079
   </Answer>
 </QA>
 <QA ID="676" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
   <Question>
-     xxxxxxxxxxxxxxxxxxxxx
+     How to sepcify HTML charset attribute ?
   </Question>
   <Answer>
-     mmmmmmmmmmmmmmmmmmmmmmmmm
+    To display an HTML page correctly, a web browser must know the character set used in the page.
+    This is specified in the &lt;meta> tag:
+      &lt;meta charset="UTF-8">
+ 
+
   </Answer>
 </QA>
-<QA ID="677" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+<QA ID="677" type="OneAnswer" category="NODE.JS" countdown="0" resetto="0" >
   <Question>
-     xxxxxxxxxxxxxxxxxxxxx
+     where is the global location for node ?
   </Question>
   <Answer>
-     mmmmmmmmmmmmmmmmmmmmmmmmm
+     npm root -g
+     that's where the command npm instll -g &lt;package> will install to.
   </Answer>
 </QA>
-<QA ID="678" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+<QA ID="678" type="OneAnswer" category="NODE.JS" countdown="0" resetto="0" >
   <Question>
-     xxxxxxxxxxxxxxxxxxxxx
+     How to split a string into an array in node.js ?
   </Question>
   <Answer>
-     mmmmmmmmmmmmmmmmmmmmmmmmm
+     // Initialize string 
+     var str = "Welcomer^to^GeeksforGeeks";
+
+     // Function call 
+     var array=str.split("^");
+
+     for(i in array){
+       console.log(i+": "+array[i]);
+     }
   </Answer>
 </QA>
-<QA ID="679" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+<QA ID="679" type="OneAnswer" category="NODE.JS" countdown="0" resetto="0" >
   <Question>
-     xxxxxxxxxxxxxxxxxxxxx
+     How to get string length in node.js ?
   </Question>
   <Answer>
-     mmmmmmmmmmmmmmmmmmmmmmmmm
+     for(i in array){
+       if ( array[i] )
+         console.log(i+": "+array[i]);
+       else
+         console.log("empty");
+     }
   </Answer>
 </QA>
 <QA ID="680" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
   <Question>
-     xxxxxxxxxxxxxxxxxxxxx
+     what is ldd command ?
   </Question>
   <Answer>
-     mmmmmmmmmmmmmmmmmmmmmmmmm
+     ldd (List Dynamic Dependencies) is a *nix utility that prints the shared libraries 
+   required by each program or shared library specified on the command line. It was 
+   developed by Roland McGrath and Ulrich Drepper. If some shared library is missing 
+   for any program, that program won't come up.
+  </Answer>
+</QA>
+<QA ID="681" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     How to make shell script to pause and prompt to press any key to continue ?
+  </Question>
+  <Answer>
+    read -p "Press [Enter] key to continue..."
+  </Answer>
+</QA>
+<QA ID="682" type="OneAnswer" category="NODE.JS" countdown="0" resetto="0" >
+  <Question>
+     setTimeout() function in javascript node.js
+  </Question>
+  <Answer>
+     setTimeout(function, milliseconds, param1, param2, ...)
+
+        The setTimeout() method calls a function or evaluates an expression 
+     after a specified number of milliseconds.
+  </Answer>
+</QA>
+<QA ID="683" type="OneAnswer" category="NODE.JS" countdown="0" resetto="0" >
+  <Question>
+     How to install node.js web server and how to use them ?
+  </Question>
+  <Answer>
+   Installation:
+       1. node.js has to be installed first
+       2. npm install http-server -g
+   Use:
+       from any directory, you can type:
+         http-server [path] [options]
+       Path is optional, defaulting to ./public if it exists, otherwise ./
+
+       Options are [defaults]:
+         -p The port number to listen on [8080]
+         -a The host address to bind to [localhost]
+         -i Display directory index pages [True]
+         -s or --silent Silent mode won't log to the console
+         -h or --help Displays help message and exits
+       So to serve the current directory on port 8000, type:
+          http-server -p 8000
+  </Answer>
+</QA>
+<QA ID="684" type="OneAnswer" category="NODE.JS" countdown="0" resetto="0" >
+  <Question>
+     How to access frames and their elements from another frame and what
+     are common mistakes people make most ?
+  </Question>
+  <Answer>
+     var iframe = document.getElementsByTagName('frame')["frame2"];
+     not 
+     var iframe = document.getElementByID('frame2')
+     when frame name is frame2
+  </Answer>
+</QA>
+<QA ID="685" type="OneAnswer" category="NODE.JS" countdown="0" resetto="0" >
+  <Question>
+     How to access an element in another frame on a webpage ?
+  </Question>
+  <Answer>
+    parent.frames["frame2"].document.getElementById("id").innerHTML="content";
+  </Answer>
+</QA>
+<QA ID="686" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     xxxxxxxxxxxxxxxx
+  </Question>
+  <Answer>
+   mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm
+  </Answer>
+</QA>
+<QA ID="687" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     xxxxxxxxxxxxxxxx
+  </Question>
+  <Answer>
+   mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm
+  </Answer>
+</QA>
+<QA ID="688" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     xxxxxxxxxxxxxxxx
+  </Question>
+  <Answer>
+   mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm
+  </Answer>
+</QA>
+<QA ID="689" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     xxxxxxxxxxxxxxxx
+  </Question>
+  <Answer>
+   mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm
+  </Answer>
+</QA>
+<QA ID="690" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     xxxxxxxxxxxxxxxx
+  </Question>
+  <Answer>
+   mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm
+  </Answer>
+</QA>
+<QA ID="681" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     xxxxxxxxxxxxxxxx
+  </Question>
+  <Answer>
+   mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm
   </Answer>
 </QA>
 </QuestionsAndAnswers>
