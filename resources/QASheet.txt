@@ -1,4 +1,4 @@
-<?xml version="1.0"?>
+?xml version="1.0"?>
 <!DOCTYPE QR SYSTEM "QuickReview.dtd">
 
 <QuestionsAndAnswers>
@@ -3421,7 +3421,7 @@ to be built in advance of their use. Some Boost libraries coexist as independent
 </QA>
 <QA ID="203" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
   <Question>
-     If we orverride a virtual method in derived class, do we have to prefix with &quot;virtual&quot; ?
+     If we override a virtual method in derived class, do we have to prefix with &quot;virtual&quot; ?
   </Question>
   <Answer>
      No   
@@ -3606,7 +3606,7 @@ to be built in advance of their use. Some Boost libraries coexist as independent
      How to cancel the merge ?
   </Question>
   <Answer>
-     git merge --abort        //Cancel themerge just did with conflict
+     git merge --abort        //Cancel the merge just did with conflict
   </Answer>
 </QA>
 <QA ID="219" type="OneAnswer" category="GIT" countdown="0" resetto="0" >
@@ -3663,6 +3663,8 @@ to be built in advance of their use. Some Boost libraries coexist as independent
  
      //if not the first time, just update:
      6. git pull origin master 
+     //or simply:
+     6. git pull
   </Answer>
 </QA>
 <QA ID="222" type="OneAnswer" category="GIT" countdown="0" resetto="0" >
@@ -3768,7 +3770,7 @@ to be built in advance of their use. Some Boost libraries coexist as independent
      cat test.txt | egrep  "[[:digit:]]{3}-[[:digit:]]{3}-[[:digit:]]{4}"
   </Answer>
 </QA>
-<QA ID="233" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+<QA ID="233" type="OneAnswer" category="AWK" countdown="0" resetto="0" >
   <Question>
      how to get the substring following &quot;Email:&quot; ?
   </Question>
@@ -3818,7 +3820,7 @@ to be built in advance of their use. Some Boost libraries coexist as independent
      cat input1.txt | sort | uniq
   </Answer>
 </QA>
-<QA ID="237" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+<QA ID="237" type="OneAnswer" category="AWK" countdown="0" resetto="0" >
   <Question>
      How to filter for lines that just has 2 words ?
   </Question>
@@ -3921,35 +3923,15 @@ to be built in advance of their use. Some Boost libraries coexist as independent
   </Answer>
 </QA>
 
-<QA ID="243" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
+<QA ID="243" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
   <Question>
-     How to use Linux profiling Tool gprof ?
+     How to print just lines containing substrings that match a regurlar expression ?
   </Question>
   <Answer>
-     Using the gprof tool is not at all complex. You just need to do the following 
-     on a high-level:
+     use egrep '&lt;regex>' :
 
-     1: Have profiling enabled while compiling the code (use "-pg" option: gcc -Wall -pg test.c -o test)
-     2: Execute the program code to produce the profiling data (a new file "gmon.out" is generated)
-     3: Run the gprof tool on the profiling data file (generated in the step above):
- 
-        gprof test gmon.out > analysis.txt
-
-         The file is broadly divided into two parts :
-
-         1. Flat profile
-         2. Call graph
-
-     The last step above produces an analysis file which is in human readable form. 
-     This file contains a couple of tables (flat profile and call graph) in addition 
-     to some other information. While flat profile gives an overview of the timing 
-     information of the functions like time consumption for the execution of a 
-     particular function, how many times it was called etc. On the other hand, 
-     call graph focuses on each function like the functions through which a particular 
-     function was called, what all functions were called from within this particular 
-     function etc So this way one can get idea of the execution time spent in the 
-     sub-routines too.
-
+     $ cat input1.txt |  egrep '[0-9a-f]{2}:[0-9a-f]{2}:[0-9a-f]{2}:[0-9a-f]{2}:[0-9a-f]{2}:[0-9a-f]{2}'
+     dhd_wlan_get_mac_addr: generated random MAC=60:4b:aa:45:7d:f4
   </Answer>
 </QA>
 
@@ -3999,7 +3981,7 @@ to be built in advance of their use. Some Boost libraries coexist as independent
   </Answer>
 </QA>
 
-<QA ID="247" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+<QA ID="247" type="OneAnswer" category="AWK" countdown="0" resetto="0" >
   <Question>
      How to filter for the length of line in shell script ?
   </Question>
@@ -4009,7 +3991,7 @@ to be built in advance of their use. Some Boost libraries coexist as independent
   </Answer>
 </QA>
 
-<QA ID="248" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+<QA ID="248" type="OneAnswer" category="AWK" countdown="0" resetto="0" >
   <Question>
      How to filter for the number of space delimited words in shell script ?
   </Question>
@@ -5637,7 +5619,7 @@ to be built in advance of their use. Some Boost libraries coexist as independent
   </Question>
   <Answer>
     Use tool dos2unix to change to unix format before using the sed '/^$/d' !
-    you can use tool XXD &lt;file&gt; to exam the file in binary format.
+    you can use tool xxd &lt;file&gt; to exam the file in binary format.
     you can use tool od -c &lt;filename> to exam the file in ascii data format.
   </Answer>
 </QA>
@@ -7107,7 +7089,7 @@ to be built in advance of their use. Some Boost libraries coexist as independent
      gnome is an acronym for GNU Network Object Model Environment
   </Answer>
 </QA>
-<QA ID="442" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+<QA ID="442" type="OneAnswer" category="AWK" countdown="0" resetto="0" >
   <Question>
      how to sum a column using awk ?
   </Question>
@@ -7684,7 +7666,7 @@ to be built in advance of their use. Some Boost libraries coexist as independent
        for (int i=0;i&lt;10;i++)
           threads[i]=thread(thread_func,i);
        sleep(5);
-       cout &lt;&lt "10 threads ready to race...\n";
+       cout &lt;&lt; "10 threads ready to race...\n";
        go(); 
        for (auto&amp; th : threads) th.join();
        return 0;
@@ -8595,7 +8577,7 @@ int main()
 </QA>
 <QA ID="563" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
   <Question>
-     How to compare a string to a string in var ? 
+     How to compare a string to a string in var in shell script? 
   </Question>
   <Answer>
      if [ "$var" == "string" ]; then
@@ -8830,11 +8812,13 @@ int main()
         git reset --hard.     
     To list uncommited changes(unadded changes):
         git diff [--name-only]
+    To list last commited changes:
+        git log -p -- filename
     To check status:
         git status
   </Answer>
 </QA>
-<QA ID="588" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+<QA ID="588" type="OneAnswer" category="AWK" countdown="0" resetto="0" >
   <Question>
      How to find the index of last occurance of a character in a string in awk ?
   </Question>
@@ -9108,15 +9092,16 @@ int main()
      git push origin HEAD:refs/for/master
      git reset HEAD~2
      git reset 'HEAD@{2}'   #undo above
+     git log -p -- filename
 
        Less used:
      git reflog
 
   </Answer>
 </QA>
-<QA ID="610" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+<QA ID="610" type="OneAnswer" category="AWK" countdown="0" resetto="0" >
   <Question>
-     how to just print lines that only column 2 contains a string using awk?
+     how to just print lines that only column 2 contains a specific string using awk?
   </Question>
   <Answer>
      cat QASheet.txt | awk '$2 ~ /62/'
@@ -9158,7 +9143,7 @@ int main()
 
   </Answer>
 </QA>
-<QA ID="615" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+<QA ID="615" type="OneAnswer" category="AWK" countdown="0" resetto="0" >
   <Question>
      echo "/a/b/c/d/e" | awk -F / '{ print $(NF-1) }'
      what does it print ?
@@ -9562,7 +9547,7 @@ int main()
   <Answer>
      format: string[start pos:length]
      for example:
-        string[0,5]
+        string[0:5]
   </Answer>
 </QA>
 <QA ID="655" type="OneAnswer" category="PYTHON" countdown="0" resetto="0" >
@@ -9856,7 +9841,7 @@ int main()
   </Question>
   <Answer>
      npm root -g
-     that's where the command npm instll -g &lt;package> will install to.
+     that's where the command npm install -g &lt;package> will install to.
   </Answer>
 </QA>
 <QA ID="678" type="OneAnswer" category="NODE.JS" countdown="0" resetto="0" >
@@ -9961,52 +9946,260 @@ int main()
     parent.frames["frame2"].document.getElementById("id").innerHTML="content";
   </Answer>
 </QA>
-<QA ID="686" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+<QA ID="686" type="OneAnswer" category="NODE.JS" countdown="0" resetto="0" >
   <Question>
-     xxxxxxxxxxxxxxxx
+     How to catch an error in node or javascript ?
   </Question>
   <Answer>
-   mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm
+ 
+   try {
+     addalert("Welcome guest!");
+   }
+   catch(err) {
+     document.getElementById("demo").innerHTML = err.message;
+   }
   </Answer>
 </QA>
-<QA ID="687" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+<QA ID="687" type="OneAnswer" category="NODE.JS" countdown="0" resetto="0" >
   <Question>
-     xxxxxxxxxxxxxxxx
+     What is jQuery ?
   </Question>
   <Answer>
-   mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm
+     jQuery is a JavaScript library designed to simplify HTML DOM tree traversal 
+   and manipulation, as well as event handling, CSS animation, and Ajax. It is 
+   free, open-source software using the permissive MIT License.
   </Answer>
 </QA>
 <QA ID="688" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
   <Question>
-     xxxxxxxxxxxxxxxx
+     how to schedule a program to run at a scheduled time in ubuntu ?
   </Question>
   <Answer>
-   mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm
+   1. run: crontab -e  to open scheduler for editing
+   2. add a line at the buttom in the format as following example:
+      55 15 * * * /home/MAGICLEAP/yzhu/test1.sh
+      
+   3. The format explanation:
+       m h dom mon dow user command
+       ┬ ┬ ┬ ┬ ┬
+       │ │ │ │ │
+       │ │ │ │ │
+       │ │ │ │ └───── day of week (0 – 6) (0 is Sunday, or use names)
+       │ │ │ └────────── month (1 – 12)
+       │ │ └─────────────── day of month (1 – 31)
+       │ └──────────────────── hour (0 – 23)
+       └───────────────────────── min (0 – 59)  
+    4. same and exit
   </Answer>
 </QA>
 <QA ID="689" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
   <Question>
-     xxxxxxxxxxxxxxxx
+     How to change the crontab editor in linux ?
   </Question>
   <Answer>
-   mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm
+    by setting up the environment variable VISUAL:
+    export VISUAL=vi
   </Answer>
 </QA>
 <QA ID="690" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
   <Question>
-     xxxxxxxxxxxxxxxx
+     How to use wget with username and password to download ?
   </Question>
   <Answer>
-   mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm
+    1. make a script named aget:
+       where="$(dirname $0)/.$(basename $0)"
+       wget -c --user=$USER --password=$(cat $where) $@
+    2. make a hidden password file named .aget and put it under current dir:
+       123456
+    3. run aget followed by downloading url. for example:
+         aget http://www.video.com/aabb.mp4
   </Answer>
 </QA>
-<QA ID="681" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+<QA ID="691" type="OneAnswer" category="MAGICLEAP" countdown="0" resetto="0" >
   <Question>
-     xxxxxxxxxxxxxxxx
+     How to logout cloud of magicleap ?
   </Question>
   <Answer>
-   mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm
+    mldb cloudlogin logout
   </Answer>
 </QA>
+<QA ID="692" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     how to use sed to replace multiple spaces with one space ?
+  </Question>
+  <Answer>
+    ... | sed 's/ \+/ /g'
+  </Answer>
+</QA>
+<QA ID="693" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     how to save from current line to the end of current file to another file from within vi ?
+  </Question>
+  <Answer>
+   from within the vi using:
+   :.,$w anotherfilename 
+  </Answer>
+</QA>
+<QA ID="694" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     how to tell if the stdout goes to a pipe of terminal in bash shell ?
+  </Question>
+  <Answer>
+   if [ -t 1 ]; then echo "terminal"; else echo "pipe"; fi
+  </Answer>
+</QA>
+<QA ID="695" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     how to change color scheme of vi in ubuntu ?
+  </Question>
+  <Answer>
+   Type:
+     :colorscheme &lt;colorscheme name>
+   To see what color scheme is available:
+     :colorscheme &lt;tab>
+  </Answer>
+</QA>
+<QA ID="696" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     Error Cannot find module 'formidable', how to resolve this ?
+  </Question>
+  <Answer>
+     npm install -g formidable
+  </Answer>
+</QA>
+<QA ID="697" type="OneAnswer" category="AWK" countdown="0" resetto="0" >
+  <Question>
+     awk multiple conditional statement
+  </Question>
+  <Answer>
+   if ($3 >=35 &amp;&amp; $4 >= 35 &amp;&amp; $5 >= 35)
+      print $0,"=>","Pass";
+   else
+      print $0,"=>","Fail";
+  </Answer>
+</QA>
+<QA ID="698" type="OneAnswer" category="MAGICLEAP" countdown="0" resetto="0" >
+  <Question>
+     how to hide icon grid ?
+  </Question>
+  <Answer>
+   mldb shell mage universe launcher hide
+  </Answer>
+</QA>
+<QA ID="699" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     How to echo a line without carriage return ?
+  </Question>
+  <Answer>
+   using echo -n !
+  </Answer>
+</QA>
+<QA ID="700" type="OneAnswer" category="AWK" countdown="0" resetto="0" >
+  <Question>
+     How to use true/false boolean vairables in awk ?
+  </Question>
+  <Answer>
+   BEGIN{
+     true=1
+     false=0
+     flag=false
+   }
+   {
+     flag=true
+     if flag==true){ ... }
+   }
+  </Answer>
+</QA>
+<QA ID="701" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     How to change to uppercase when echo ?
+  </Question>
+  <Answer>
+   fn=yali
+   echo ${fn}
+     yali
+   echo ${fn^}
+     Yali
+   echo ${fn^^}
+     YALI
+  </Answer>
+</QA>
+<QA ID="702" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     How to check if you are at group sg_artifactorUsers ?
+  </Question>
+  <Answer>
+     id yzhu | tr "," "\n" | grep sg_artifactory
+    
+     To list all groups:
+     id | tr "," "\n" | grep -oe "[a-z_]*" > mygroups.txt
+  </Answer>
+</QA>
+<QA ID="703" type="OneAnswer" category="AWK" countdown="0" resetto="0" >
+  <Question>
+     How to print to stderr inside awk ?
+  </Question>
+  <Answer>
+     print "Serious error detected!" > "/dev/stderr"
+  </Answer>
+</QA>
+<QA ID="704" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     How to replace a substring inside a string in awk ?
+  </Question>
+  <Answer>
+     gsub("oldstr","newstr",TheString)
+  </Answer>
+</QA>
+<QA ID="705" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     how to check if a file is empty in bash shell script ?
+  </Question>
+  <Answer>
+     Empty means the file exist but size is zero:
+
+     if [ -s main_log.txt ]; then echo NotEmpty; else echo Empty; fi
+  </Answer>
+</QA>
+<QA ID="706" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     xxxxxxxxxxxxxxxxxx
+  </Question>
+  <Answer>
+     mmmmmmmmmmmmmmmmmmmmmmmm
+  </Answer>
+</QA>
+<QA ID="707" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     xxxxxxxxxxxxxxxxxx
+  </Question>
+  <Answer>
+     mmmmmmmmmmmmmmmmmmmmmmmm
+  </Answer>
+</QA>
+<QA ID="708" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     xxxxxxxxxxxxxxxxxx
+  </Question>
+  <Answer>
+     mmmmmmmmmmmmmmmmmmmmmmmm
+  </Answer>
+</QA>
+<QA ID="709" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     xxxxxxxxxxxxxxxxxx
+  </Question>
+  <Answer>
+     mmmmmmmmmmmmmmmmmmmmmmmm
+  </Answer>
+</QA>
+<QA ID="710" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     xxxxxxxxxxxxxxxxxx
+  </Question>
+  <Answer>
+     mmmmmmmmmmmmmmmmmmmmmmmm
+  </Answer>
+</QA>
+
 </QuestionsAndAnswers>
