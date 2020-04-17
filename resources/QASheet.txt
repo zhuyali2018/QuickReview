@@ -9473,7 +9473,7 @@ int main()
 </QA>
 <QA ID="648" type="OneAnswer" category="PYTHON" countdown="0" resetto="0" >
   <Question>
-     How to do mulitple substitution in a string in python?
+     How to do multiple substitution in a string in python?
   </Question>
   <Answer>
      namestr.replace('>', '&amp;gt;').replace('&lt;', '&amp;lt;')
