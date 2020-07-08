@@ -9770,7 +9770,7 @@ int main()
      if(line =="666"){
        console.log('Line from file:', line);
      }else
-       console.log('xxxxx');
+       console.log('zzzzz');
 
   </Answer>
 </QA>
@@ -10161,31 +10161,195 @@ int main()
      if [ -s main_log.txt ]; then echo NotEmpty; else echo Empty; fi
   </Answer>
 </QA>
-<QA ID="706" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+<QA ID="706" type="OneAnswer" category="JAVA" countdown="0" resetto="0" >
   <Question>
-     xxxxxxxxxxxxxxxxxx
+     How to check java version installed ?
   </Question>
   <Answer>
-     mmmmmmmmmmmmmmmmmmmmmmmm
+     java -version
   </Answer>
 </QA>
 <QA ID="707" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
   <Question>
-     xxxxxxxxxxxxxxxxxx
+     How to recursively search for a hidden file in linux?
   </Question>
   <Answer>
-     mmmmmmmmmmmmmmmmmmmmmmmm
+     find . -type f -iname ".*" -ls | grep mypartialfilename
   </Answer>
 </QA>
 <QA ID="708" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
   <Question>
-     xxxxxxxxxxxxxxxxxx
+     In shell script, how to detect wether a string contains a space in it ?   
+  </Question>
+  <Answer>
+     echo "$ANDROID_NDK_ROOT" | grep -q -e " "
+     if [ $? = 0 ] ; then
+        echo "Error: the string contains spaces"
+     fi 
+  </Answer>
+</QA>
+<QA ID="709" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     In shell script, how to check a path to a dir exists "
+  </Question>
+  <Answer>
+     export ANDROID_NDK_ROOT=/home/MAGICLEAP/yzhu/Acamas_Adroid10
+     echo "$ANDROID_NDK_ROOT is not an empty string" 
+     if [ ! -d $ANDROID_NDK_ROOT ] ; then
+        echo "The folder $ANDROID_NDK_ROOT does not exist !"
+     fi
+  </Answer>
+</QA>
+<QA ID="710" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     In shell script, how to check a file exists ?
+  </Question>
+  <Answer>
+     export fff=mypath/myfile
+     echo "$fff is not an empty string (including string of just spaces)"
+     if [ -f $fff ] ; then 
+        echo "The file $fff exists"; 
+     fi
+  </Answer>
+</QA>
+<QA ID="711" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     In Shell script, how to give a var a default value if not defined yet ?
+  </Question>
+  <Answer>
+     MYVAR=${MYVAR-defaultstr}    #if MYVAR not defined, assign it a string of "defaultstr"
+  </Answer>
+</QA>
+<QA ID="712" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+    In shell script, how to format print several lines in one line ? 
+  </Question>
+  <Answer>
+     printf "%10s\naaa\n" "asdf"
+  </Answer>
+</QA>
+
+<QA ID="713" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     In shell script, how to compare 2 strings ?
+  </Question>
+  <Answer>
+     if [ "$VERBOSE" = "yes" ] ; then
+        echo "2 strings match !"
+      fi
+  </Answer>
+</QA>
+
+<QA ID="714" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     In shell script. how to do an infinite while loop ?
+  </Question>
+  <Answer>
+     while [ -n "1" ] ; do
+         echo "never ending..."
+     done
+   or:
+     while true; do
+         echo "never ending ..."
+     done
+  </Answer>
+</QA>
+
+<QA ID="715" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     In shell script, how to create a file programatically ?
+  </Question>
+  <Answer>
+     cat > $FILENAME &lt;&lt; EOF
+        int main(void){}
+     EOF
+ 
+     To generate a hello_world cpp program:
+
+     cat > "HELLO_WOLRD.cpp" &lt;&lt;EOF
+     #include &lt;iostream>
+     using namespace std;
+     int main()
+     {
+       cout &lt;&lt; "Hello World!" &lt;&lt; endl;
+       return 0;
+     }
+     EOF
+
+  </Answer>
+</QA>
+
+<QA ID="716" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     In shell script, how to check for error for the last statement run ?
+  </Question>
+  <Answer>
+     if [ $? != 0 ] ; then
+        echo "Something wrong"
+     fi
+  </Answer>
+</QA>
+
+<QA ID="717" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     In shell script, how to check that we have a working md5sum here ?
+  </Question>
+  <Answer>
+    A_MD5=`echo "A" | md5sum | cut -d' ' -f1`
+    if [ "$A_MD5" != "bf072e9119077b4e76437a93986787ef" ] ; then
+        echo "We do not have md5sum on this machine"
+    fi
+  </Answer>
+</QA>
+
+<QA ID="718" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     In shell script, how to check if a var is empty or not defined ?
+  </Question>
+  <Answer>
+     if [ ! -z "$var" ] ; then 
+        echo "Not Empty"; 
+     else 
+        echo "Empty, 0 length or not defined";
+     fi
+  </Answer>
+</QA>
+
+<QA ID="719" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     In shell script, how to find and list all the symbolink files ?
+  </Question>
+  <Answer>
+    find $DIRECTORY -type l
+  </Answer>
+</QA>
+
+<QA ID="720" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     In shell script, how to test if a file is a symbolink file ?
+  </Question>
+  <Answer>
+     if [ -L "$SYMLINK" ]; then
+       echo "$SYMLINK is a symbolink file"
+     fi
+   or:
+     test -L "$SYMLINK"
+     if [ $? = 0 ]; then 
+         echo "$SYMLINK is a symbolink file"
+     fi
+  </Answer>
+</QA>
+
+<QA ID="721" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+    x
   </Question>
   <Answer>
      mmmmmmmmmmmmmmmmmmmmmmmm
   </Answer>
 </QA>
-<QA ID="709" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+
+<QA ID="722" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
   <Question>
      xxxxxxxxxxxxxxxxxx
   </Question>
@@ -10193,7 +10357,341 @@ int main()
      mmmmmmmmmmmmmmmmmmmmmmmm
   </Answer>
 </QA>
-<QA ID="710" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+
+<QA ID="723" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     xxxxxxxxxxxxxxxxxx
+  </Question>
+  <Answer>
+     mmmmmmmmmmmmmmmmmmmmmmmm
+  </Answer>
+</QA>
+
+<QA ID="724" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     xxxxxxxxxxxxxxxxxx
+  </Question>
+  <Answer>
+     mmmmmmmmmmmmmmmmmmmmmmmm
+  </Answer>
+</QA>
+
+<QA ID="725" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     xxxxxxxxxxxxxxxxxx
+  </Question>
+  <Answer>
+     mmmmmmmmmmmmmmmmmmmmmmmm
+  </Answer>
+</QA>
+
+<QA ID="726" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     xxxxxxxxxxxxxxxxxx
+  </Question>
+  <Answer>
+     mmmmmmmmmmmmmmmmmmmmmmmm
+  </Answer>
+</QA>
+
+<QA ID="727" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     xxxxxxxxxxxxxxxxxx
+  </Question>
+  <Answer>
+     mmmmmmmmmmmmmmmmmmmmmmmm
+  </Answer>
+</QA>
+
+<QA ID="728" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     xxxxxxxxxxxxxxxxxx
+  </Question>
+  <Answer>
+     mmmmmmmmmmmmmmmmmmmmmmmm
+  </Answer>
+</QA>
+
+<QA ID="729" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     xxxxxxxxxxxxxxxxxx
+  </Question>
+  <Answer>
+     mmmmmmmmmmmmmmmmmmmmmmmm
+  </Answer>
+</QA>
+
+<QA ID="730" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     xxxxxxxxxxxxxxxxxx
+  </Question>
+  <Answer>
+     mmmmmmmmmmmmmmmmmmmmmmmm
+  </Answer>
+</QA>
+
+<QA ID="731" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     xxxxxxxxxxxxxxxxxx
+  </Question>
+  <Answer>
+     mmmmmmmmmmmmmmmmmmmmmmmm
+  </Answer>
+</QA>
+
+<QA ID="732" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     xxxxxxxxxxxxxxxxxx
+  </Question>
+  <Answer>
+     mmmmmmmmmmmmmmmmmmmmmmmm
+  </Answer>
+</QA>
+
+<QA ID="733" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     xxxxxxxxxxxxxxxxxx
+  </Question>
+  <Answer>
+     mmmmmmmmmmmmmmmmmmmmmmmm
+  </Answer>
+</QA>
+
+<QA ID="734" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     xxxxxxxxxxxxxxxxxx
+  </Question>
+  <Answer>
+     mmmmmmmmmmmmmmmmmmmmmmmm
+  </Answer>
+</QA>
+
+<QA ID="735" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     xxxxxxxxxxxxxxxxxx
+  </Question>
+  <Answer>
+     mmmmmmmmmmmmmmmmmmmmmmmm
+  </Answer>
+</QA>
+
+<QA ID="736" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     xxxxxxxxxxxxxxxxxx
+  </Question>
+  <Answer>
+     mmmmmmmmmmmmmmmmmmmmmmmm
+  </Answer>
+</QA>
+
+<QA ID="737" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     xxxxxxxxxxxxxxxxxx
+  </Question>
+  <Answer>
+     mmmmmmmmmmmmmmmmmmmmmmmm
+  </Answer>
+</QA>
+
+<QA ID="738" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     xxxxxxxxxxxxxxxxxx
+  </Question>
+  <Answer>
+     mmmmmmmmmmmmmmmmmmmmmmmm
+  </Answer>
+</QA>
+
+<QA ID="739" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     xxxxxxxxxxxxxxxxxx
+  </Question>
+  <Answer>
+     mmmmmmmmmmmmmmmmmmmmmmmm
+  </Answer>
+</QA>
+
+<QA ID="740" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     xxxxxxxxxxxxxxxxxx
+  </Question>
+  <Answer>
+     mmmmmmmmmmmmmmmmmmmmmmmm
+  </Answer>
+</QA>
+
+<QA ID="741" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     xxxxxxxxxxxxxxxxxx
+  </Question>
+  <Answer>
+     mmmmmmmmmmmmmmmmmmmmmmmm
+  </Answer>
+</QA>
+
+<QA ID="742" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     xxxxxxxxxxxxxxxxxx
+  </Question>
+  <Answer>
+     mmmmmmmmmmmmmmmmmmmmmmmm
+  </Answer>
+</QA>
+
+<QA ID="743" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     xxxxxxxxxxxxxxxxxx
+  </Question>
+  <Answer>
+     mmmmmmmmmmmmmmmmmmmmmmmm
+  </Answer>
+</QA>
+
+<QA ID="744" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     xxxxxxxxxxxxxxxxxx
+  </Question>
+  <Answer>
+     mmmmmmmmmmmmmmmmmmmmmmmm
+  </Answer>
+</QA>
+
+<QA ID="745" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     xxxxxxxxxxxxxxxxxx
+  </Question>
+  <Answer>
+     mmmmmmmmmmmmmmmmmmmmmmmm
+  </Answer>
+</QA>
+
+<QA ID="746" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     xxxxxxxxxxxxxxxxxx
+  </Question>
+  <Answer>
+     mmmmmmmmmmmmmmmmmmmmmmmm
+  </Answer>
+</QA>
+
+<QA ID="747" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     xxxxxxxxxxxxxxxxxx
+  </Question>
+  <Answer>
+     mmmmmmmmmmmmmmmmmmmmmmmm
+  </Answer>
+</QA>
+
+<QA ID="748" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     xxxxxxxxxxxxxxxxxx
+  </Question>
+  <Answer>
+     mmmmmmmmmmmmmmmmmmmmmmmm
+  </Answer>
+</QA>
+
+<QA ID="749" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     xxxxxxxxxxxxxxxxxx
+  </Question>
+  <Answer>
+     mmmmmmmmmmmmmmmmmmmmmmmm
+  </Answer>
+</QA>
+
+<QA ID="750" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     xxxxxxxxxxxxxxxxxx
+  </Question>
+  <Answer>
+     mmmmmmmmmmmmmmmmmmmmmmmm
+  </Answer>
+</QA>
+
+<QA ID="751" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     xxxxxxxxxxxxxxxxxx
+  </Question>
+  <Answer>
+     mmmmmmmmmmmmmmmmmmmmmmmm
+  </Answer>
+</QA>
+
+<QA ID="752" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     xxxxxxxxxxxxxxxxxx
+  </Question>
+  <Answer>
+     mmmmmmmmmmmmmmmmmmmmmmmm
+  </Answer>
+</QA>
+
+<QA ID="753" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     xxxxxxxxxxxxxxxxxx
+  </Question>
+  <Answer>
+     mmmmmmmmmmmmmmmmmmmmmmmm
+  </Answer>
+</QA>
+
+<QA ID="754" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     xxxxxxxxxxxxxxxxxx
+  </Question>
+  <Answer>
+     mmmmmmmmmmmmmmmmmmmmmmmm
+  </Answer>
+</QA>
+
+<QA ID="755" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     xxxxxxxxxxxxxxxxxx
+  </Question>
+  <Answer>
+     mmmmmmmmmmmmmmmmmmmmmmmm
+  </Answer>
+</QA>
+
+<QA ID="756" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     xxxxxxxxxxxxxxxxxx
+  </Question>
+  <Answer>
+     mmmmmmmmmmmmmmmmmmmmmmmm
+  </Answer>
+</QA>
+
+<QA ID="757" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     xxxxxxxxxxxxxxxxxx
+  </Question>
+  <Answer>
+     mmmmmmmmmmmmmmmmmmmmmmmm
+  </Answer>
+</QA>
+
+<QA ID="758" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     xxxxxxxxxxxxxxxxxx
+  </Question>
+  <Answer>
+     mmmmmmmmmmmmmmmmmmmmmmmm
+  </Answer>
+</QA>
+
+<QA ID="759" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
+  <Question>
+     xxxxxxxxxxxxxxxxxx
+  </Question>
+  <Answer>
+     mmmmmmmmmmmmmmmmmmmmmmmm
+  </Answer>
+</QA>
+
+<QA ID="760" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
   <Question>
      xxxxxxxxxxxxxxxxxx
   </Question>
@@ -10203,3 +10701,5 @@ int main()
 </QA>
 
 </QuestionsAndAnswers>
+</QuestionsAndAnswers>
+
