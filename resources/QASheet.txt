@@ -9841,11 +9841,7 @@ int main()
   </Question>
   <Answer>
      npm root -g
-<<<<<<< HEAD
-     that's where the command npm instll -g &lt;package> will install to.
-=======
      that's where the command npm install -g &lt;package> will install to.
->>>>>>> c3344b08add04a2dca1441e5e711071a6d5d8f86
   </Answer>
 </QA>
 <QA ID="678" type="OneAnswer" category="NODE.JS" countdown="0" resetto="0" >
@@ -9950,22 +9946,6 @@ int main()
     parent.frames["frame2"].document.getElementById("id").innerHTML="content";
   </Answer>
 </QA>
-<<<<<<< HEAD
-<QA ID="686" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
-  <Question>
-     xxxxxxxxxxxxxxxx
-  </Question>
-  <Answer>
-   mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm
-  </Answer>
-</QA>
-<QA ID="687" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
-  <Question>
-     xxxxxxxxxxxxxxxx
-  </Question>
-  <Answer>
-   mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm
-=======
 <QA ID="686" type="OneAnswer" category="NODE.JS" countdown="0" resetto="0" >
   <Question>
      How to catch an error in node or javascript ?
@@ -9988,17 +9968,10 @@ int main()
      jQuery is a JavaScript library designed to simplify HTML DOM tree traversal 
    and manipulation, as well as event handling, CSS animation, and Ajax. It is 
    free, open-source software using the permissive MIT License.
->>>>>>> c3344b08add04a2dca1441e5e711071a6d5d8f86
   </Answer>
 </QA>
 <QA ID="688" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
   <Question>
-<<<<<<< HEAD
-     xxxxxxxxxxxxxxxx
-  </Question>
-  <Answer>
-   mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm
-=======
      how to schedule a program to run at a scheduled time in ubuntu ?
   </Question>
   <Answer>
@@ -10017,39 +9990,15 @@ int main()
        │ └──────────────────── hour (0 – 23)
        └───────────────────────── min (0 – 59)  
     4. same and exit
->>>>>>> c3344b08add04a2dca1441e5e711071a6d5d8f86
   </Answer>
 </QA>
 <QA ID="689" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
   <Question>
-<<<<<<< HEAD
-     xxxxxxxxxxxxxxxx
-  </Question>
-  <Answer>
-   mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm
-  </Answer>
-</QA>
-<QA ID="690" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
-  <Question>
-     xxxxxxxxxxxxxxxx
-  </Question>
-  <Answer>
-   mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm
-  </Answer>
-</QA>
-<QA ID="681" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
-  <Question>
-     xxxxxxxxxxxxxxxx
-  </Question>
-  <Answer>
-   mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm
-=======
      How to change the crontab editor in linux ?
   </Question>
   <Answer>
     by setting up the environment variable VISUAL:
     export VISUAL=vi
->>>>>>> c3344b08add04a2dca1441e5e711071a6d5d8f86
   </Answer>
 </QA>
 <QA ID="690" type="OneAnswer" category="LINUX" countdown="0" resetto="0" >
