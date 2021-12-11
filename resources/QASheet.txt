@@ -1806,7 +1806,7 @@
      D: 1 - 1
   </Question>
   <Answer>
-     B. Length of a string includes the ending 0, size of array has no ending 0
+     B. Size of a string includes the ending 0, size of array has no ending 0
   </Answer>
 </QA>
 <QA ID="103" type="OneAnswer" category="CPP" countdown="0" resetto="0" >
